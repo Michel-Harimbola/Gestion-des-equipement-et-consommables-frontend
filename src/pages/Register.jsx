@@ -1,7 +1,27 @@
 import React, { useState } from 'react'
-import { Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { registerUser } from "../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
+  const [form, setForm] = useState({ nom: "", prenom: "", email: "", motDePasse: "", role: "" });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(registerUser(form)).unwrap();
+      toast.success("Registered successfully!");
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -12,7 +32,7 @@ const Register = () => {
   return (
     <div className='grid w-full h-screen place-items-center bg-gray-100'>
       <div className="flex w-full max-w-6xl bg-white shadow-[0_0_50px_5px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden">
-
+        <Toaster position='top-right'/>
         <div className='w-full md:w-1/2 px-20 pt-16 pb-10 flex flex-col justify-center'>
             <h2 className='text-3xl font-medium text-gray-800 mb-10 text-center'>S'inscrire</h2>
 
@@ -21,18 +41,27 @@ const Register = () => {
               <div className='space-y-6'>
 
                   <input
+                    name='nom'
+                    value={form.nom}
+                    onChange={handleChange}
                     type="text"
                     placeholder="Votre nom"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                   /> 
 
                   <input
+                    name='prenom'
+                    value={form.prenom}
+                    onChange={handleChange}
                     type="text"
                     placeholder="Votre prénom"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                   /> 
 
                   <input
+                    name='email'
+                    value={form.email}
+                    onChange={handleChange}
                     type="email"
                     placeholder="Votre email"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
@@ -40,6 +69,9 @@ const Register = () => {
 
                 <div className="relative">
                   <input
+                    name='motDePasse'
+                    value={form.motDePasse}
+                    onChange={handleChange}
                     type={ showPassword ? "text" : "password" }
                     placeholder="votre mot de passe"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
@@ -79,6 +111,9 @@ const Register = () => {
 
               <div className="relative">
                 <select
+                  name='role'
+                  value={form.role}
+                  onChange={handleChange}
                   className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] appearance-none bg-white 
                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
                 >
@@ -100,9 +135,11 @@ const Register = () => {
 
               <p className='flex justify-center items-center'>
                 Vous avez déjà un compte? 
-                <a href="#" className='text-blue-600 hover:text-blue-400'>
+                <span  
+                onClick={() => navigate("/login")}
+                className='text-blue-600 hover:text-blue-400'>
                   se Connecter
-                </a> 
+                </span> 
               </p>
             </form>
 
@@ -121,6 +158,7 @@ const Register = () => {
               Entrez votre détails et commencez la journée avec nous
             </p>
             <button
+              onClick={() => navigate("/login")}
               type="button"
               className="px-8 py-3 border-2 border-white text-white font-medium rounded-full 
                          hover:bg-white hover:text-blue-600 transition duration-300 backdrop-blur-sm"

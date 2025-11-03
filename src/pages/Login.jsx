@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: "", motDePasse: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -60,8 +60,8 @@ export default function Login() {
                     <div className='ml-2 h-5 w-2 border-l-2 border-gray-400'></div>
                   </div>
                   <input
-                    name='password'
-                    value={form.password}
+                    name='motDePasse'
+                    value={form.motDePasse}
                     onChange={handleChange}
                     type={ showPassword ? "text" : "password" }
                     placeholder="Entrer votre mot de passe ici"
