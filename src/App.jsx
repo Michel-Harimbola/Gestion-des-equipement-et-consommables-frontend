@@ -1,12 +1,14 @@
 import React from 'react'
-import Register from './components/auth/Register'
+import AppRoutes from './routes/AppRoutes';
+import GlobalLoader from "./components/shared/GlobalLoader";
+import ToastContainer from "./components/shared/ToastContainer";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <Register />
-    </div>
-  )
+    <>
+      <GlobalLoader />
+      <ToastContainer />
+      <AppRoutes />
+    </>
+  );
 }
-
-export default App
