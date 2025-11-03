@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+:root {
+    --toastify-color-success: #10b981; /* vert Tailwind */
+    --toastify-color-error: #ef4444;  /* rouge Tailwind */
+    --toastify-color-warning: #facc15;
+    --toastify-color-info: #3b82f6;
+}
