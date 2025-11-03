@@ -1,29 +1,53 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../api/axios";
+import { authService } from "../../services/authService.js";
+import { toast } from "react-toastify";
 
-export const loginUser = createAsyncThunk("auth/login", async (data) => {
-    const res = await api.post("/auth/login", data);
-    return res.data;
-});
 
-export const registerUser = createAsyncThunk("auth/register", async (data) => {
-    const res = await api.post("/auth/register", data);
-    return res.data;
-});
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const res = await authService.login(credentials);
+      localStorage.setItem("token", res.token);
+      toast.success("Connexion réussie !");
+      return res.user;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Erreur de connexion");
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await authService.register(data);
+      toast.success("Inscription réussie !");
+      return res.user;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Erreur d'inscription");
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 
 const authSlice = createSlice({
     name: "auth",
-    initialState: { user: null, token: null, loading: false },
-    reducers: { logout: (state) => { state.user = null; state.token = null; localStorage.removeItem("token"); } },
+    initialState: { user: null, loading: false },
+    reducers: { 
+        logout: (state) => { 
+            authService.logout();
+            state.user = null; 
+            toast.info("Déconnexion réussie !");
+        } 
+    },
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.pending, (state) => { state.loading = true; })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload.user;
-                state.token = action.payload.token;
-                localStorage.setItem("token", action.payload.token);
+                state.user = action.payload; 
             })
             .addCase(loginUser.rejected, (state) => { state.loading = false; })
             .addCase(registerUser.pending, (state) => { state.loading = true; })

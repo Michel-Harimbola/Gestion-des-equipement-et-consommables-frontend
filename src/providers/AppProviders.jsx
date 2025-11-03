@@ -1,12 +1,12 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "react-redux"; 
+import { store } from "../redux/store/store"; 
 import { LoadingProvider, useLoading } from "../context/LoadingContext";
-import { setLoadigInstance } from "../context/LoadingContextHandler";
+import { setLoadingInstance } from "../context/LoadingContextHandler";
 
 function LoadingConnector() {
     const loading = useLoading();
-    setLoadigInstance(loading);
+    setLoadingInstance(loading);
     return null;
 }
 

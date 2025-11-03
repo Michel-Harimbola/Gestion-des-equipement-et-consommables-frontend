@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { registerUser } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 import { Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
@@ -14,13 +13,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dispatch(registerUser(form)).unwrap();
-      toast.success("Registered successfully!");
-      navigate("/login");
-    } catch (error) {
-      toast.error(error.message);
-    }
+    await dispatch(registerUser(form)).unwrap();
+    navigate("/login");
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -32,11 +26,12 @@ const Register = () => {
   return (
     <div className='grid w-full h-screen place-items-center bg-gray-100'>
       <div className="flex w-full max-w-6xl bg-white shadow-[0_0_50px_5px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden">
-        <Toaster position='top-right'/>
         <div className='w-full md:w-1/2 px-20 pt-16 pb-10 flex flex-col justify-center'>
             <h2 className='text-3xl font-medium text-gray-800 mb-10 text-center'>S'inscrire</h2>
 
-            <form className='space-y-8'>
+            <form 
+            onSubmit={handleSubmit}
+            className='space-y-8'>
 
               <div className='space-y-6'>
 
@@ -47,6 +42,7 @@ const Register = () => {
                     type="text"
                     placeholder="Votre nom"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    required
                   /> 
 
                   <input
@@ -56,6 +52,7 @@ const Register = () => {
                     type="text"
                     placeholder="Votre prénom"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    required
                   /> 
 
                   <input
@@ -65,6 +62,7 @@ const Register = () => {
                     type="email"
                     placeholder="Votre email"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    required
                   /> 
 
                 <div className="relative">
@@ -75,6 +73,7 @@ const Register = () => {
                     type={ showPassword ? "text" : "password" }
                     placeholder="votre mot de passe"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    required
                   />
                   <button
                     type="button"
@@ -117,6 +116,7 @@ const Register = () => {
                   className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] appearance-none bg-white 
                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
                 >
+                  <option value="" disabled>Choisir un rôle</option>
                   <option value="utilisateurSimple">Utilisateur Simple</option>
                   <option value="responsableRH">Responsable RH</option>
                   <option value="admin">Admin</option>
