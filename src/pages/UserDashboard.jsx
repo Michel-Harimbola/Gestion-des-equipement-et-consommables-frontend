@@ -4,7 +4,7 @@ import { logout } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 
-export default function Dashboard() {
+export default function UserDashboard() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
