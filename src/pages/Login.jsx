@@ -17,7 +17,7 @@ export default function Login() {
     try {
       await dispatch(loginUser(form)).unwrap();
       toast.success("Login successful!");
-      navigate("/Menu");
+      navigate("/UserDashboard");
     } catch (error) {
       toast.error(error.message);
     }
