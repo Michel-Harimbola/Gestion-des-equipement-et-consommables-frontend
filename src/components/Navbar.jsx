@@ -34,7 +34,7 @@ export default function Navbar() {
         {
             id: 3,
             name: "Emprunts",
-            path: "/Emprunts",
+            path: "/userDashboard/emprunts",
         },
         {
             id: 4,
