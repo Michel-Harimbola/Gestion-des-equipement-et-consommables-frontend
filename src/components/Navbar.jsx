@@ -29,7 +29,7 @@ export default function Navbar() {
         {
             id: 2,
             name: "Equipements",
-            path: "/Equipement",
+            path: "/userDashboard/Equipements",
         },
         {
             id: 3,
@@ -66,8 +66,7 @@ export default function Navbar() {
   return (
         <div
             id="navbar"
-            className={`w-full h-[8ch] backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 ${isScrolled ? "bg-sky-50/30" : "bg-transparent"
-                }`}
+            className="w-full h-[8ch] backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 bg-gray-50" 
         >
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
