@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { registerUser } from "../redux/slices/authSlice";
+import { registerUser } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from 'lucide-react';
 

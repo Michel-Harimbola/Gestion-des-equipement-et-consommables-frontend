@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import UserDashboard from "../pages/UserDashboard";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import UserDashboard from "../pages/user/UserDashboard";
 import ProctectedRoute from "../components/shared/ProtectedRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 export default function AppRoutes() {
     return (
@@ -11,7 +12,11 @@ export default function AppRoutes() {
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/userDashboard" element={<ProctectedRoute><UserDashboard /></ProctectedRoute>} />
+                <Route element={<ProctectedRoute><DashboardLayout /></ProctectedRoute>}>
+                  <Route path="/userDashboard" element={ <UserDashboard /> } />
+                  <Route path="/dashboard/profile" />
+                  <Route path="/dashboard/settings" />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
