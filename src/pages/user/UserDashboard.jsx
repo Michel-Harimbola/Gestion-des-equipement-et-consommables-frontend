@@ -1,24 +1,62 @@
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEnCours } from "../../redux/slices/user/EnCoursSlice"
+import GlobalLoader from "../../components/shared/GlobalLoader";
+
 
 export default function UserDashboard() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { items, loading, error } = useSelector((state) => state.enCours);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
-  };
+    useEffect(() => {
+      dispatch(fetchEnCours());
+    }, [dispatch]);
 
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <Toaster position="top-right" />
-      <h1 className="text-3xl font-bold mb-4">Welcome 🚀</h1>
-      <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">
-        Logout
-      </button>
-    </div>
-  );
+    return (
+      <div className="mt-24 ml-4 mr-6">
+        <h1 className="text-3xl font-semibold">Vos emprunts en cours</h1> 
+        { loading? (
+          <GlobalLoader />
+        ) : error ? (
+          <p className="text-red-600">{error}</p>
+        ) : items.length === 0 ? (
+          <p className="text-gray-600">Aucun emprunt en cours.</p>
+        ) :(
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-14">
+            {items.map((enCours) => (
+              <div 
+                key={enCours.id}
+                className="flex flex-col space-y-1 bg-white shadow-[0_0_30px_2px_rgba(0,0,0,0.1)] p-8  rounded-2xl"
+              >
+                <div className="flex space-x-2">
+                  <h1 className="font-semibold text-lg">Nom de l'équipement:</h1>
+                  {enCours.equipement.map(eq => ( 
+                    <h1 
+                      key={eq.id}
+                      className="text-xl font-semibold">
+                        {eq.nom}
+                    </h1>
+                  ))}
+                </div>
+                
+                <div className="flex space-x-2">
+                  <p>Date d'emprunt :</p>
+                  <p>{new Date(enCours.dateEmprunt).toLocaleDateString()}</p>
+                </div>
+                <p>Date de retour prévue: <span>{new Date(enCours.dateRetourPrevu).toLocaleDateString()}</span></p>
+                <div className="flex flex-row items-center space-x-2 mt-2">
+                  <div 
+                    className={`w-4 h-4 rounded-full ${enCours.statut !== "EnCours"? "bg-red-600" : "bg-green-500"}`}
+                  >
+                  </div>
+                  <p className="text-center text-gray-600 font-normal">
+                    {enCours.statut}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
 }

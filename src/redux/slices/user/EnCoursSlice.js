@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 
 export const fetchEnCours = createAsyncThunk(
-  "emprunts/fetchEnCours",
+  "enCours/fetchEnCours",
   async (_, { rejectWithValue }) => {
     try {
       const data = await EnCoursService.getUserEmpruntsInProgress();
@@ -17,7 +17,7 @@ export const fetchEnCours = createAsyncThunk(
 );
 
 const enCoursSlice = createSlice({
-  name: "EnCours",
+  name: "enCours",
   initialState: {
     items: [],
     loading: false,
