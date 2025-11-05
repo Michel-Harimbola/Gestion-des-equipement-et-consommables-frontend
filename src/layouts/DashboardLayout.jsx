@@ -8,7 +8,7 @@ export default function DashboardLayout() {
       <Navbar />
 
       {/* Contenu principal sans scroll */}
-      <main className="flex-1 bg-gray-100 overflow-y-auto p-6">
+      <main className="flex-1 bg-gray-50 overflow-y-auto p-6">
         <Outlet />
       </main>
     </div>
