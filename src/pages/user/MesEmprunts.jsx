@@ -25,19 +25,19 @@ export default function MesEmprunts() {
       <div className="flex space-x-5 mt-10">
           <button
             onClick={() => setFilter("all")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-200"}`}
+            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
           >
             Tous
           </button>
           <button
             onClick={() => setFilter("EnCours")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "EnCours" ? "bg-black text-white" : "bg-gray-200"}`}
+            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "EnCours" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
           >
             EnCours
           </button>
           <button
             onClick={() => setFilter("Retourner")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Retourner" ? "bg-black text-white" : "bg-gray-200"}`}
+            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Retourner" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
           >
             Retourner
           </button>
@@ -46,7 +46,7 @@ export default function MesEmprunts() {
       {loading ? (
         <GlobalLoader />
       ):(
-        <div className="overflow-x-auto shadow-[0_0_30px_2px_rgba(0,0,0,0.3)] rounded-xl mt-10">
+        <div className="overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl mt-10">
           <table className="min-w-full text-xl text-gray-700">
             <thead className="bg-sky-600 text-white ">
               <tr>

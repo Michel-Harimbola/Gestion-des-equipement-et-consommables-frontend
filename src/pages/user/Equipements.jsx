@@ -26,21 +26,21 @@ export default function Equipements() {
           <div className="flex space-x-5 mt-10">
             <button
               onClick={() => setFilter("all")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >
               Tous
             </button>
 
             <button
               onClick={() => setFilter("Disponible")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Disponible" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Disponible" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >
               Disponible
             </button>
 
             <button
               onClick={() => setFilter("Emprunter")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >
               Emprunter
             </button>
@@ -54,7 +54,7 @@ export default function Equipements() {
                   filteredItems.map((eq) => (
                     <div 
                       key={eq.id}
-                      className="flex flex-col items-center space-y-5 bg-white shadow-[0_0_30px_2px_rgba(0,0,0,0.1)] py-8 w-[290px] rounded-3xl"
+                      className="flex flex-col items-center space-y-5 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 w-[290px] rounded-3xl"
                     >
                       <div>
                           <h1 className="font-semibold text-lg text-center">Nom de l'équipement:</h1>

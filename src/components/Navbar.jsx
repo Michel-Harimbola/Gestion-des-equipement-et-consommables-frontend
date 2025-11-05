@@ -17,8 +17,8 @@ export default function Navbar() {
     const navItems = [
         { id: 1, name: "Accueil", path: "/UserDashboard" },
         { id: 2, name: "Equipements", path: "/userDashboard/Equipements" },
-        { id: 3, name: "MesEmprunts", path: "/userDashboard/MesEmprunts" },
-        { id: 4, name: "Emprunter", path: "/userDashboard/Emprunter"}
+        { id: 3, name: "Emprunter", path: "/userDashboard/Emprunter"},
+        { id: 4, name: "MesEmprunts", path: "/userDashboard/MesEmprunts" },
 
     ];
 
@@ -59,7 +59,7 @@ export default function Navbar() {
            >
                {/* Logo */}
                <div className="flex items-center gap-2 md:pr-16 pr-0">
-                   <Link to="/UserDashboard" className="text-2xl font-serif font-semibold flex items-center gap-x-2">
+                   <Link to="/UserDashboard" className="text-3xl font-serif font-semibold flex items-center gap-x-2">
                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-blue-500 rounded-full" />
                        YouthBorrow
                   </Link>
@@ -105,7 +105,7 @@ export default function Navbar() {
 
                    <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-0">
                        {/* Navbar items */}
-                       <ul className="flex flex-col md:flex-row items-center gap-2 text-lg font-normal cursor-pointer">
+                       <ul className="flex flex-col md:flex-row items-center gap-5 text-xl font-normal cursor-pointer">
                            {navItems.map((item) => (
                                <li key={item.id}>
                                    <Link 
@@ -114,7 +114,7 @@ export default function Navbar() {
                                        setIsActive(item.id);
                                        isOpen(false);                                
                                    }}
-                                   className={`ease-in-out rounded-full px-5 py-2 duration-300 ${isActive == item.id ? "bg-gray-200" : "hover:bg-gray-200"}`}>
+                                   className={`ease-in-out rounded-full  duration-300 ${isActive == item.id ? "text-blue-500" : "hover:text-blue-500"}`}>
                                        {item.name}
                                    </Link>
                                </li>
