@@ -20,28 +20,27 @@ export default function Equipements() {
     });
 
     return (
-      <div className="">
-        <div className="mt-24 ml-8">
-          <h1 className="text-4xl -ml-2 font-bold">Tous les équipements</h1> 
+      <div className="mt-24 ml-4 mr-6">
+          <h1 className="text-4xl -ml-1 font-bold">Tous les équipements</h1> 
 
           <div className="flex space-x-5 mt-10">
             <button
               onClick={() => setFilter("all")}
-              className={`px-4 py-1 rounded-lg font-semibold ${filter == "all" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-200"}`}
             >
               Tous
             </button>
 
             <button
               onClick={() => setFilter("Disponible")}
-              className={`px-4 py-1 rounded-lg font-semibold ${filter == "Disponible" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Disponible" ? "bg-black text-white" : "bg-gray-200"}`}
             >
               Disponible
             </button>
 
             <button
               onClick={() => setFilter("Emprunter")}
-              className={`px-4 py-1 rounded-lg font-semibold ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-200"}`}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-200"}`}
             >
               Emprunter
             </button>
@@ -50,7 +49,7 @@ export default function Equipements() {
           {loading ? (
             <GlobalLoader />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 space-x-16 mb-13 mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mb-13 mt-10">
                 {filteredItems.length > 0 ? (
                   filteredItems.map((eq) => (
                     <div 
@@ -76,7 +75,7 @@ export default function Equipements() {
                         disabled={ eq.etat !== "Disponible" }
                         className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.etat !== "Disponible"? 
                               "bg-gray-400 " 
-                              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"}
+                              : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"}
                         `}>
                         Emprunter
                       </button>
@@ -89,7 +88,6 @@ export default function Equipements() {
                 )}
             </div>
           )}
-        </div>
       </div>
     )
 }
