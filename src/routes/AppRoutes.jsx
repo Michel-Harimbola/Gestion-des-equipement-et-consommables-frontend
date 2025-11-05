@@ -6,6 +6,7 @@ import Login from "../pages/auth/Login";
 import UserDashboard from "../pages/user/UserDashboard";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
+import Emprunter from "../pages/user/Emprunter";
 
 export default function AppRoutes() {
     return (
@@ -17,7 +18,8 @@ export default function AppRoutes() {
                 <Route element={<ProctectedRoute><DashboardLayout /></ProctectedRoute>}>
                   <Route path="/userDashboard" element={ <UserDashboard /> } />
                   <Route path="/userDashboard/Equipements" element={ <Equipements /> } />
-                  <Route path="/userDashboard/emprunts" element={ <MesEmprunts /> } />
+                  <Route path="/userDashboard/MesEmprunts" element={ <MesEmprunts /> } />
+                  <Route path="/userDashboard/Emprunter" element={ <Emprunter /> } />
                 </Route>
             </Routes>
         </BrowserRouter>
