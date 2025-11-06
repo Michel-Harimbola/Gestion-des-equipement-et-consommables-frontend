@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { loginUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
@@ -14,7 +15,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(loginUser(form)).unwrap();
-    navigate("/UserDashboard");
+    
+    const token = localStorage.getItem("token");
+    if(token) {
+      const decoded = jwtDecode(token);
+      if (decoded.role === "admin" || decoded.role === "responsableRH") {
+        navigate("/adminDashboard");
+      } else {
+        navigate("/userDashboard");
+      }
+    }
   };
 
   const [showPassword, setShowPassword] = useState(false);
