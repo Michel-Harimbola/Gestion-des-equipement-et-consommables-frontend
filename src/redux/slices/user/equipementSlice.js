@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { equipementService } from "../../../services/equipementsService";
+import { equipementService } from "../../../services/user/equipementsService";
 import toast from "react-hot-toast";
 
 export const fetchEquipements = createAsyncThunk(

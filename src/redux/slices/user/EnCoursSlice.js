@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { EnCoursService } from "../../../services/empruntService";
+import { EnCoursService } from "../../../services/user/empruntService";
 import toast from "react-hot-toast";
 
 

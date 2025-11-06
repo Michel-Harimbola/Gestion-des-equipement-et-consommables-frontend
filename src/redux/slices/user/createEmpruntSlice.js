@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateEmpruntService } from "../../../services/empruntService";
+import { CreateEmpruntService } from "../../../services/user/empruntService";
 import toast from "react-hot-toast";
 
 export const createEmprunt = createAsyncThunk(

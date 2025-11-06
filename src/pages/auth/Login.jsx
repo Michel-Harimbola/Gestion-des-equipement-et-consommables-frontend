@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { loginUser } from "../../redux/slices/authSlice";
+import { loginUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 
