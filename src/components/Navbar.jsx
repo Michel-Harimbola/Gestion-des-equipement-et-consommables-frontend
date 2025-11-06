@@ -114,7 +114,7 @@ export default function Navbar() {
                                        setIsActive(item.id);
                                        isOpen(false);                                
                                    }}
-                                   className={`ease-in-out rounded-full  duration-300 ${isActive == item.id ? "text-blue-500" : "hover:text-blue-500"}`}>
+                                   className={`ease-in-out ${isActive == item.id ? "text-blue-500 hover:text-blue-700 border-b-4 pb-6" : "hover:text-blue-500"}`}>
                                        {item.name}
                                    </Link>
                                </li>
