@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../redux/slices/authSlice"
+import { logout } from "../redux/slices/auth/authSlice"
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { X, Menu, Bell } from 'lucide-react';
