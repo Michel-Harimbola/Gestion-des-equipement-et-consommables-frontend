@@ -25,7 +25,7 @@ const Register = () => {
 
   return (
     <div className='grid w-full h-screen place-items-center bg-gray-100'>
-      <div className="flex w-full max-w-6xl bg-white shadow-[0_0_50px_5px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden">
+      <div className="flex w-full max-w-6xl bg-white shadow-[0_0_40px_3px_rgba(0,0,0,0.2)] rounded-xl overflow-hidden">
         <div className='w-full md:w-1/2 px-20 pt-16 pb-10 flex flex-col justify-center'>
             <h2 className='text-3xl font-medium text-gray-800 mb-10 text-center'>S'inscrire</h2>
 
@@ -41,7 +41,7 @@ const Register = () => {
                     onChange={handleChange}
                     type="text"
                     placeholder="Votre nom"
-                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   /> 
 
@@ -51,7 +51,7 @@ const Register = () => {
                     onChange={handleChange}
                     type="text"
                     placeholder="Votre prénom"
-                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   /> 
 
@@ -61,7 +61,7 @@ const Register = () => {
                     onChange={handleChange}
                     type="email"
                     placeholder="Votre email"
-                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   /> 
 
@@ -72,7 +72,7 @@ const Register = () => {
                     onChange={handleChange}
                     type={ showPassword ? "text" : "password" }
                     placeholder="votre mot de passe"
-                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   />
                   <button
@@ -92,7 +92,7 @@ const Register = () => {
                   <input
                     type={ showPassword ? "text" : "password" }
                     placeholder="Confirmer votre mot de passe"
-                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                   />
                   <button
                     type="button"
@@ -113,7 +113,7 @@ const Register = () => {
                   name='role'
                   value={form.role}
                   onChange={handleChange}
-                  className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] appearance-none bg-white 
+                  className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] appearance-none bg-white 
                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
                 >
                   <option value="" disabled>Choisir un rôle</option>

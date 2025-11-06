@@ -25,7 +25,7 @@ export default function Login() {
 
   return (
     <div className='grid w-full h-screen place-items-center bg-gray-100'>
-      <div className="flex w-full max-w-6xl bg-white shadow-[0_0_50px_5px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden">
+      <div className="flex w-full max-w-6xl bg-white shadow-[0_0_40px_3px_rgba(0,0,0,0.2)] rounded-xl overflow-hidden">
         <div className='w-full md:w-1/2 px-20 pt-40 pb-28 flex flex-col justify-center'>
             <h2 className='text-3xl font-medium text-gray-800 mb-14 -mt-10 text-center'>Se connexion</h2>
 
@@ -43,7 +43,7 @@ export default function Login() {
                     onChange={handleChange}
                     type="text"
                     placeholder="Entrer votre email ici"
-                    className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   /> 
                 </div>
@@ -59,7 +59,7 @@ export default function Login() {
                     onChange={handleChange}
                     type={ showPassword ? "text" : "password" }
                     placeholder="Entrer votre mot de passe ici"
-                    className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_4px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                    className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                     required
                   />
                   <button
