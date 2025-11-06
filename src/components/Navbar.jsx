@@ -18,7 +18,7 @@ export default function Navbar() {
         { id: 1, name: "Accueil", path: "/UserDashboard" },
         { id: 2, name: "Equipements", path: "/userDashboard/Equipements" },
         { id: 3, name: "Emprunter", path: "/userDashboard/Emprunter"},
-        { id: 4, name: "MesEmprunts", path: "/userDashboard/MesEmprunts" },
+        { id: 4, name: "Historique", path: "/userDashboard/MesEmprunts" },
 
     ];
 

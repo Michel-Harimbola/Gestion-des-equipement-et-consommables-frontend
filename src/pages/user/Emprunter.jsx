@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import { useLocation } from "react-router-dom";
 import { createEmprunt } from "../../redux/slices/user/createEmpruntSlice";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
 
 export default function Emprunter() {
-    const [form, setForm] = useState({dateRetourPrevu: "", equipementId: ""});
+    const location = useLocation();
+    const preselectedId = location.state?.equipementId || "";
+
+    const [form, setForm] = useState({dateRetourPrevu: "", equipementId: preselectedId});
     const dispatch = useDispatch();
     const { items } = useSelector((state => state.equipements));
 

@@ -20,7 +20,7 @@ export default function UserDashboard() {
         ) : error ? (
           <p className="text-red-600">{error}</p>
         ) : items.length === 0 ? (
-          <p className="text-gray-600">Aucun emprunt en cours.</p>
+          <p className="text-gray-600 mt-16">Aucun emprunt en cours.</p>
         ) :(
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-14">
             {items.map((enCours) => (
@@ -44,14 +44,23 @@ export default function UserDashboard() {
                   <p>{new Date(enCours.dateEmprunt).toLocaleDateString()}</p>
                 </div>
                 <p>Date de retour prévue: <span>{new Date(enCours.dateRetourPrevu).toLocaleDateString()}</span></p>
-                <div className="flex flex-row items-center space-x-2 mt-2">
-                  <div 
-                    className={`w-4 h-4 rounded-full ${enCours.statut !== "EnCours"? "bg-red-600" : "bg-green-500"}`}
-                  >
+
+                <div className="flex flex-row justify-between items-center -mt-2">
+                  <div className="flex flex-row items-center space-x-2 mt-2">
+                    <div 
+                      className={`w-4 h-4 rounded-full ${enCours.statut !== "EnCours"? "bg-red-600" : "bg-green-500"}`}
+                    >
+                    </div>
+                    <p className="text-center text-gray-600 font-normal">
+                      {enCours.statut}
+                    </p>
                   </div>
-                  <p className="text-center text-gray-600 font-normal">
-                    {enCours.statut}
-                  </p>
+
+                  <button 
+                    className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
+                      bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md">
+                    Retourner
+                  </button>
                 </div>
               </div>
             ))}

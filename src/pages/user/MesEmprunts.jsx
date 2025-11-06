@@ -72,7 +72,7 @@ export default function MesEmprunts() {
                     {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
                   </td>
                   <td className="py-2 px-4">
-                    {new Date(emprunt.dateRetourEffective).toLocaleDateString()}
+                    {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
                   </td>
                   <td className="py-2 px-4">
                     <span

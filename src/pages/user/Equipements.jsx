@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
 
 
 export default function Equipements() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { items, loading } = useSelector((state => state.equipements));
     const [filter, setFilter] = useState("all");
 
@@ -72,6 +74,7 @@ export default function Equipements() {
                       </div>
                       
                       <button 
+                        onClick={() => navigate("/userDashboard/Emprunter", { state: { equipementId: eq.id } })}
                         disabled={ eq.etat !== "Disponible" }
                         className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.etat !== "Disponible"? 
                               "bg-gray-400 " 
