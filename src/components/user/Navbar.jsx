@@ -54,7 +54,7 @@ export default function Navbar() {
      return (
            <div
                id="navbar"
-               className="w-full h-[8ch] backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between 
+               className="w-full h-[7.5ch] backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between 
                md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 bg-transparent shadow-md" 
            >
                {/* Logo */}

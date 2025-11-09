@@ -25,7 +25,7 @@ export const createEmprunt = createAsyncThunk("emprunt/create", async (data, thu
 export const updateEmprunt = createAsyncThunk("emprunt/update", async ({ id, data }, thunkAPI) => {
   try {
     const res = await empruntService.update(id, data);
-    toast.success("Utilisateur mis à jour !");
+    toast.success("Emprunt mis à jour !");
     return res;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
