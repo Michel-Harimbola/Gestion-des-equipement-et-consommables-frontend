@@ -48,7 +48,7 @@ export default function MesEmprunts() {
       ):(
         <div className="overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl mt-10">
           <table className="min-w-full text-xl text-gray-700">
-            <thead className="bg-sky-600 text-white ">
+            <thead className="bg-sky-600 text-white">
               <tr>
                 <th className="py-3 px-4 text-left">ID</th>
                 <th className="py-3 px-4 text-left">Date d’emprunt</th>

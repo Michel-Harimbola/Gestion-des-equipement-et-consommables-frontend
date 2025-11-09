@@ -11,17 +11,32 @@ const Register = () => {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState("");
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (form.motDePasse !== confirm) {
+      setError("Les mots de passe ne correspondent pas !");
+      return;
+    }
+
     await dispatch(registerUser(form)).unwrap();
     navigate("/login");
   };
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [showPassword1, setShowPassword1] = useState(false);
+    
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
 
   return (
     <div className='grid w-full h-screen place-items-center bg-gray-100'>
@@ -90,6 +105,9 @@ const Register = () => {
 
                 <div className="relative">
                   <input
+                    name='ConfirmationModeDePasse'
+                    value={confirm}
+                    onChange={(e) => setConfirm(e.target.value)}
                     type={ showPassword ? "text" : "password" }
                     placeholder="Confirmer votre mot de passe"
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-blue-700 rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
@@ -106,6 +124,7 @@ const Register = () => {
                     )}
                   </button>
                 </div>
+                  {error && <p className="text-red-500 text-sm -my-4">{error}</p>}
               </div>
 
               <div className="relative">

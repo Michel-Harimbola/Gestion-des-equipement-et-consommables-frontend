@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router-dom";
-import { createEmprunt } from "../../redux/slices/user/createEmpruntSlice";
+import { createDemandeEmprunt } from "../../redux/slices/user/demandeEmpruntSlice";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
 
 export default function Emprunter() {
@@ -16,7 +16,7 @@ export default function Emprunter() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await dispatch(createEmprunt(form)).unwrap();
+        await dispatch(createDemandeEmprunt(form)).unwrap();
     };
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function Emprunter() {
                           {items
                             .filter((eq) => eq.etat === "Disponible")
                             .map((eq) => (
-                            <option key={eq.id} value={eq.id}>
+                            <option key={eq.id} value={form.equipementId = eq.id}>
                                 {eq.nom}
                             </option>
                           ))}

@@ -15,10 +15,10 @@ export default function Footer() {
     }
 
     return (
-        <div className="flex flex-row justify-between items-center  mb-3 bg-gray-100 py-3 px-4 mx-3 rounded-2xl">
+        <div className="flex flex-row justify-between items-center mb-3 bg-gray-100 dark:text-white dark:bg-gray-700 py-3 px-4 mx-3 rounded-2xl">
             <button 
                 onClick={toggleLogout}
-                className="p-3 bg-gray-200 rounded-full hover:bg-gray-300 cursor-pointer">
+                className="p-3 bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-full hover:bg-gray-300 cursor-pointer">
                 <IoIosLogOut className="w-8 h-8"/>
             </button>
             <div className="flex flex-row items-center gap-2">

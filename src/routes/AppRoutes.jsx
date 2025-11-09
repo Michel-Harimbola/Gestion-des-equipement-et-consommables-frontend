@@ -1,14 +1,19 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "../components/shared/ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
+import AdminDashboardLayout from "../layouts/AdminDashboardLayout";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import UserDashboard from "../pages/user/UserDashboard";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Emprunter from "../pages/user/Emprunter";
-import adminDashboard from "../pages/admin/adminDashboard";
+import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
 import Unauthorized from "../pages/Unauthorized";
+import Equipement from "../pages/admin/Equipement/Equipement";
+import Consommable from "../pages/admin/Consommable/Consommable";
+import User from "../pages/admin/User/User";
+import Emprunt from "../pages/admin/Emprunt/Emprunt";
 
 export default function AppRoutes() {
     return (
@@ -37,11 +42,15 @@ export default function AppRoutes() {
                  <Route
                   element={
                     <ProtectedRoute roles={["admin", "responsableRH"]}>
-                      <adminDashboard />
+                      <AdminDashboardLayout />
                     </ProtectedRoute>
                   }
                 >
-                    <Route path="/adminDashboard" element={<adminDashboard />} />
+                    <Route path="/AdminDashboard" element={<AdminDashboard />} />
+                    <Route path="/Equipement" element={<Equipement />} />
+                    <Route path="/Consommable" element={<Consommable />} />
+                    <Route path="/User" element={<User />} />
+                    <Route path="/Emprunt" element={<Emprunt />} />
                 </Route>
             </Routes>
         </BrowserRouter>

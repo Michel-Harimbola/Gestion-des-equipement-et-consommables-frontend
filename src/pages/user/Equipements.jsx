@@ -41,6 +41,13 @@ export default function Equipements() {
             </button>
 
             <button
+              onClick={() => setFilter("EnMaintenance")}
+              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "EnMaintenance" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
+            >
+              En Maintenance
+            </button>
+
+            <button
               onClick={() => setFilter("Emprunter")}
               className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
             >
