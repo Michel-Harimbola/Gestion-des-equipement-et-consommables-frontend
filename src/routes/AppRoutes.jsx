@@ -4,7 +4,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AdminDashboardLayout from "../layouts/AdminDashboardLayout";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-import UserDashboard from "../pages/user/UserDashboard";
+import UserDashboard from "../pages/user/Accueil/UserDashboard";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Emprunter from "../pages/user/Emprunter";

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateDemandeEmpruntService } from "../../../services/user/demandeEmpruntService";
+import { CreateDemandeEmpruntService, userDemandes } from "../../../services/user/demandeEmpruntService";
 import toast from "react-hot-toast";
 
 export const createDemandeEmprunt = createAsyncThunk(
@@ -16,6 +16,19 @@ export const createDemandeEmprunt = createAsyncThunk(
   }
 );
 
+export const fetchUserDemandes = createAsyncThunk(
+  "Demandes/fetchDemandes",
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await userDemandes.getUserDemandes();
+      return data;
+    } catch (error) {
+      toast.error("Erreur lors du chargement des demandes");
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
 const createDemandeEmpruntSlice = createSlice({
   name: "emprunts",
   initialState: {
@@ -26,17 +39,22 @@ const createDemandeEmpruntSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createDemandeEmprunt.pending, (state) => {
+      .addCase(fetchUserDemandes.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
-      .addCase(createDemandeEmprunt.fulfilled, (state, action) => {
+      .addCase(fetchUserDemandes.fulfilled, (state, action) => {
         state.loading = false;
-        state.items.push(action.payload);
+        state.items = action.payload;
       })
-      .addCase(createDemandeEmprunt.rejected, (state, action) => {
+      .addCase(fetchUserDemandes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(createDemandeEmprunt.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      
   },
 });
 

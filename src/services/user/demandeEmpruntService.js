@@ -6,3 +6,10 @@ export const CreateDemandeEmpruntService = {
     return response.data;
   },
 };
+
+export const userDemandes = {
+  async getUserDemandes() {
+    const response = await axiosInstance.get("/demande/userDemandes");
+    return response.data;
+  }
+}
