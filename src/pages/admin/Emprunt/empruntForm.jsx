@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchEquipements } from "../../../redux/slices/user/equipementSlice";
+import { fetchEquipements } from "../../../redux/slices/admin/EquipementSlice";
 
 
 export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
