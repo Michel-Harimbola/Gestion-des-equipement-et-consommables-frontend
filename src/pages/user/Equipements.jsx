@@ -8,7 +8,7 @@ import GlobalLoader from "../../components/shared/GlobalLoader";
 export default function Equipements() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { items, loading } = useSelector((state => state.equipements));
+    const { items, loading } = useSelector((state => state.equipement));
     const [filter, setFilter] = useState("all");
 
     
