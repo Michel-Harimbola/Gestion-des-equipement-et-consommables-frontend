@@ -7,14 +7,16 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
   const [form, setForm] = useState({
     dateRetourPrevu: "",
     equipementId: "",
+    statut: "",
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (initialData) {
       setForm({
-        dateRetourPrevu: "",
-        equipementId: "",
+        dateRetourPrevu: initialData.dateRetourPrevu || "",
+        equipementId: initialData.equipementId || "",
+        statut: initialData.statut || ""
       });
     }
   }, [initialData]);
@@ -43,7 +45,6 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-4">
-              <h1 className="text-2xl font-semibold">Sélectionner un élément d'équipement</h1>
               <select   
                   value={form.equipementId}
                   onChange={handleChange}  
@@ -69,6 +70,20 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                 className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)]
                 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               />
+          </div>
+
+          <div className="relative">
+            <select
+              name='role'
+              value={form.statut}
+              onChange={handleChange}
+              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white 
+                         focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+            >
+              <option value="EnCours">En cours</option>
+              <option value="EnRetard">En retard</option>
+              <option value="Retourner">Retourner</option>
+            </select>
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
