@@ -10,7 +10,7 @@ export default function Emprunter() {
 
     const [form, setForm] = useState({dateRetourPrevu: "", equipementId: preselectedId});
     const dispatch = useDispatch();
-    const { items } = useSelector((state => state.equipements));
+    const { items } = useSelector((state => state.equipement));
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
