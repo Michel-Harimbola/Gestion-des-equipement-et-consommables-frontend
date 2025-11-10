@@ -15,10 +15,10 @@ export const store = configureStore({
     reducer: { 
         auth: authReducer,
 
-        equipements: equipementReducer,
-        emprunts: empruntReducer,
+        equipement: equipementReducer,
+        emprunt: empruntReducer,
         enCours: enCoursReducer,
-        demandes: demandeEmpruntReducer,
+        demande: demandeEmpruntReducer,
 
         users: userReducer,
         emprunts: empruntsReducer,
