@@ -25,7 +25,7 @@ export default function AdminDashboardLayout() {
             />
             <Sidebar isSidebarOpen={isSidebarOpen}/>
             
-            <main className="">
+            <main className=" overflow-hidden">
                 <Outlet darkMode={darkMode}/>
             </main>
         </div>

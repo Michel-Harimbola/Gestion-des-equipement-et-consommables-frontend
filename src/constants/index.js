@@ -15,9 +15,8 @@ import {
   FaTools
 } from "react-icons/fa";
 
-import user01 from "../assets/user01.png";
-import user02 from "../assets/user02.png";
-import user03 from "../assets/user03.png";
+import { LuFilePlus2, LuSend, LuClipboardList, LuMail } from "react-icons/lu";
+
 
 export const links = [
   {
@@ -55,11 +54,11 @@ export const links = [
     icon: FaTools,
     text: "Equipements",
   },
-  // {
-  //   href: "#",
-  //   icon: IoIosLogIn,
-  //   text: "Sign In",
-  // },
+  {
+    href: "/Demande",
+    icon: LuClipboardList,
+    text: "Demandes",
+  },
   // {
   //   href: "#",
   //   icon: IoIosLogOut,
@@ -107,36 +106,36 @@ export const shortcutLink = [
   },
 ];
 
-export const users = [
-  {
-    name: "Robert Fox",
-    country: "USA",
-    role: "Python Developer",
-    image: user01,
-    bgColor: "bg-yellow-100",
-  },
-  {
-    name: "Jane Doe",
-    country: "UK",
-    role: "Frontend Developer",
-    image: user02,
-    bgColor: "bg-blue-100",
-  },
-  {
-    name: "John Smith",
-    country: "Canada",
-    role: "Backend Developer",
-    image: user03,
-    bgColor: "bg-gray-100",
-  },
-  {
-    name: "Alice Johnson",
-    country: "Australia",
-    role: "Full Stack Developer",
-    image: user01,
-    bgColor: "bg-slate-100",
-  },
-];
+// export const users = [
+//   {
+//     name: "Robert Fox",
+//     country: "USA",
+//     role: "Python Developer",
+//     image: user01,
+//     bgColor: "bg-yellow-100",
+//   },
+//   {
+//     name: "Jane Doe",
+//     country: "UK",
+//     role: "Frontend Developer",
+//     image: user02,
+//     bgColor: "bg-blue-100",
+//   },
+//   {
+//     name: "John Smith",
+//     country: "Canada",
+//     role: "Backend Developer",
+//     image: user03,
+//     bgColor: "bg-gray-100",
+//   },
+//   {
+//     name: "Alice Johnson",
+//     country: "Australia",
+//     role: "Full Stack Developer",
+//     image: user01,
+//     bgColor: "bg-slate-100",
+//   },
+// ];
 
 export const events = [
   {

@@ -1,10 +1,10 @@
-import userLogo from "../../../assets/user01.png";
+import { FaUserCircle } from "react-icons/fa"
 
 
 export default function User() {
     return (
         <div className="flex gap-3 items-center bg-white p-4 rounded-full dark:bg-gray-600 dark:text-gray-300">
-            <img src={userLogo} alt="user image" className="w-14 h-14 rounded-full"/>
+            <FaUserCircle className="w-14 h-14 text-white" />
             <div>
                 <h3 className="font-semibold text-2xl">Jhon Ddoe</h3>
                 <p>Developer</p>

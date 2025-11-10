@@ -38,9 +38,9 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-gray-100 rounded-lg p-6 w-full max-w-md shadow-lg">
-        <h2 className="text-2xl font-semibold mb-5">
+    <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
+        <h2 className="text-2xl font-semibold mb-5 dark:text-white">
           {initialData ? "Modifier l'utilisateur" : "Ajouter un utilisateur"}
         </h2>
 
@@ -51,7 +51,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             onChange={handleChange}
             type="text"
             placeholder="Votre nom"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white dark:bg-gray-600 dark:placeholder-white 
+              dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
             required
           /> 
           <input
@@ -60,7 +61,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             onChange={handleChange}
             type="text"
             placeholder="Votre prénom"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white dark:bg-gray-600 dark:placeholder-white 
+              dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
             required
           /> 
           <input
@@ -69,7 +71,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             onChange={handleChange}
             type="email"
             placeholder="Votre email"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white dark:bg-gray-600 dark:placeholder-white 
+              dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
             required
           /> 
 
@@ -82,7 +85,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
                   onChange={handleChange}
                   type={ showPassword ? "text" : "password" }
                   placeholder="votre mot de passe"
-                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white dark:bg-gray-600 dark:placeholder-white 
+                    dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                   required
                 />
                 <button
@@ -101,7 +105,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
                 <input
                   type={ showPassword ? "text" : "password" }
                   placeholder="Confirmer votre mot de passe"
-                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white dark:bg-gray-600 dark:placeholder-white 
+                    dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
                 />
                 <button
                   type="button"
@@ -123,8 +128,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               name='role'
               value={form.role}
               onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white
+                  dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
             >
               <option value="" disabled>Choisir un rôle</option>
               <option value="utilisateurSimple">Utilisateur Simple</option>
@@ -138,14 +143,14 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               type="button"
               onClick={onClose}
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-gray-400 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 shadow-md"
+                    bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 shadow-md"
             >
               Annuler
             </button>
             <button
               type="submit"
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"
+                    bg-blue-500 hover:bg-blue-600 dark:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"
             >
               {initialData ? "Mettre à jour" : "Créer"}
             </button>

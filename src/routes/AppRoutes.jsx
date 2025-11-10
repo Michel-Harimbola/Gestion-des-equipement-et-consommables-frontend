@@ -14,6 +14,7 @@ import Equipement from "../pages/admin/Equipement/Equipement";
 import Consommable from "../pages/admin/Consommable/Consommable";
 import User from "../pages/admin/User/User";
 import Emprunt from "../pages/admin/Emprunt/Emprunt";
+import Demande from "../pages/admin/Demandes/Demande";
 
 export default function AppRoutes() {
     return (
@@ -51,6 +52,7 @@ export default function AppRoutes() {
                     <Route path="/Consommable" element={<Consommable />} />
                     <Route path="/User" element={<User />} />
                     <Route path="/Emprunt" element={<Emprunt />} />
+                    <Route path="/Demande" element={<Demande />} />
                 </Route>
             </Routes>
         </BrowserRouter>

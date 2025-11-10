@@ -40,12 +40,12 @@ export default function Equipement() {
     };
 
     return (
-        <div className="ml-[300px] mr-8 mt-22 h-full ">
+        <div className="h-screen dark:bg-gray-800 pt-22 pl-74 pr-10">
             <div className="flex justify-end">
                 <button
                     onClick={handleAdd}
                     className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"       
+                    bg-blue-500 hover:bg-blue-600 dark:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"       
                 >
                     Ajouter <span className="text-2xl font-bold">+</span>
                 </button>
@@ -56,7 +56,7 @@ export default function Equipement() {
                   <p>Chargement...</p>
                 ) : (
                   <table className="min-w-full text-lg text-gray-700">
-                    <thead className="bg-sky-500 text-white">
+                    <thead className="bg-sky-500 dark:bg-blue-900 text-white">
                       <tr>
                         <th className="py-3 px-4 text-left">ID</th>
                         <th className="py-3 px-4 text-left">Nom</th>
@@ -69,7 +69,7 @@ export default function Equipement() {
                       {items.map((equipement, index) => (
                         <tr 
                             key={equipement.id} 
-                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition-colors"
+                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-700 dark:odd:bg-gray-800 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">
