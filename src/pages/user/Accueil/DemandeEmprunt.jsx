@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserDemandes } from "../../../redux/slices/user/demandeEmpruntSlice";
+import { fetchUserDemandes, annulerDemande } from "../../../redux/slices/user/demandeEmpruntSlice";
 
 
 export default function demandeEmprunt() {
@@ -36,6 +36,7 @@ export default function demandeEmprunt() {
                         </div>
 
                         <button 
+                          onClick={() => dispatch(annulerDemande(demande.id))}
                           className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
                             bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md">
                           Annuler

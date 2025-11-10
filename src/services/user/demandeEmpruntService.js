@@ -13,3 +13,10 @@ export const userDemandes = {
     return response.data;
   }
 }
+
+export const annulerDemande = {
+  async deleteDemande(id) {
+    const response = await axiosInstance.delete(`/demande/${id}/annulerDemande`);
+    return response.data;
+  }
+}

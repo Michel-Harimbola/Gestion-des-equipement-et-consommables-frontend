@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateDemandeEmpruntService, userDemandes } from "../../../services/user/demandeEmpruntService";
+import { CreateDemandeEmpruntService, userDemandes, annulerDemande as annulerDemandeService } from "../../../services/user/demandeEmpruntService";
 import toast from "react-hot-toast";
 
 export const createDemandeEmprunt = createAsyncThunk(
@@ -29,6 +29,17 @@ export const fetchUserDemandes = createAsyncThunk(
   }
 );
 
+export const annulerDemande = createAsyncThunk("demande/annulerDemande", async (id, thunkAPI) => {
+  try {
+    const res = await annulerDemandeService.deleteDemande(id);
+    toast.success("Demande annuler !");
+    return res;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Erreur lors de la confirmation");
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
+
 const createDemandeEmpruntSlice = createSlice({
   name: "emprunts",
   initialState: {
@@ -54,7 +65,11 @@ const createDemandeEmpruntSlice = createSlice({
       .addCase(createDemandeEmprunt.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
-      
+      .addCase(annulerDemande.fulfilled, (state, action) => {
+      // Retire la demande de la liste une fois refusée
+      state.items = state.items.filter(d => d.id !== action.meta.arg);
+      })
+
   },
 });
 
