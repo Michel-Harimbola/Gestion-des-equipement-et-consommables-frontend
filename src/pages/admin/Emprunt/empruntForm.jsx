@@ -7,7 +7,6 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
   const [form, setForm] = useState({
     dateRetourPrevu: "",
     equipementId: "",
-    statut: "",
   });
   const dispatch = useDispatch();
 
@@ -54,7 +53,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                   {items
                     .filter((eq) => eq.etat === "Disponible")
                     .map((eq) => (
-                    <option key={eq.id} value={eq.id}>
+                    <option key={eq.id} value={form.equipementId = eq.id}>
                         {eq.nom}
                     </option>
                   ))}
