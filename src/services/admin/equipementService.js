@@ -7,12 +7,12 @@ const EquipementSevice = {
     },
 
     create: async (data) => {
-        const res = await axiosInstance.create("/equipement/create", data);
+        const res = await axiosInstance.post("/equipement/create", data);
         return res.data;
     },
 
     update: async (id, data) => {
-        const res = await axiosInstance.update(`/equipement/${id}`, data);
+        const res = await axiosInstance.put(`/equipement/${id}`, data);
         return res.data;
     },
 
