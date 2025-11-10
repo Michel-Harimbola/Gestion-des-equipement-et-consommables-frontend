@@ -25,7 +25,7 @@ export const createEquipement = createAsyncThunk("equipement/create", async (dat
 export const updateEquipement = createAsyncThunk("equipement/update", async ({ id, data }, thunkAPI) => {
   try {
     const res = await equipementService.update(id, data);
-    toast.success("Utilisateur mis à jour !");
+    toast.success("Equipement mis à jour !");
     return res;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
@@ -36,7 +36,7 @@ export const updateEquipement = createAsyncThunk("equipement/update", async ({ i
 export const deleteEquipement = createAsyncThunk("equipement/delete", async (id, thunkAPI) => {
   try {
     await equipementService.remove(id);
-    toast.success("Utilisateur supprimé !");
+    toast.success("Equipement supprimé !");
     return id;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la suppression");
