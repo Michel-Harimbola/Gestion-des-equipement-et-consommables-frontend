@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ConsommableSevice from "../../../services/admin/consommableSevice";
+import ConsommableSevice from "../../../services/admin/consommableService";
 import { toast } from "react-toastify";
 
 
