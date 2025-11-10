@@ -72,46 +72,52 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
             required
           /> 
-          <div className="relative">
-            <input
-              name='motDePasse'
-              value={form.motDePasse}
-              onChange={handleChange}
-              type={ showPassword ? "text" : "password" }
-              placeholder="votre mot de passe"
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
-              required
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              {showPassword ? (
-                <EyeOff className="w-5 h-5" />
-              ) : (
-                <Eye className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-          <div className="relative">
-            <input
-              type={ showPassword ? "text" : "password" }
-              placeholder="Confirmer votre mot de passe"
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none"
-            >
-              {showPassword ? (
-                <EyeOff className="w-5 h-5" />
-              ) : (
-                <Eye className="w-5 h-5" />
-              )}
-            </button>
-          </div>
+
+          {!initialData && (
+            <>
+              <div className="relative">
+                <input
+                  name='motDePasse'
+                  value={form.motDePasse}
+                  onChange={handleChange}
+                  type={ showPassword ? "text" : "password" }
+                  placeholder="votre mot de passe"
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type={ showPassword ? "text" : "password" }
+                  placeholder="Confirmer votre mot de passe"
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+            </>
+          )}
+          
           <div className="relative">
             <select
               name='role'
