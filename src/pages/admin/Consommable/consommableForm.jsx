@@ -24,7 +24,11 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
+    onSubmit({
+      ...form,
+      quantiteDisponible: Number(form.quantiteDisponible),
+      seuilCritique: Number(form.seuilCritique),
+    });
   };
 
   return (
@@ -49,7 +53,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
             name='quantiteDisponible'
             value={form.quantiteDisponible}
             onChange={handleChange}
-            type="text"
+            type="number"
             placeholder="Quantité"
             className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-white
               dark:text-white focus:ring-blue-500 transition duration-150"
@@ -59,7 +63,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
             name='seuilCritique'
             value={form.seuilCritique}
             onChange={handleChange}
-            type="text"
+            type="number"
             placeholder="Seuil Critique"
             className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-white
               dark:text-white focus:ring-blue-500 transition duration-150"
