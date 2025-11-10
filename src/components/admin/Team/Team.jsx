@@ -13,7 +13,6 @@ export default function Team() {
     
     useEffect(() => {
           dispatch(fetchEmprunts());
-
         }, [dispatch]);
 
     return (
