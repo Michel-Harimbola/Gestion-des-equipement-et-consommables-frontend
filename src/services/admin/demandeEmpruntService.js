@@ -7,12 +7,12 @@ const demandeEmpruntService = {
     },
 
     approuver: async (id) => {
-        const res = await axiosInstance.update(`/demande/${id}/approuver`);
+        const res = await axiosInstance.put(`/demande/${id}/approuver`);
         return res.data;
     },
 
     refuser: async (id) => {
-        const res = await axiosInstance.update(`/demande/${id}/refuser`);
+        const res = await axiosInstance.put(`/demande/${id}/refuser`);
         return res.data;
     }
  };
