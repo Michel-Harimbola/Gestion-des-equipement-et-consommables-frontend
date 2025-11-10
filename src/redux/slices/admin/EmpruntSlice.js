@@ -14,7 +14,7 @@ export const fetchEmprunts = createAsyncThunk("emprunt/fetchAll", async (_, thun
 export const createEmprunt = createAsyncThunk("emprunt/create", async (data, thunkAPI) => {
   try {
     const res = await empruntService.create(data);
-    toast.success("Utilisateur créé avec succès !");
+    toast.success("Emprunt créé avec succès !");
     return res;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la création");
@@ -36,7 +36,7 @@ export const updateEmprunt = createAsyncThunk("emprunt/update", async ({ id, dat
 export const deleteEmprunt = createAsyncThunk("emprunt/delete", async (id, thunkAPI) => {
   try {
     await empruntService.remove(id);
-    toast.success("Utilisateur supprimé !");
+    toast.success("Emprunt supprimé !");
     return id;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la suppression");

@@ -26,7 +26,10 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
+    onSubmit({
+        ...form,
+        dateRetourPrevu: new Date(form.dateRetourPrevu).toISOString()
+    });
   };
 
   const { items } = useSelector((state => state.equipements));

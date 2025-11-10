@@ -1,6 +1,11 @@
 import axiosInstance from "../../configs/axios";
 
 const demandeEmpruntService = {
+    create: async (data) => {
+        const res = await axiosInstance.post("/demande/create", data);
+        return res.data;
+    },
+
     getAll: async () => {
         const res = await axiosInstance.get("/demande/");
         return res.data;
@@ -13,6 +18,16 @@ const demandeEmpruntService = {
 
     refuser: async (id) => {
         const res = await axiosInstance.put(`/demande/${id}/refuser`);
+        return res.data;
+    },
+
+    update: async (id, data) => {
+        const res = await axiosInstance.put(`/demande/${id}`, data);
+        return res.data;
+    },
+
+    delete: async (id) => {
+        const res = await axiosInstance.delete(`/demande/${id}/annulerDemande`);
         return res.data;
     }
  };

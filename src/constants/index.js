@@ -27,7 +27,7 @@ export const links = [
   {
     href: "/User",
     icon: FaUsers,
-    text: "Users",
+    text: "Utilisateurs",
   },
   {
     href: "/Emprunt",

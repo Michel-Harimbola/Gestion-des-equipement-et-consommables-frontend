@@ -27,7 +27,7 @@ export default function Emprunt() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) {
+      if (window.confirm("Voulez-vous vraiment supprimer cet emprunt ?")) {
         dispatch(deleteEmprunt(id));
       }
     };

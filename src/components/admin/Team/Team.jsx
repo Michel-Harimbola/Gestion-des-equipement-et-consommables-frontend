@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmprunts, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { fetchDemandes, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
 import Title from "../../../ui/Title";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { LuCheck, LuX } from "react-icons/lu";
@@ -12,7 +12,7 @@ export default function Team() {
     const { items, loading } = useSelector((state) => state.demandes);
     
     useEffect(() => {
-          dispatch(fetchEmprunts());
+          dispatch(fetchDemandes());
         }, [dispatch]);
 
     return (

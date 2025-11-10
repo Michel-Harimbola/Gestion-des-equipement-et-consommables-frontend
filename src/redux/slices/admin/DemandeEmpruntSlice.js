@@ -3,11 +3,22 @@ import demandeEmpruntService from "../../../services/admin/demandeEmpruntService
 import { toast } from "react-toastify";
 
 
-export const fetchEmprunts = createAsyncThunk("demande/fetchAll", async (_, thunkAPI) => {
+export const fetchDemandes = createAsyncThunk("demande/fetchAll", async (_, thunkAPI) => {
   try {
     return await demandeEmpruntService.getAll();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
+  }
+});
+
+export const createDemande = createAsyncThunk("demande/create", async (data, thunkAPI) => {
+  try {
+    const res = await demandeEmpruntService.create(data);
+    toast.success("Demande mis à jour !");
+    return res;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Erreur lors de la création");
+    return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
 
@@ -33,6 +44,27 @@ export const refuserEmprunt = createAsyncThunk("demande/refuser", async (id, thu
   }
 });
 
+export const updateDemande = createAsyncThunk("demande/update", async ({ id, data }, thunkAPI) => {
+  try {
+    const res = await demandeEmpruntService.update(id, data);
+    toast.success("Demande mis à jour !");
+    return res;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Erreur lors de l'édition");
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
+
+export const deleteDemande = createAsyncThunk("demande/delete", async (id, thunkAPI) => {
+  try {
+    const res = await demandeEmpruntService.delete(id);
+    toast.success("Demande supprimer !");
+    return res;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Erreur lors de la suppresion");
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
 
 const demandeEmpruntSlice = createSlice({
   name: "demande",
@@ -44,16 +76,19 @@ const demandeEmpruntSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchEmprunts.pending, (state) => {
+      .addCase(fetchDemandes.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchEmprunts.fulfilled, (state, action) => {
+      .addCase(fetchDemandes.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(fetchEmprunts.rejected, (state, action) => {
+      .addCase(fetchDemandes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(createDemande.fulfilled, (state, action) => {
+        state.items.push(action.payload);
       })
       .addCase(approuverEmprunt.fulfilled, (state, action) => {
       // Retire la demande de la liste une fois approuvée
@@ -62,6 +97,13 @@ const demandeEmpruntSlice = createSlice({
       .addCase(refuserEmprunt.fulfilled, (state, action) => {
           // Retire la demande de la liste une fois refusée
           state.items = state.items.filter(d => d.id !== action.meta.arg);
+      })
+      .addCase(updateDemande.fulfilled, (state, action) => {
+        const index = state.items.findIndex((u) => u.id === action.payload.id);
+        if (index !== -1) state.items[index] = action.payload;
+      })
+      .addCase(deleteDemande.fulfilled, (state, action) => {
+        state.items = state.items.filter((u) => u.id !== action.payload);
       });
   },
 });
