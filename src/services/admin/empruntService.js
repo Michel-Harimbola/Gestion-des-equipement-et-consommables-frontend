@@ -12,7 +12,7 @@ const EmpruntSevice = {
     },
 
     update: async (id, data) => {
-        const res = await axiosInstance.update(`/emprunt/${id}`, data);
+        const res = await axiosInstance.put(`/emprunt/${id}`, data);
         return res.data;
     },
 
