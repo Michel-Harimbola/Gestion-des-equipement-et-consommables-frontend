@@ -7,7 +7,7 @@ const EmpruntSevice = {
     },
 
     create: async (data) => {
-        const res = await axiosInstance.create("/emprunt/create", data);
+        const res = await axiosInstance.post("/emprunt/create", data);
         return res.data;
     },
 
@@ -16,7 +16,7 @@ const EmpruntSevice = {
         return res.data;
     },
 
-    delete: async (id) => {
+    remove: async (id) => {
         const res = await axiosInstance.delete(`/emprunt/${id}`);
         return res.data;
     }

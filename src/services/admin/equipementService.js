@@ -16,7 +16,7 @@ const EquipementSevice = {
         return res.data;
     },
 
-    delete: async (id) => {
+    remove: async (id) => {
         const res = await axiosInstance.delete(`/equipement/${id}`);
         return res.data;
     }

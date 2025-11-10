@@ -105,7 +105,7 @@ export default function Emprunt() {
                                 <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">
                                    <GrUpdate />
                                 </button>
-                                <button onClick={() => handleDelete(emprunt.id)} className="text-red-500 text-2xl hover:text-white">
+                                <button  onClick={() => handleDelete(emprunt.id)} className="text-red-500 text-2xl hover:text-white">
                                    <FiDelete />
                                 </button>
                             </td>

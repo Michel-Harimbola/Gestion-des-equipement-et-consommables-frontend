@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 export default function EquipementForm({ onSubmit, onClose, initialData = null }) {
   const [form, setForm] = useState({
     nom: "",
-    type: "",
-    etat: ""
+    type: ""
   });
 
   useEffect(() => {

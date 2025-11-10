@@ -14,7 +14,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
   useEffect(() => {
     if (initialData) {
       setForm({
-        dateRetourPrevu: initialData.dateRetourPrevu || "",
+        dateRetourPrevu: initialData.dateRetourPrevu?.split("T")[0]  || "",
         equipementId: initialData.equipementId || "",
         statut: initialData.statut || ""
       });
@@ -74,7 +74,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
 
           <div className="relative">
             <select
-              name='role'
+              name='statut'
               value={form.statut}
               onChange={handleChange}
               className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white 
