@@ -56,13 +56,13 @@ const demandeEmpruntSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(approuverEmprunt.fulfilled, (state, action) => {
-        const index = state.items.findIndex((u) => u.id === action.payload.id);
-        if (index !== -1) state.items[index] = action.payload;
+      // Retire la demande de la liste une fois approuvée
+          state.items = state.items.filter(d => d.id !== action.meta.arg);
       })
       .addCase(refuserEmprunt.fulfilled, (state, action) => {
-        const index = state.items.findIndex((u) => u.id === action.payload.id);
-        if (index !== -1) state.items[index] = action.payload;
-      })
+          // Retire la demande de la liste une fois refusée
+          state.items = state.items.filter(d => d.id !== action.meta.arg);
+      });
   },
 });
 
