@@ -17,6 +17,9 @@ export default function Emprunter() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await dispatch(createDemandeEmprunt(form)).unwrap();
+
+        dispatch(fetchEquipements());
+        setForm({ dateRetourPrevu: "", equipementId: "" });
     };
 
     useEffect(() => {
