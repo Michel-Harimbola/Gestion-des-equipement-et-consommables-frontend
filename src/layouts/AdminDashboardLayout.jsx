@@ -17,7 +17,7 @@ export default function AdminDashboardLayout() {
     }
 
     return (
-        <div className={`font-sans transition-colors duration-200 ${darkMode && "dark"}`}>
+        <div className={`${darkMode && "dark"}`}>
             <Header 
                 toggleDarkMode={toggleDarkMode} 
                 darkMode={darkMode}
@@ -25,7 +25,7 @@ export default function AdminDashboardLayout() {
             />
             <Sidebar isSidebarOpen={isSidebarOpen}/>
             
-            <main className=" overflow-hidden">
+            <main>
                 <Outlet darkMode={darkMode}/>
             </main>
         </div>

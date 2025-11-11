@@ -65,7 +65,7 @@ export default function Emprunter() {
 
     return (
       <div className="mt-24 ml-4 mr-6">
-          <h1 className="text-4xl -ml-1 font-bold">Soumettre le formulaire de demande d'emprunt</h1>
+          <h1 className="text-4xl -ml-1 font-bold lg:flex text-center">Soumettre le formulaire de demande d'emprunt</h1>
 
           <div className="grid justify-center place-items-center h-full w-full mt-42">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-14">

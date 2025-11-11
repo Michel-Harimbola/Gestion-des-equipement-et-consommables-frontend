@@ -22,7 +22,7 @@ export default function UserDashboard() {
 
   return (
     <div className="mt-24 ml-4 mr-6">
-      <h1 className="text-3xl font-semibold">Vos emprunts en cours</h1> 
+      <h1 className="text-3xl font-semibold lg:flex text-center">Vos emprunts en cours</h1> 
       { loading? (
         <GlobalLoader />
       ) : items.length === 0 ? (
@@ -32,14 +32,13 @@ export default function UserDashboard() {
           {items.map((enCours) => (
             <div 
               key={enCours.id}
-              className="flex flex-col space-y-1 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-8  rounded-2xl"
+              className="flex flex-col space-y-1 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 lg:p-8  rounded-2xl"
             >
               <div className="flex space-x-2">
-                <h1 className="font-semibold text-lg">Nom de l'équipement:</h1>
                 {enCours.equipement.map(eq => ( 
                   <h1 
                     key={`${enCours.id}-${eq.id}`}
-                    className="text-xl font-semibold">
+                    className="text-2xl font-semibold">
                       {eq.nom}
                   </h1>
                 ))}

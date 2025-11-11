@@ -22,48 +22,35 @@ export default function Equipements() {
     });
 
     return (
-      <div className="mt-24 ml-4 mr-6">
-          <h1 className="text-4xl -ml-1 font-bold">Tous les équipements</h1> 
+      <div className="mt-24 ml-2 mr-6">
+          <h1 className="text-4xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
-          <div className="flex space-x-5 mt-10">
-            <button
-              onClick={() => setFilter("all")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-            >
-              Tous
-            </button>
-
-            <button
-              onClick={() => setFilter("Disponible")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Disponible" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-            >
-              Disponible
-            </button>
-
-            <button
-              onClick={() => setFilter("EnMaintenance")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "EnMaintenance" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-            >
-              En Maintenance
-            </button>
-
-            <button
-              onClick={() => setFilter("Emprunter")}
-              className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Emprunter" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-            >
-              Emprunter
-            </button>
+          {/* Boutons de filtre */}
+          <div className="flex flex-wrap gap-3 mb-8 mt-10">
+            {["all", "Disponible", "Emprunter", "EnMaintenance"].map((val) => (
+              <button
+                key={val}
+                onClick={() => setFilter(val)}
+                className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
+                  filter === val
+                    ? "bg-black text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                {val === "all" ? "Tous" : val}
+              </button>
+            ))}
           </div>
 
           {loading ? (
             <GlobalLoader />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mb-13 mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mx-15 lg:mx-0 mb-13 mt-10">
                 {filteredItems.length > 0 ? (
                   filteredItems.map((eq) => (
                     <div 
                       key={eq.id}
-                      className="flex flex-col items-center space-y-5 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 w-[290px] rounded-3xl"
+                      className="flex flex-col items-center space-y-5 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
                     >
                       <div>
                           <h1 className="font-semibold text-lg text-center">Nom de l'équipement:</h1>
@@ -75,7 +62,7 @@ export default function Equipements() {
                             className={`w-4 h-4 rounded-full ${eq.etat !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
                         >
                         </div>
-                        <p className="text-center text-gray-600 font-normal">
+                        <p className="text-gray-600 font-normal">
                           {eq.etat}
                         </p>
                       </div>

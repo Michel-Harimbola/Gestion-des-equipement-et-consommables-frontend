@@ -7,94 +7,137 @@ export default function MesEmprunts() {
   const dispatch = useDispatch();
   const { items, loading } = useSelector((state) => state.emprunt);
   const [filter, setFilter] = useState("all");
-  
 
   useEffect(() => {
     dispatch(fetchUserEmprunts());
   }, [dispatch]);
 
   const filteredItems = items.filter((eq) => {
-    if (filter == "all") return true;
-    return eq.statut == filter;
+    if (filter === "all") return true;
+    return eq.statut === filter;
   });
 
   return (
-    <div className="mt-24 ml-4">
-      <h1 className="text-4xl font-bold -ml-1">Mes emprunts</h1>
-      
-      <div className="flex space-x-5 mt-10">
+    <div className="mt-24 px-4 sm:px-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">Mes emprunts</h1>
+
+      {/* Boutons de filtre */}
+      <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-10 mb-8">
+        {["all", "EnCours", "Retourner"].map((val) => (
           <button
-            onClick={() => setFilter("all")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "all" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
+            key={val}
+            onClick={() => setFilter(val)}
+            className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
+              filter === val
+                ? "bg-black text-white"
+                : "bg-gray-100 hover:bg-gray-200"
+            }`}
           >
-            Tous
+            {val === "all" ? "Tous" : val}
           </button>
-          <button
-            onClick={() => setFilter("EnCours")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "EnCours" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-          >
-            EnCours
-          </button>
-          <button
-            onClick={() => setFilter("Retourner")}
-            className={`px-4 py-1 rounded-lg font-semibold cursor-pointer ${filter == "Retourner" ? "bg-black text-white" : "bg-gray-100 hover:bg-gray-200"}`}
-          >
-            Retourner
-          </button>
-        </div>
+        ))}
+      </div>
 
       {loading ? (
         <GlobalLoader />
-      ):(
-        <div className="overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl mt-10">
-          <table className="min-w-full text-xl text-gray-700">
-            <thead className="bg-sky-600 text-white">
-              <tr>
-                <th className="py-3 px-4 text-left">ID</th>
-                <th className="py-3 px-4 text-left">Date d’emprunt</th>
-                <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                <th className="py-3 px-4 text-left">Date de retour effective</th>
-                <th className="py-3 px-4 text-left">Statut</th>
-                <th className="py-3 px-4 text-left">Équipements</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredItems.map((emprunt, index) => (
-                <tr
-                  key={emprunt.id}
-                  className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  <td className="py-2 px-4 font-medium">{index + 1}</td>
-                  <td className="py-2 px-4">
-                    {new Date(emprunt.dateEmprunt).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4">
-                    {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4">
-                    {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
-                  </td>
-                  <td className="py-2 px-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-lg font-semibold ${
-                        emprunt.statut === "EnCours"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-green-100 text-green-700"
-                      }`}
-                    >
-                      {emprunt.statut}
-                    </span>
-                  </td>
-                  <td className="py-2 px-4">
-                    {emprunt.equipement.map(eq => (
-                      <p>{eq.nom}</p>
-                    ))}
-                  </td>
+      ) : (
+        <>
+          {/* ordi */}
+          <div className="hidden md:block overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl">
+            <table className="min-w-full text-sm sm:text-base text-gray-700">
+              <thead className="bg-sky-600 text-white">
+                <tr>
+                  <th className="py-3 px-4 text-left">#</th>
+                  <th className="py-3 px-4 text-left">Date d’emprunt</th>
+                  <th className="py-3 px-4 text-left">Date de retour prévu</th>
+                  <th className="py-3 px-4 text-left">Date de retour effective</th>
+                  <th className="py-3 px-4 text-left">Statut</th>
+                  <th className="py-3 px-4 text-left">Équipements</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filteredItems.map((emprunt, index) => (
+                  <tr
+                    key={emprunt.id}
+                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition-colors"
+                  >
+                    <td className="py-2 px-4 font-medium">{index + 1}</td>
+                    <td className="py-2 px-4">
+                      {new Date(emprunt.dateEmprunt).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">
+                      {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">
+                      {emprunt.dateRetourEffective == null
+                        ? "Pas encore"
+                        : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">
+                      <span
+                        className={`px-3 py-1 rounded-full font-semibold ${
+                          emprunt.statut === "EnCours"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {emprunt.statut}
+                      </span>
+                    </td>
+                    <td className="py-2 px-4">
+                      {emprunt.equipement.map((eq, i) => (
+                        <p key={i}>{eq.nom}</p>
+                      ))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* mobile / tablette */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+            {filteredItems.map((emprunt, index) => (
+              <div
+                key={emprunt.id}
+                className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
+              >
+                <div className="flex justify-between mb-2">
+                  <div className="text-2xl font-semibold">
+                    {emprunt.equipement.map((eq, i) => (
+                      <span key={i}>{eq.nom}</span>
+                    ))}
+                  </div>
+                </div>
+                <p>
+                  <span className="font-medium">Date d’emprunt : </span>
+                  {new Date(emprunt.dateEmprunt).toLocaleDateString()}
+                </p>
+                <p>
+                  <span className="font-medium">Retour prévu : </span>
+                  {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
+                </p>
+                <p>
+                  <span className="font-medium">Retour effectif : </span>
+                  {emprunt.dateRetourEffective == null
+                    ? "Pas encore"
+                    : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
+                </p>
+
+                <div className="mt-2 flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-4 h-4 rounded-full ${emprunt.statut === "EnCours"? "bg-green-500": "bg-yellow-600"}`}></span>
+                    <p>{emprunt.statut}</p>
+                  </div>
+                  <h2 className="font-bold text-lg mr-1">
+                    {index + 1}
+                  </h2>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
