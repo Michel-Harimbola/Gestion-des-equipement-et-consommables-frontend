@@ -2,7 +2,7 @@ import axiosInstance from "../../configs/axios";
 
 const demandeEmpruntService = {
     create: async (data) => {
-        const res = await axiosInstance.post("/demande/create", data);
+        const res = await axiosInstance.post("/demande/emprunt", data);
         return res.data;
     },
 

@@ -11,7 +11,7 @@ export const fetchDemandes = createAsyncThunk("demande/fetchAll", async (_, thun
   }
 });
 
-export const createDemande = createAsyncThunk("demande/create", async (data, thunkAPI) => {
+export const createDemande = createAsyncThunk("demande/emprunt", async (data, thunkAPI) => {
   try {
     const res = await demandeEmpruntService.create(data);
     toast.success("Demande mis à jour !");

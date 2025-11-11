@@ -1,16 +1,34 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateDemandeEmpruntService, userDemandes, annulerDemande as annulerDemandeService } from "../../../services/user/demandeEmpruntService";
+import { 
+  CreateDemandeEmpruntService, 
+  CreateDemandeRetourService, userDemandes, 
+  annulerDemande as annulerDemandeService
+ } from "../../../services/user/demandeEmpruntService";
 import toast from "react-hot-toast";
 
 export const createDemandeEmprunt = createAsyncThunk(
-  "demande/create",
+  "demande/emprunt",
   async (data, { rejectWithValue }) => {
     try {
       const response = await CreateDemandeEmpruntService.create(data);
       toast.success("demande d'emprunt envoyée avec succès !");
       return response;
     } catch (error) {
-      toast.error(error.response?.data?.error || "Erreur lors de la création de la demande");
+      toast.error(error.response?.data?.error || "Erreur lors de la création de la demande d'emprunt");
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const CreateDemandeRetour = createAsyncThunk(
+  "demande/retour",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await CreateDemandeRetourService.createRetour(data);
+      toast.success("demande de retour envoyée avec succès !");
+      return response;
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Erreur lors de la création de la demande de retour");
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -41,7 +59,7 @@ export const annulerDemande = createAsyncThunk("demande/annulerDemande", async (
 });
 
 const createDemandeEmpruntSlice = createSlice({
-  name: "emprunts",
+  name: "demande",
   initialState: {
     items: [],
     loading: false,

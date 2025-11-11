@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDemandes, annulerDemande } from "../../../redux/slices/user/demandeEmpruntSlice";
 
 
-export default function demandeEmprunt() {
+export default function DemandeEmprunt() {
     const dispatch = useDispatch();
     const { items } = useSelector(state => state.demande);
 
@@ -22,9 +22,7 @@ export default function demandeEmprunt() {
                     <div  
                       key={demande.id}
                       className="flex flex-col space-y-1 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-8  rounded-2xl">
-                      <h1>Nom de l'équipement: 
-                        {demande.equipement.nom}
-                      </h1>
+                      <h1>Nom de l'équipement: <span className="text-xl font-semibold"> {demande.equipement.nom}</span></h1>
                       <p>Date d'emprunt: <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
                       <p>Date de retour prévu: <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
                       <div className="flex flex-row justify-between items-center -mt-2">

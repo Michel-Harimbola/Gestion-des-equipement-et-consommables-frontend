@@ -12,19 +12,56 @@ export default function Emprunter() {
     const dispatch = useDispatch();
     const { items } = useSelector((state => state.equipement));
 
-    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await dispatch(createDemandeEmprunt(form)).unwrap();
-
-        dispatch(fetchEquipements());
-        setForm({ dateRetourPrevu: "", equipementId: "" });
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setForm({
+        ...form,
+        [name]: name === "equipementId" ? parseInt(value, 10) : value,
+      });
     };
 
+    // Charger les équipements et initialiser le form
     useEffect(() => {
-      dispatch(fetchEquipements());
-    }, [dispatch]);
+      const initForm = async () => {
+        const res = await dispatch(fetchEquipements()).unwrap();
+        // Si aucun ID pré-sélectionné ou ID non dispo, choisir le premier dispo
+        const premierDispo = preselectedId && res.find(eq => eq.id === preselectedId && eq.etat === "Disponible")
+          ? preselectedId
+          : res.find(eq => eq.etat === "Disponible")?.id || "";
+        setForm((prev) => ({ ...prev, equipementId: premierDispo }));
+      };
+      initForm();
+    }, [dispatch, preselectedId]);
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(createDemandeEmprunt(form)).unwrap();
+
+      // Recharger les équipements pour obtenir les mises à jour
+      const res = await dispatch(fetchEquipements()).unwrap();
+
+      // Réinitialiser le formulaire avec le premier équipement dispo
+      const premierDispo = res.find(eq => eq.etat === "Disponible")?.id || "";
+      setForm({ dateRetourPrevu: "", equipementId: premierDispo });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     await dispatch(createDemandeEmprunt(form)).unwrap();
+
+    //     dispatch(fetchEquipements());
+    //     setForm({ dateRetourPrevu: "", equipementId: "" });
+    // };
+
+    // useEffect(() => {
+    //   dispatch(fetchEquipements());
+    // }, [dispatch]);
+
+    // Liste des équipements disponibles pour le select
+    const equipementsDisponibles = items.filter((eq) => eq.etat === "Disponible");
 
     return (
       <div className="mt-24 ml-4 mr-6">
@@ -39,14 +76,18 @@ export default function Emprunter() {
                           onChange={handleChange}  
                           name="equipementId"
                           className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)]
-                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer">
-                          {items
-                            .filter((eq) => eq.etat === "Disponible")
-                            .map((eq) => (
-                            <option key={eq.id} value={form.equipementId = eq.id}>
-                                {eq.nom}
-                            </option>
-                          ))}
+                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                      required
+                      >
+                          {equipementsDisponibles.length === 0 ? (
+                              <option value="">Aucun équipement disponible</option>
+                            ) : (
+                              equipementsDisponibles.map((eq) => (
+                                <option key={eq.id} value={eq.id}>
+                                  {eq.nom}
+                                </option>
+                              ))
+                            )}
                       </select>
                   </div>
                   <div className="space-y-4">
@@ -58,6 +99,7 @@ export default function Emprunter() {
                         type="date"
                         className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)]
                         focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        required
                       />
                   </div>
                   <div className="flex justify-center">
