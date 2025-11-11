@@ -18,7 +18,7 @@ export default function MesEmprunts() {
   });
 
   return (
-    <div className="mt-24 px-4 sm:px-8">
+    <div className="mt-24 px-4 sm:px-8 dark:text-white">
       <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">Mes emprunts</h1>
 
       {/* Boutons de filtre */}
@@ -29,8 +29,8 @@ export default function MesEmprunts() {
             onClick={() => setFilter(val)}
             className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
               filter === val
-                ? "bg-black text-white"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
             }`}
           >
             {val === "all" ? "Tous" : val}
@@ -45,7 +45,7 @@ export default function MesEmprunts() {
           {/* ordi */}
           <div className="hidden md:block overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl">
             <table className="min-w-full text-sm sm:text-base text-gray-700">
-              <thead className="bg-sky-600 text-white">
+              <thead className="bg-sky-600 dark:bg-blue-900 text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">#</th>
                   <th className="py-3 px-4 text-left">Date d’emprunt</th>
@@ -59,7 +59,7 @@ export default function MesEmprunts() {
                 {filteredItems.map((emprunt, index) => (
                   <tr
                     key={emprunt.id}
-                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 transition-colors"
+                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                   >
                     <td className="py-2 px-4 font-medium">{index + 1}</td>
                     <td className="py-2 px-4">

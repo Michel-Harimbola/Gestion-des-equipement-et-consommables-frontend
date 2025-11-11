@@ -22,7 +22,7 @@ export default function Equipements() {
     });
 
     return (
-      <div className="mt-24 ml-2 mr-6">
+      <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
           <h1 className="text-4xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
           {/* Boutons de filtre */}
@@ -31,10 +31,10 @@ export default function Equipements() {
               <button
                 key={val}
                 onClick={() => setFilter(val)}
-                className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
+                className={`px-4 py-1 rounded-lg  transition cursor-pointer ${
                   filter === val
-                    ? "bg-black text-white"
-                    : "bg-gray-100 hover:bg-gray-200"
+                    ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                    : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
                 }`}
               >
                 {val === "all" ? "Tous" : val}
@@ -50,7 +50,7 @@ export default function Equipements() {
                   filteredItems.map((eq) => (
                     <div 
                       key={eq.id}
-                      className="flex flex-col items-center space-y-5 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
+                      className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
                     >
                       <div>
                           <h1 className="font-semibold text-lg text-center">Nom de l'équipement:</h1>
@@ -62,7 +62,7 @@ export default function Equipements() {
                             className={`w-4 h-4 rounded-full ${eq.etat !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
                         >
                         </div>
-                        <p className="text-gray-600 font-normal">
+                        <p className="text-gray-600 dark:text-gray-200 font-normal">
                           {eq.etat}
                         </p>
                       </div>
@@ -71,7 +71,7 @@ export default function Equipements() {
                         onClick={() => navigate("/userDashboard/Emprunter", { state: { equipementId: eq.id } })}
                         disabled={ eq.etat !== "Disponible" }
                         className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.etat !== "Disponible"? 
-                              "bg-gray-400 " 
+                              "bg-gray-400 dark:bg-gray-500" 
                               : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"}
                         `}>
                         Emprunter

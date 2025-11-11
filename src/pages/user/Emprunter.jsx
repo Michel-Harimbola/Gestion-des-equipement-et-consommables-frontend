@@ -64,7 +64,7 @@ export default function Emprunter() {
     const equipementsDisponibles = items.filter((eq) => eq.etat === "Disponible");
 
     return (
-      <div className="mt-24 ml-4 mr-6">
+      <div className="mt-24 ml-4 mr-6 dark:text-white">
           <h1 className="text-4xl -ml-1 font-bold lg:flex text-center">Soumettre le formulaire de demande d'emprunt</h1>
 
           <div className="grid justify-center place-items-center h-full w-full mt-42">
@@ -75,8 +75,8 @@ export default function Emprunter() {
                           value={form.equipementId}
                           onChange={handleChange}  
                           name="equipementId"
-                          className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)]
-                              focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                          className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600  
+                            dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
                       required
                       >
                           {equipementsDisponibles.length === 0 ? (
@@ -97,8 +97,8 @@ export default function Emprunter() {
                         value={form.dateRetourPrevu}
                         onChange={handleChange}
                         type="date"
-                        className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)]
-                        focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                          dark:placeholder-white dark:text-whitefocus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                         required
                       />
                   </div>

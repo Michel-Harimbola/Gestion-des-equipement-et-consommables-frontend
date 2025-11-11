@@ -21,18 +21,18 @@ export default function UserDashboard() {
   };    
 
   return (
-    <div className="mt-24 ml-4 mr-6">
+    <div className="mt-24 ml-4 mr-6 dark:text-gray-50">
       <h1 className="text-3xl font-semibold lg:flex text-center">Vos emprunts en cours</h1> 
       { loading? (
         <GlobalLoader />
       ) : items.length === 0 ? (
-        <p className="text-gray-600 mt-16">Aucun emprunt en cours.</p>
+        <p className="text-gray-600 dark:text-gray-100 mt-16">Aucun emprunt en cours.</p>
       ) :(
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-14">
           {items.map((enCours) => (
             <div 
               key={enCours.id}
-              className="flex flex-col space-y-1 bg-white shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 lg:p-8  rounded-2xl"
+              className="flex flex-col space-y-1 bg-white dark:bg-gray-700 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 lg:p-8  rounded-2xl"
             >
               <div className="flex space-x-2">
                 {enCours.equipement.map(eq => ( 
@@ -55,7 +55,7 @@ export default function UserDashboard() {
                     className={`w-4 h-4 rounded-full ${enCours.statut !== "EnCours"? "bg-red-600" : "bg-green-500"}`}
                   >
                   </div>
-                  <p className="text-center text-gray-600 font-normal">
+                  <p className="text-center text-gray-600 dark:text-gray-200 font-normal">
                     {enCours.statut}
                   </p>
                 </div>
