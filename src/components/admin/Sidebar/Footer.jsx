@@ -10,7 +10,7 @@ export default function Footer() {
     const navigate = useNavigate();
 
     const toggleLogout = () => {
-        dispatch(logout);
+        dispatch(logout());
         navigate("/Login");
     }
 
