@@ -42,7 +42,7 @@ export default function Consommable() {
     };
 
     return (
-        <div className="h-screen dark:bg-gray-800 pt-22 pl-74 pr-10">
+        <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
             <div className="flex justify-end">
                 <button
                     onClick={handleAdd}

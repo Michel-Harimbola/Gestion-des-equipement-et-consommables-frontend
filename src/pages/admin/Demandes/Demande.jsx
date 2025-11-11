@@ -42,7 +42,7 @@ export default function Demande() {
     };
 
     return (
-        <div className="h-screen dark:bg-gray-800 pt-22 pl-74 pr-10">
+        <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
             <div className="flex justify-end">
                 <button
                     onClick={handleAdd}
@@ -73,7 +73,7 @@ export default function Demande() {
                       {items.map((demande, index) => (
                         <tr 
                             key={demande.id} 
-                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-700 dark:odd:bg-gray-800 dark:text-white transition-colors"
+                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">

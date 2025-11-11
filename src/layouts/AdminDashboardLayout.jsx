@@ -26,7 +26,7 @@ export default function AdminDashboardLayout() {
             <Sidebar isSidebarOpen={isSidebarOpen}/>
             
             <main>
-                <Outlet darkMode={darkMode}/>
+                <Outlet className={`${darkMode && "dark"}`}/>
             </main>
         </div>
     )

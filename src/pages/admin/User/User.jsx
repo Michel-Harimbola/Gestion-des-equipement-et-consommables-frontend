@@ -42,7 +42,7 @@ export default function User() {
     };
 
     return (
-      <div className="h-screen dark:bg-gray-800 pt-22 pl-74 pr-10">
+      <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
             <div className="flex justify-end">
                 <button
                     onClick={handleAdd}
@@ -72,7 +72,7 @@ export default function User() {
                       {items.map((user, index) => (
                         <tr 
                             key={user.id} 
-                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-700 dark:odd:bg-gray-800 dark:text-white transition-colors"
+                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                           <td className="p-2">{index + 1}</td>
                           <td className="p-2">{user.nom}</td>

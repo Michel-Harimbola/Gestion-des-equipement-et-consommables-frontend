@@ -16,42 +16,45 @@ export default function Team() {
         }, [dispatch]);
 
     return (
-        <div className="bg-white p-3 rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-5">
+        <div className="bg-white p-3 h-[470px] rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-4">
             <Title>Demandes d'emprunts</Title>
             { loading ? (
                 <GlobalLoader />
             ) : (
-                <div className="flex flex-col gap-3">
-                    {items
-                    .filter((demande) => demande.statut === "enAttente")
-                    .map((demande, index) => (
-                        <div key={index} className="flex justify-between items-center">
-                            <div className="w-full flex felx-row justify-between dark:bg-gray-600 px-4 py-4 rounded-xl">
-                                <div className="flex flex-row items-center gap-4">
-                                    <div className="bg-gray-300 px-2 py-4 rounded-lg">
-                                        <FaRegEnvelope className="w-8 h-8 dark:text-gray-600"/>
+                <div className="h-full overflow-y-auto">
+                    <div className="flex flex-col gap-3">
+                        {items
+                        .filter((demande) => demande.statut === "enAttente")
+                        .map((demande, index) => (
+                            <div key={index} className="flex justify-between items-center">
+                                <div className="w-full flex felx-row justify-between bg-gray-50 dark:bg-gray-600 px-4 py-3 rounded-xl">
+                                    <div className="flex flex-row items-center gap-4">
+                                        <div className="bg-gray-200 px-2 py-4 rounded-lg">
+                                            <FaRegEnvelope className="w-8 h-8 dark:text-gray-600"/>
+                                        </div>
+                                        <div>
+                                            <h1 className="text-lg font-semibold dark:text-white">{demande.utilisateur.prenom}</h1>
+                                            <p><span className="font-semibold">Date de retour prévue: </span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</p>
+                                            <p ><span className="font-semibold">Equipement: </span>{demande.equipement.nom}</p>
+                                            <p><span className="font-semibold">Type: </span>{demande.type}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h1 className="text-lg font-semibold text-white">{demande.utilisateur.nom} <span>{demande.utilisateur.prenom}</span></h1>
-                                        <p><span className="font-semibold">Date de retour prévue: </span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</p>
-                                        <p ><span className="font-semibold">Equipement: </span>{demande.equipement.nom}</p>
+                                    <div className="flex flex-row items-center gap-2">
+                                        <button
+                                            onClick={() => dispatch(approuverEmprunt(demande.id))}
+                                            className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer">
+                                            <LuCheck className="w-7 h-7 text-green-500 dark:text-green-400"/>
+                                        </button>
+                                        <button 
+                                            onClick={() => dispatch(refuserEmprunt(demande.id))}
+                                            className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer">
+                                            <LuX className="w-7 h-7 text-red-500 dark:text-red-400"/>
+                                        </button>
                                     </div>
-                                </div>
-                                <div className="flex flex-row items-center gap-2">
-                                    <button
-                                        onClick={() => dispatch(approuverEmprunt(demande.id))}
-                                        className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-800 cursor-pointer">
-                                        <LuCheck className="w-7 h-7 text-green-600 dark:text-green-400"/>
-                                    </button>
-                                    <button 
-                                        onClick={() => dispatch(refuserEmprunt(demande.id))}
-                                        className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-800 cursor-pointer">
-                                        <LuX className="w-7 h-7 text-red-600 dark:text-red-400"/>
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             )}
         </div>
