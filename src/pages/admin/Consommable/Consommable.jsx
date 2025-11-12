@@ -6,7 +6,7 @@ import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
 
 
-export default function Consommable() {
+export default function Consommables() {
     const dispatch = useDispatch();
     const { items, loading } = useSelector((state) => state.consommables);
     const [isModalOpen, setIsModalOpen] = useState(false);

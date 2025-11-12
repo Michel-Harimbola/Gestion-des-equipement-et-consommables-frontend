@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
+import Emprunter from "./Emprunter";
 
 
 export default function Equipements() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { items, loading } = useSelector((state => state.equipement));
-    const [filter, setFilter] = useState("all");
+  const dispatch = useDispatch();
+  const { items, loading } = useSelector((state => state.equipement));
+  const [filter, setFilter] = useState("all");
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedEquipementId, setSelectedEquipementId] = useState(null);
 
-    
-    useEffect(() => {
-      dispatch(fetchEquipements());
-    }, [dispatch]);
-    
-    const filteredItems = items.filter((eq) => {
-      if (filter == "all") return true;
-      return eq.etat == filter;
-    });
+  useEffect(() => {
+    dispatch(fetchEquipements());
+  }, [dispatch]);
+  
+  const filteredItems = items.filter((eq) => {
+    if (filter == "all") return true;
+    return eq.etat == filter;
+  });
+
+  const handleEmprunterClick = (equipementId) => {
+    setSelectedEquipementId(equipementId);
+    setShowPopup(true);
+  };
 
     return (
-      <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
+      <div className="mt-24 ml-2 mr-6 dark:text-gray-50 relative">
           <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
           {/* Boutons de filtre */}
@@ -68,7 +73,7 @@ export default function Equipements() {
                       </div>
                       
                       <button 
-                        onClick={() => navigate("/userDashboard/Emprunter", { state: { equipementId: eq.id } })}
+                        onClick={() => handleEmprunterClick(eq.id)}
                         disabled={ eq.etat !== "Disponible" }
                         className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.etat !== "Disponible"? 
                               "bg-gray-400 dark:bg-gray-500" 
@@ -84,6 +89,14 @@ export default function Equipements() {
                   </p>
                 )}
             </div>
+          )}
+
+          {/* Popup Emprunter */}
+          {showPopup && (
+            <Emprunter
+              selectedEquipementId={selectedEquipementId}
+              onClose={() => setShowPopup(false)}
+            />
           )}
       </div>
     )

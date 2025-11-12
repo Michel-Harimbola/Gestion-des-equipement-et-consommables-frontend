@@ -18,7 +18,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const navItems = [
         { id: 1, name: "Accueil", path: "/UserDashboard" },
         { id: 2, name: "Equipements", path: "/userDashboard/Equipements" },
-        { id: 3, name: "Emprunter", path: "/userDashboard/Emprunter"},
+        { id: 3, name: "Consommables", path: "/userDashboard/Consommable"},
         { id: 4, name: "Historique", path: "/userDashboard/MesEmprunts" },
 
     ];
