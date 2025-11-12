@@ -26,7 +26,7 @@ export default function Equipements() {
           <h1 className="text-4xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
           {/* Boutons de filtre */}
-          <div className="flex flex-wrap gap-3 mb-8 mt-10">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-8 mt-10">
             {["all", "Disponible", "Emprunter", "EnMaintenance"].map((val) => (
               <button
                 key={val}
@@ -50,7 +50,7 @@ export default function Equipements() {
                   filteredItems.map((eq) => (
                     <div 
                       key={eq.id}
-                      className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
+                      className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
                     >
                       <div>
                           <h1 className="font-semibold text-lg text-center">Nom de l'équipement:</h1>

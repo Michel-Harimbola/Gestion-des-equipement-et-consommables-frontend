@@ -21,13 +21,13 @@ export default function DemandeEmprunt() {
                   {items.map((demande) => (
                     <div  
                       key={demande.id}
-                      className="flex flex-col space-y-1 bg-white dark:bg-gray-700 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-8  rounded-2xl">
+                      className="flex flex-col space-y-1 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-8  rounded-2xl">
                       <h1>Nom de l'équipement: <span className="text-xl font-semibold"> {demande.equipement.nom}</span></h1>
                       <p>Date d'emprunt: <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
                       <p>Date de retour prévu: <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
                       <div className="flex flex-row justify-between items-center -mt-2">
                         <div className="flex flex-row items-center space-x-2 mt-2">
-                          <div className="w-4 h-4 rounded-full bg-gray-500"></div>
+                          <div className="w-4 h-4 rounded-full bg-gray-500 dark:bg-gray-400"></div>
                           <p className="text-center text-gray-600 dark:text-gray-200 font-normal">
                             {demande.statut}
                           </p>

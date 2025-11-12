@@ -32,7 +32,7 @@ export default function UserDashboard() {
           {items.map((enCours) => (
             <div 
               key={enCours.id}
-              className="flex flex-col space-y-1 bg-white dark:bg-gray-700 shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 lg:p-8  rounded-2xl"
+              className="flex flex-col space-y-1 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 lg:p-8  rounded-2xl"
             >
               <div className="flex space-x-2">
                 {enCours.equipement.map(eq => ( 

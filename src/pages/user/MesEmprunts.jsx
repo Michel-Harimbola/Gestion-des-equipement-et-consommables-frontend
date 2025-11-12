@@ -100,7 +100,7 @@ export default function MesEmprunts() {
             {filteredItems.map((emprunt, index) => (
               <div
                 key={emprunt.id}
-                className="bg-white shadow-md rounded-xl p-4 border border-gray-200"
+                className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
               >
                 <div className="flex justify-between mb-2">
                   <div className="text-2xl font-semibold">
