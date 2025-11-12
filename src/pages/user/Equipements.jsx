@@ -23,10 +23,10 @@ export default function Equipements() {
 
     return (
       <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
-          <h1 className="text-4xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
+          <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
           {/* Boutons de filtre */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-8 mt-10">
+          <div className="flex flex-wrap lg:justify-start items-center justify-center gap-3 mb-8 mt-10">
             {["all", "Disponible", "Emprunter", "EnMaintenance"].map((val) => (
               <button
                 key={val}
