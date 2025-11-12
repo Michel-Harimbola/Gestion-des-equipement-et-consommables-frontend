@@ -123,7 +123,7 @@ const Register = () => {
                       type="button"
                       onClick={togglePasswordVisibility}
                       className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 dark:text-gray-100 dark:hover:text-gray-300 dark:bg-gray-600
-                          dark:placeholder-white dark:text-white hover:text-gray-600 focus:outline-none"
+                          dark:placeholder-white hover:text-gray-600 focus:outline-none"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />

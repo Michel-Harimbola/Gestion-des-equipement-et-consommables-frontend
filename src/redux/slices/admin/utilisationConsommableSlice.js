@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import UtilisationConsommableService from "../../../services/utilisationConsommable.service";
+import UtilisationConsommableService from "../../../services/admin/utilisationConsommableService";
 
 
 export const fetchUtilisations = createAsyncThunk(

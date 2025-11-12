@@ -44,7 +44,7 @@ export default function MesEmprunts() {
         <>
           {/* ordi */}
           <div className="hidden md:block overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl">
-            <table className="min-w-full text-sm sm:text-base text-gray-700">
+            <table className="w-full text-sm sm:text-base text-gray-700">
               <thead className="bg-sky-600 dark:bg-blue-900 text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">#</th>

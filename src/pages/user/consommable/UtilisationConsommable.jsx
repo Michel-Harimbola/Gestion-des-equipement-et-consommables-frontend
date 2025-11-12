@@ -1,65 +1,65 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { createDemandeEmprunt } from "../../redux/slices/user/demandeEmpruntSlice";
-import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
+import { createUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
+import { fetchConsommables } from "../../../redux/slices/admin/ConsommableSlice";
 
-export default function Emprunter({ selectedEquipementId, onClose }) {
+export default function Emprunter({ selectedUtilisationId, onClose }) {
   const [form, setForm] = useState({
-    dateRetourPrevu: "",
-    equipementId: selectedEquipementId || "",
+    consommableId: selectedUtilisationId || "",
+    quantiteUtilise: "",
+    description: "",
   });
 
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.equipement);
+  const { items } = useSelector((state) => state.consommables);
 
   useEffect(() => {
-    dispatch(fetchEquipements());
+    dispatch(fetchConsommables());
   }, [dispatch]);
 
   useEffect(() => {
-    setForm((prev) => ({ ...prev, equipementId: selectedEquipementId }));
-  }, [selectedEquipementId]);
+    setForm((prev) => ({ ...prev, consommableId: selectedUtilisationId }));
+  }, [selectedUtilisationId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: name === "equipementId" ? parseInt(value, 10) : value,
+      [name]: name === "consommableId" ? parseInt(value, 10) : value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(createDemandeEmprunt(form)).unwrap();
-    dispatch(fetchEquipements());
-    setForm({ dateRetourPrevu: "", equipementId: "" });
+    await dispatch(createUtilisation(form)).unwrap();
+    dispatch(fetchConsommables());
+    console.log(form);
+    setForm({ consommableId: "", quantiteUtilise: "", description: "" });
     onClose(); 
   };
-
-  const equipementsDisponibles = items.filter((eq) => eq.etat === "Disponible");
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
       <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white max-w-md">
         <h1 className="text-3xl -ml-1 font-bold lg:flex text-center">
-          Faire une demande d'emprunt
+          Utiliser un consommable
         </h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-12">
             <select   
-                value={form.equipementId}
+                value={form.consommableId}
                 onChange={handleChange}  
-                name="equipementId"
+                name="consommableId"
                 className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600  
                   dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
                 required
             >
-              {equipementsDisponibles.length === 0 ? (
-                <option value="">Aucun équipement disponible</option>
+              {items.length === 0 ? (
+                <option value="">Aucun consommable disponible</option>
                 ) : (
-                  equipementsDisponibles.map((eq) => (
-                    <option key={eq.id} value={eq.id}>
-                      {eq.nom}
+                  items.map((cons) => (
+                    <option key={cons.id} value={cons.id}>
+                      {cons.nom}
                     </option>
                   ))
                 )
@@ -67,15 +67,26 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
             </select>
             
             <input
-              type="date"
-              name="dateRetourPrevu"
-              value={form.dateRetourPrevu}
+              type="number"
+              name="quantiteUtilise"
+              placeholder="Quantitée"
+              value={form.quantiteUtilise}
               onChange={handleChange}
               className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
                 dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               required
             />
-  
+
+            <textarea
+              type="description"
+              name="description"
+              placeholder="description"
+              value={form.description}
+              onChange={handleChange}
+              className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            />
+
             <div className="flex flex-row justify-end gap-4 mt-8">
               <button
                 type="button"
