@@ -11,6 +11,7 @@ import empruntsReducer from "../slices/admin/EmpruntSlice";
 import demandeEmpruntsReducer from "../slices/admin/DemandeEmpruntSlice";
 import equipementsReducer from "../slices/admin/EquipementSlice";
 import consommableReducer from "../slices/admin/ConsommableSlice";
+import utilisationConsommableReducer from "../slices/admin/utilisationConsommableSlice";
 
 export const store = configureStore({
     reducer: { 
@@ -26,5 +27,6 @@ export const store = configureStore({
         demandes: demandeEmpruntsReducer,
         equipements: equipementsReducer,
         consommables: consommableReducer,
+        utilisation: utilisationConsommableReducer,
     },
 });
