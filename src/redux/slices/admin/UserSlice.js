@@ -17,7 +17,7 @@ export const createUser = createAsyncThunk("user/create", async (data, thunkAPI)
     toast.success("Utilisateur créé avec succès !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la création");
+    toast.error("Erreur lors de la création");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -28,7 +28,7 @@ export const updateUser = createAsyncThunk("user/update", async ({ id, data }, t
     toast.success("Utilisateur mis à jour !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
+    toast.error("Erreur lors de la mise à jour");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -39,7 +39,7 @@ export const deleteUser = createAsyncThunk("user/delete", async (id, thunkAPI) =
     toast.success("Utilisateur supprimé !");
     return id;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la suppression");
+    toast.error("Erreur lors de la suppression");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });

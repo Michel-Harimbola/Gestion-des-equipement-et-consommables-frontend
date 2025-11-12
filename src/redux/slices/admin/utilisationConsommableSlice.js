@@ -1,47 +1,57 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import UtilisationConsommableService from "../../../services/admin/utilisationConsommableService";
+import { toast } from "react-toastify";
 
 
 export const fetchUtilisations = createAsyncThunk(
   "utilisationConsommable/fetchAll",
-  async (_, { rejectWithValue }) => {
+  async (_, thunkAPI) => {
     try {
       return await UtilisationConsommableService.getAllUtilisations();
     } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
   }
 );
 
 export const createUtilisation = createAsyncThunk(
   "utilisationConsommable/create",
-  async (data, { rejectWithValue }) => {
+  async (data, thunkAPI) => {
     try {
-      return await UtilisationConsommableService.createUtilisation(data);
+      const res = await UtilisationConsommableService.createUtilisation(data);
+      toast.success("Utilisation consommable créé avec succès !");
+      return res;
     } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
+      toast.error("Erreur lors de la création");
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
   }
 );
 
 export const updateUtilisation = createAsyncThunk(
   "utilisationConsommable/update",
-  async (data, { rejectWithValue }) => {
+  async (data, thunkAPI) => {
     try {
-      return await UtilisationConsommableService.updateUtilisation(data);
+      const res = await UtilisationConsommableService.updateUtilisation(data);
+      toast.success("Utilisation consommable mis à jour !");
+      return res;
     } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
+      toast.error("Erreur lors de la mise à jour");
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
   }
 );
 
 export const deleteUtilisation = createAsyncThunk(
   "utilisationConsommable/delete",
-  async (id, { rejectWithValue }) => {
+  async (id, thunkAPI) => {
     try {
-      return await UtilisationConsommableService.deleteUtilisation(id);
+      const res = await UtilisationConsommableService.deleteUtilisation(id);
+      toast.success("Utilisation consommable supprimé !");
+      return res;
     } catch (err) {
-      return rejectWithValue(err.response?.data || err.message);
+      toast.error("Erreur lors de la suppression");
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
   }
 );
