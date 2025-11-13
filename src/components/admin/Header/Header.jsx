@@ -1,7 +1,7 @@
 import { FaMoon, FaSun } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import YouthComputing from "../../../assets/YouthComputing.svg";
-
+import NotificationBell from "./NotificationBell";
 
 export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
     return (
@@ -24,8 +24,8 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                         </a>
                     </div>
 
-                    <div>
-                        
+                    <div className="flex items-center gap-8">
+                        <NotificationBell />
                         <button 
                             onClick={toggleDarkMode}
                             className="dark:bg-slate-50 dark:text-slate-700 rounded-full p-2" 

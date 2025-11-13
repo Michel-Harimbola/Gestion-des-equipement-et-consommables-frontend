@@ -6,7 +6,7 @@ export default function NotificationBell() {
 
   return (
     <div className="relative">
-      <Bell size={26} className="text-gray-700" />
+      <Bell size={27} className="dark:text-gray-400 text-gray-700" />
       {notifications.length > 0 && (
         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 rounded-full">
           {notifications.length}
