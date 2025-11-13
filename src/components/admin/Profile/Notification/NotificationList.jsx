@@ -8,14 +8,14 @@ export default function NotificationList() {
       {notifications.length === 0 ? (
         <p className="text-gray-700 dark:text-gray-300 text-sm">Aucune notification</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {notifications.map((notif) => (
             <li
               key={notif.id}
-              className="p-2 rounded-md"
+              className="rounded-md"
             >
-              <p className="text-sm">{notif.message}</p>
-              <span className="text-xs text-gray-400">
+              <p className="text-sm dark:text-gray-200">{notif.message}</p>
+              <span className="text-xs dark:text-gray-300">
                 {new Date(notif.DateEnvoi).toLocaleString()}
               </span>
             </li>
