@@ -1,41 +1,43 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchEquipements } from "../../../redux/slices/admin/EquipementSlice";
+import { fetchConsommables } from "../../../redux/slices/admin/ConsommableSlice";
 
 
 export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
-  const [form, setForm] = useState({
-    dateRetourPrevu: "",
-    equipementId: "",
-  });
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (initialData) {
-      setForm({
-        dateRetourPrevu: initialData.dateRetourPrevu?.split("T")[0]  || "",
-        equipementId: initialData.equipementId || "",
-        statut: initialData.statut || ""
-      });
-    }
-  }, [initialData]);
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({
-        ...form,
-        dateRetourPrevu: new Date(form.dateRetourPrevu).toISOString()
+    const [form, setForm] = useState({
+    consommableId: "",
+    quantiteUtilise: "",
+    description: "",
     });
-  };
-
-  const { items } = useSelector((state => state.equipements));
-
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+      if (initialData) {
+        setForm({
+          consommableId: initialData.consommableId || "",
+          quantiteUtilise: initialData.quantiteUtilise || "",
+          description: initialData.description || ""
+        });
+      }
+    }, [initialData]);
+  
+    const handleChange = (e) => {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const { name, value } = e.target;
+      onSubmit({
+          ...form,
+      [name]: name === "consommableId" ? parseInt(value, 10) : value,
+      });
+    };
+  
+  const { items } = useSelector((state) => state.consommables);
+  
   useEffect(() => {
-      dispatch(fetchEquipements());
+    dispatch(fetchConsommables());
   }, [dispatch]);
 
   return (
@@ -48,43 +50,41 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-4">
               <select   
-                  value={form.equipementId}
+                  value={form.consommableId}
                   onChange={handleChange}  
-                  name="equipementId"
-                  className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
+                  name="consommableId"
+                  className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600
                     dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer">
                   {items
-                    .filter((eq) => eq.etat === "Disponible")
-                    .map((eq) => (
-                    <option key={eq.id} value={form.equipementId = eq.id}>
-                        {eq.nom}
+                    .filter((cons) => cons.quantiteUtilise !== 0)
+                    .map((cons) => (
+                    <option key={cons.id} value={form.consommableId = cons.id}>
+                        {cons.nom}
                     </option>
                   ))}
               </select>
           </div>
           <div className="space-y-4">
               <input
-                name="dateRetourPrevu"
-                value={form.dateRetourPrevu}
+                name="quantiteUtilise"
+                value={form.quantiteUtilise}
                 onChange={handleChange}
-                type="date"
+                placeholder="Quantité"
+                type="number"
+                className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-gray-400 
+                  dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500  cursor-pointer"
+              />
+          </div>
+          <div className="space-y-4">
+              <textarea
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="description"
+                type="description"
                 className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-gray-400 
                   dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               />
-          </div>
-
-          <div className="relative">
-            <select
-              name='statut'
-              value={form.statut}
-              onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
-                dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
-            >
-              <option value="EnCours">En cours</option>
-              <option value="EnRetard">En retard</option>
-              <option value="Retourner">Retourner</option>
-            </select>
           </div>
 
           <div className="flex justify-end gap-3 pt-2">

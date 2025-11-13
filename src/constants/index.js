@@ -12,10 +12,11 @@ import {
   FaUsers,
   FaHandHolding,
   FaBoxOpen,
-  FaTools
+  FaTools,
+  FaCogs
 } from "react-icons/fa";
 
-import { LuFilePlus2, LuSend, LuClipboardList, LuMail } from "react-icons/lu";
+import { LuClipboardList} from "react-icons/lu";
 
 
 export const links = [
@@ -59,11 +60,11 @@ export const links = [
     icon: LuClipboardList,
     text: "Demandes",
   },
-  // {
-  //   href: "#",
-  //   icon: IoIosLogOut,
-  //   text: "Sign Up",
-  // },
+  {
+    href: "/Utilisation",
+    icon: FaCogs,
+    text: "UtilisationCons",
+  },
 ];
 
 export const employeesData = [
@@ -105,37 +106,6 @@ export const shortcutLink = [
     icon: IoIosSettings,
   },
 ];
-
-// export const users = [
-//   {
-//     name: "Robert Fox",
-//     country: "USA",
-//     role: "Python Developer",
-//     image: user01,
-//     bgColor: "bg-yellow-100",
-//   },
-//   {
-//     name: "Jane Doe",
-//     country: "UK",
-//     role: "Frontend Developer",
-//     image: user02,
-//     bgColor: "bg-blue-100",
-//   },
-//   {
-//     name: "John Smith",
-//     country: "Canada",
-//     role: "Backend Developer",
-//     image: user03,
-//     bgColor: "bg-gray-100",
-//   },
-//   {
-//     name: "Alice Johnson",
-//     country: "Australia",
-//     role: "Full Stack Developer",
-//     image: user01,
-//     bgColor: "bg-slate-100",
-//   },
-// ];
 
 export const events = [
   {

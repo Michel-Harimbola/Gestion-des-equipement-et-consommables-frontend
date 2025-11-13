@@ -40,7 +40,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
             onChange={handleChange}
             type="text"
             placeholder="Votre nom"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-white
+            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
                   dark:text-white focus:ring-blue-500 transition duration-150"
             required
           /> 
@@ -50,7 +50,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
             onChange={handleChange}
             type="text"
             placeholder="Votre type"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-white
+            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
               dark:text-white focus:ring-blue-500 transition duration-150"
             required
           /> 
@@ -59,7 +59,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
               name='role'
               value={form.etat}
               onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white
+              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400
                   dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
             >
               <option value="Disponible">Disponible</option>

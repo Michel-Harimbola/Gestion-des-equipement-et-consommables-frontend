@@ -40,7 +40,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
+      <div className="bg-gray-100 dark:bg-gray-800 dark:text-white rounded-lg p-6 w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-semibold mb-5">
           {initialData ? "Modifier l'emprunt" : "Ajouter un emprunt"}
         </h2>
@@ -63,7 +63,6 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
               </select>
           </div>
           <div className="space-y-4">
-              <h1 className="text-2xl font-semibold">Date de retour prévu</h1>
               <input
                 name="dateRetourPrevu"
                 value={form.dateRetourPrevu}

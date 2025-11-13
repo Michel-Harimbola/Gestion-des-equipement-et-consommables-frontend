@@ -7,7 +7,7 @@ const UtilisationConsommableService = {
   },
 
   async getAllUtilisations() {
-    const res = await axiosInstance.get("/utilisation/");
+    const res = await axiosInstance.get("/utilisation");
     return res.data;
   },
 

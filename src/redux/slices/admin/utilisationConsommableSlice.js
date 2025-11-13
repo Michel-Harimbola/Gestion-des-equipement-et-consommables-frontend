@@ -57,7 +57,7 @@ export const deleteUtilisation = createAsyncThunk(
 );
 
 const utilisationConsommableSlice = createSlice({
-  name: "utilisationConsommable",
+  name: "utilisation",
   initialState: {
     items: [],
     loading: false,
@@ -75,7 +75,7 @@ const utilisationConsommableSlice = createSlice({
       })
       .addCase(fetchUtilisations.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
       .addCase(createUtilisation.fulfilled, (state, action) => {
         state.items.unshift(action.payload);
