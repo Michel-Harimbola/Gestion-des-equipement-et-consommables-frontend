@@ -1,5 +1,5 @@
 import DonutChart from "./DonutChart";
-import Notification from "./Notifications";
+import Notification from "./Notification/Notifications";
 import User from "./User";
 
 
