@@ -24,12 +24,15 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                         </a>
                     </div>
 
-                    <button 
-                        onClick={toggleDarkMode}
-                        className="dark:bg-slate-50 dark:text-slate-700 rounded-full p-2" 
-                    >
-                        {darkMode ? <FaSun /> : <FaMoon />}
-                    </button>
+                    <div>
+                        
+                        <button 
+                            onClick={toggleDarkMode}
+                            className="dark:bg-slate-50 dark:text-slate-700 rounded-full p-2" 
+                        >
+                            {darkMode ? <FaSun /> : <FaMoon />}
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
