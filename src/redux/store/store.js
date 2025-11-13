@@ -12,6 +12,7 @@ import demandeEmpruntsReducer from "../slices/admin/DemandeEmpruntSlice";
 import equipementsReducer from "../slices/admin/EquipementSlice";
 import consommableReducer from "../slices/admin/ConsommableSlice";
 import utilisationConsommableReducer from "../slices/admin/utilisationConsommableSlice";
+import notificationReducer from "../slices/admin/notificationSlice";
 
 export const store = configureStore({
     reducer: { 
@@ -28,5 +29,6 @@ export const store = configureStore({
         equipements: equipementsReducer,
         consommables: consommableReducer,
         utilisation: utilisationConsommableReducer,
+        notifications: notificationReducer,
     },
 });
