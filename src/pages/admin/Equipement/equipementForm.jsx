@@ -4,15 +4,28 @@ import { useState, useEffect } from "react";
 export default function EquipementForm({ onSubmit, onClose, initialData = null }) {
   const [form, setForm] = useState({
     nom: "",
-    type: ""
+    numeroDeSerie: "",
+    marque: "",
+    disponibilite: "Disponible",
+    etatMateriel: "",
+    obtention: "",
+    fournisseur: "",
+    donateur: "",
+    prix: "",
   });
 
   useEffect(() => {
     if (initialData) {
       setForm({
         nom: initialData.nom || "",
-        type: initialData.type || "",
-        etat: initialData.etat || "",
+        numeroDeSerie: initialData.numeroDeSerie || "",
+        marque: initialData.marque || "",
+        disponibilite: initialData.disponibilite || "",
+        etatMateriel: initialData.etatMateriel || "",
+        obtention: initialData.obtention || "",
+        fournisseur: initialData.fournisseur || "",
+        donateur: initialData.donateur || "",
+        prix: initialData.prix || "",
       });
     }
   }, [initialData]);
@@ -28,44 +41,118 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
 
   return (
     <div className="fixed inset-0  backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-lg">
         <h2 className="text-2xl font-semibold mb-5 dark:text-white">
           {initialData ? "Modifier l'équipement" : "Ajouter un équipement"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <input
-            name='nom'
-            value={form.nom}
-            onChange={handleChange}
-            type="text"
-            placeholder="Votre nom"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+          <div className="flex gap-5">
+            <div className="flex flex-col gap-5">
+              <input
+                name='nom'
+                value={form.nom}
+                onChange={handleChange}
+                type="text"
+                placeholder="Nom"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                      dark:text-white focus:ring-blue-500 transition duration-150"
+                required
+              /> 
+              <input
+                name='numeroDeSerie'
+                value={form.numeroDeSerie}
+                onChange={handleChange}
+                type="text"
+                placeholder="Numéro de série"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
                   dark:text-white focus:ring-blue-500 transition duration-150"
-            required
-          /> 
-          <input
-            name='type'
-            value={form.type}
-            onChange={handleChange}
-            type="text"
-            placeholder="Votre type"
-            className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
-              dark:text-white focus:ring-blue-500 transition duration-150"
-            required
-          /> 
-          <div className="relative">
-            <select
-              name='role'
-              value={form.etat}
-              onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400
-                  dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
-            >
-              <option value="Disponible">Disponible</option>
-              <option value="EnMaintenance">En Maintenance</option>
-              <option value="Emprunter">Emprunter</option>
-            </select>
+                required
+              /> 
+              <input
+                name='marque'
+                value={form.marque}
+                onChange={handleChange}
+                type="text"
+                placeholder="Marque"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                  dark:text-white focus:ring-blue-500 transition duration-150"
+                required
+              /> 
+              <div className="relative">
+                <select
+                  name='disponibilite'
+                  value={form.disponibilite}
+                  onChange={handleChange}
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400
+                      dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                >
+                  <option value="Disponible">Disponible</option>
+                  <option value="EnMaintenance">En Maintenance</option>
+                  <option value="Emprunter">Emprunter</option>
+                  <option value="Indisponible">Indisponible</option>
+                </select>
+              </div>
+              <div className="relative">
+                <select
+                  name='etatMateriel'
+                  value={form.etatMateriel}
+                  onChange={handleChange}
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400
+                      dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                >
+                  <option value="Neuf">Neuf</option>
+                  <option value="BonEtat">Bon état</option>
+                  <option value="EtatMoyen">Etat moyen</option>
+                  <option value="MauvaisEtat">Mauvais état</option>
+                  <option value="HorsUsage">Hors usage</option>
+                  <option value="EnReparation">En réparation</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-5">
+              <div className="relative">
+                <select
+                  name='obtention'
+                  value={form.obtention}
+                  onChange={handleChange}
+                  className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400
+                      dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                >
+                  <option value="Achat">Achat</option>
+                  <option value="Don">Don</option>
+                </select>
+              </div>
+              <input
+                name='fournisseur'
+                value={form.fournisseur}
+                onChange={handleChange}
+                type="text"
+                placeholder="Fournisseur"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                  dark:text-white focus:ring-blue-500 transition duration-150"
+              /> 
+              <input
+                name='donateur'
+                value={form.donateur}
+                onChange={handleChange}
+                type="text"
+                placeholder="Donnateur"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                  dark:text-white focus:ring-blue-500 transition duration-150"
+              /> 
+              <input
+                name='prix'
+                value={form.prix}
+                onChange={handleChange}
+                type="number"
+                placeholder="Prix"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                  dark:text-white focus:ring-blue-500 transition duration-150"
+                required
+              /> 
+            </div>
           </div>
           <div className="flex justify-end gap-3 pt-2">
             <button

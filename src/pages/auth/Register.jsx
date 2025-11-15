@@ -168,9 +168,10 @@ const Register = () => {
                       dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer "
                   >
                     <option value="" disabled>Choisir un rôle</option>
-                    <option value="utilisateurSimple">Utilisateur Simple</option>
-                    <option value="responsableRH">Responsable RH</option>
-                    <option value="admin">Admin</option>
+                    <option value="client">client</option>
+                    <option value="partenaire">Partenaire</option>
+                    <option value="personnelInterne">Personnel interne</option>
+                    <option value="regisseurEquipementInterne">Régisseur des équipement interne</option>
                   </select>
                 </div>
                     

@@ -7,7 +7,7 @@ const demandeEmpruntService = {
     },
 
     getAll: async () => {
-        const res = await axiosInstance.get("/demande/");
+        const res = await axiosInstance.get("/demande");
         return res.data;
     },
 

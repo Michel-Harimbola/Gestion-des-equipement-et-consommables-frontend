@@ -6,6 +6,7 @@ import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
 export default function Emprunter({ selectedEquipementId, onClose }) {
   const [form, setForm] = useState({
     dateRetourPrevu: "",
+    usage: "",
     equipementId: selectedEquipementId || "",
   });
 
@@ -32,17 +33,17 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
     e.preventDefault();
     await dispatch(createDemandeEmprunt(form)).unwrap();
     dispatch(fetchEquipements());
-    setForm({ dateRetourPrevu: "", equipementId: "" });
+    setForm(form);
     onClose(); 
   };
 
-  const equipementsDisponibles = items.filter((eq) => eq.etat === "Disponible");
+  const equipementsDisponibles = items.filter((eq) => eq.disponibilite === "Disponible");
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
-      <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white max-w-md">
+      <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white w-[500px]">
         <h1 className="text-3xl -ml-1 font-bold lg:flex text-center">
-          Faire une demande d'emprunt
+          Contrat d'engagement
         </h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-12">
@@ -75,7 +76,18 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
                 dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               required
             />
-  
+
+            <textarea 
+              name="usage" 
+              type="description"
+              value={form.usage}
+              onChange={handleChange} 
+              placeholder="Usage"
+              className="w-full text-xl pl-3 pt-2 pb-8 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              required
+            />
+            
             <div className="flex flex-row justify-end gap-4 mt-8">
               <button
                 type="button"

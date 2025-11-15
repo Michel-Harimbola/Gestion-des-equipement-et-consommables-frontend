@@ -32,7 +32,7 @@ export default function AppRoutes() {
                 {/* Routes utilisateur */}
                 <Route 
                     element={
-                        <ProtectedRoute roles={["utilisateurSimple"]}>
+                        <ProtectedRoute roles={["personnelInterne", "client", "partenaire"]}>
                             <DashboardLayout />
                         </ProtectedRoute>
                     }
@@ -46,7 +46,7 @@ export default function AppRoutes() {
                 {/* Routes admin */}
                  <Route
                   element={
-                    <ProtectedRoute roles={["admin", "responsableRH"]}>
+                    <ProtectedRoute roles={["admin", "regisseurEquipementInterne"]}>
                       <AdminDashboardLayout />
                     </ProtectedRoute>
                   }

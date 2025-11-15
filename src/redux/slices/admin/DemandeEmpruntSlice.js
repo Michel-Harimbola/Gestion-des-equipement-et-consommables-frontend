@@ -7,7 +7,7 @@ export const fetchDemandes = createAsyncThunk("demande/fetchAll", async (_, thun
   try {
     return await demandeEmpruntService.getAll();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
+    return thunkAPI.rejectWithValue("Erreur lors du chargement");
   }
 });
 
@@ -17,7 +17,7 @@ export const createDemande = createAsyncThunk("demande/emprunt", async (data, th
     toast.success("Demande mis à jour !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la création");
+    toast.error("Erreur lors de la création");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -28,7 +28,7 @@ export const approuverEmprunt = createAsyncThunk("demande/approuver", async (id,
     toast.success("Demande approuver !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la confirmation");
+    toast.error("Erreur lors de la confirmation");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -39,7 +39,7 @@ export const refuserEmprunt = createAsyncThunk("demande/refuser", async (id, thu
     toast.success("Demande refuser !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la confirmation");
+    toast.error("Erreur lors de la confirmation");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -50,7 +50,7 @@ export const updateDemande = createAsyncThunk("demande/update", async ({ id, dat
     toast.success("Demande mis à jour !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de l'édition");
+    toast.error("Erreur lors de l'édition");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });

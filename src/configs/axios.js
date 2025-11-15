@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use((res) => {
     return res;
 }, (error) => {
     loading?.setIsLoading(false);
-    toast.error(error.response?.data?.message || "Error occured");
+    toast.error(error.response?.data?.message);
     return Promise.reject(error);
 });
 

@@ -60,8 +60,14 @@ export default function Equipement() {
                       <tr>
                         <th className="py-3 px-4 text-left">ID</th>
                         <th className="py-3 px-4 text-left">Nom</th>
-                        <th className="py-3 px-4 text-left">Type</th>
-                        <th className="py-3 px-4 text-left">Etat</th>
+                        <th className="py-3 px-4 text-left">Numéro de série</th>
+                        <th className="py-3 px-4 text-left">Marque</th>
+                        <th className="py-3 px-4 text-left">Disponibilité</th>
+                        <th className="py-3 px-4 text-left">Etat matériel</th>
+                        <th className="py-3 px-4 text-left">Obtention</th>
+                        <th className="py-3 px-4 text-left">Fournisseur</th>
+                        <th className="py-3 px-4 text-left">Donateur</th>
+                        <th className="py-3 px-4 text-left">Prix</th>
                         <th className="py-3 px-4 text-left">Actions</th>
                       </tr>
                     </thead>
@@ -72,23 +78,25 @@ export default function Equipement() {
                             className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
-                            <td className="py-2 px-4">
-                              {equipement.nom}
-                            </td>
-                            <td className="py-2 px-4">
-                              {equipement.type}
-                            </td>
+                            <td className="py-2 px-4">{equipement.nom}</td>
+                            <td className="py-2 px-4">{equipement.numeroDeSerie}</td>
+                            <td className="py-2 px-4">{equipement.marque}</td>
                             <td className="py-2 px-4">
                               <span
                                 className={`px-3 py-1 rounded-full text-lg font-semibold ${
-                                  equipement.etat === "Disponible"
+                                  equipement.disponibilite === "Disponible"
                                   ? "bg-green-100 text-green-700"
                                     : "bg-yellow-100 text-yellow-700"
                                 }`}
                               >
-                                {equipement.etat}
+                                {equipement.disponibilite}
                               </span>
                             </td>
+                            <td className="py-2 px-4">{equipement.etatMateriel}</td>
+                            <td className="py-2 px-4">{equipement.obtention}</td>
+                            <td className="py-2 px-4">{equipement.fournisseur}</td>
+                            <td className="py-2 px-4">{equipement.donateur}</td>
+                            <td className="py-2 px-4">{equipement.prix}</td>
                             <td className="p-2 space-x-8 flex">
                                 <button onClick={() => handleEdit(equipement)} className="text-xl hover:text-white">
                                    <GrUpdate />

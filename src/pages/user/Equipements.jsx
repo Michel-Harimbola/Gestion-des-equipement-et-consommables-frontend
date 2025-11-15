@@ -18,7 +18,7 @@ export default function Equipements() {
   
   const filteredItems = items.filter((eq) => {
     if (filter == "all") return true;
-    return eq.etat == filter;
+    return eq.disponibilite == filter;
   });
 
   const handleEmprunterClick = (equipementId) => {
@@ -32,7 +32,7 @@ export default function Equipements() {
 
           {/* Boutons de filtre */}
           <div className="flex flex-wrap lg:justify-start items-center justify-center gap-3 mb-8 mt-10">
-            {["all", "Disponible", "Emprunter", "EnMaintenance"].map((val) => (
+            {["all", "Disponible", "Emprunté", "En maintenance", "Indisponible"].map((val) => (
               <button
                 key={val}
                 onClick={() => setFilter(val)}
@@ -57,25 +57,47 @@ export default function Equipements() {
                       key={eq.id}
                       className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
                     >
-                      <div>
-                          <h1 className="font-semibold text-lg text-center">Nom de l'équipement:</h1>
-                          <h1 className="text-xl font-semibold text-center">{eq.nom}</h1>
+                      <div >
+                          <h1 className="text-xl font-semibold text-center">{eq.nom}: </h1>
+                          <p className="font-semibold text-lg text-center">{eq.marque}</p>
+                          <p className="font-semibold text-lg text-center">N° {eq.numeroDeSerie}</p>
+                          <p className="font-semibold text-lg text-center">
+                            {eq.etatMateriel == "BonEtat" ? (
+                              <p>Bon état</p>
+                            ) : eq.etatMateriel == "EtatMoyen" ? (
+                              <p>Etat moyen</p>
+                            ) : eq.etatMateriel == "MauvaisEtat" ? (  
+                              <p>Mauvais état</p>
+                            ) : eq.etatMateriel == "HorsUsage" ? (
+                              <p>Hors usage</p>
+                            ) : eq.etatMateriel == "EnReparation" ? (
+                              <p>En réparation</p>
+                            ) : (
+                              <p>Neuf</p>
+                            )}
+                          </p>
                       </div>
                       
                       <div className="flex flex-row justify-center items-center space-x-2">
                         <div 
-                            className={`w-4 h-4 rounded-full ${eq.etat !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
+                            className={`w-4 h-4 rounded-full ${eq.disponibilite !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
                         >
                         </div>
                         <p className="text-gray-600 dark:text-gray-200 font-normal">
-                          {eq.etat}
+                          {eq.disponibilite == "Disponible"? (
+                            <p>Disponible</p>
+                          ): eq.disponibilite == "EnMaintenance" ? (
+                            <p>En maintenance</p>
+                          ):(
+                            <p>Emprunté</p>
+                          )}
                         </p>
                       </div>
                       
                       <button 
                         onClick={() => handleEmprunterClick(eq.id)}
-                        disabled={ eq.etat !== "Disponible" }
-                        className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.etat !== "Disponible"? 
+                        disabled={ eq.disponibilite !== "Disponible" }
+                        className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.disponibilite !== "Disponible"? 
                               "bg-gray-400 dark:bg-gray-500" 
                               : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"}
                         `}>
