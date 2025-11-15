@@ -43,7 +43,7 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
       <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white w-[500px]">
         <h1 className="text-3xl -ml-1 font-bold lg:flex text-center">
-          Contrat d'engagement
+          Contrat de location
         </h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-12">
