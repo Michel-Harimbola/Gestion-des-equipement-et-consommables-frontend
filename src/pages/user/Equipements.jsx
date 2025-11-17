@@ -64,7 +64,7 @@ export default function Equipements() {
                         <h1 className="text-xl font-semibold text-center">{eq.nom}: </h1>
                         <p className="font-semibold text-lg text-center">{eq.marque}</p>
                         <p className="font-semibold text-lg text-center">N° {eq.numeroDeSerie}</p>
-                        <p className="font-semibold text-lg text-center">
+                        <div className="font-semibold text-lg text-center">
                           {eq.etatMateriel == "BonEtat" ? (
                             <p>Bon état</p>
                           ) : eq.etatMateriel == "EtatMoyen" ? (
@@ -78,7 +78,7 @@ export default function Equipements() {
                           ) : (
                             <p>Neuf</p>
                           )}
-                        </p>
+                        </div>
                     </div>
                     
                     <div className="flex flex-row justify-center items-center space-x-2">
@@ -86,7 +86,7 @@ export default function Equipements() {
                           className={`w-4 h-4 rounded-full ${eq.disponibilite !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
                       >
                       </div>
-                      <p className="text-gray-600 dark:text-gray-200 font-normal">
+                      <div className="text-gray-600 dark:text-gray-200 font-normal">
                         {eq.disponibilite == "Disponible"? (
                           <p>Disponible</p>
                         ): eq.disponibilite == "EnMaintenance" ? (
@@ -94,7 +94,7 @@ export default function Equipements() {
                         ):(
                           <p>Emprunté</p>
                         )}
-                      </p>
+                      </div>
                     </div>
                     
                     <button 

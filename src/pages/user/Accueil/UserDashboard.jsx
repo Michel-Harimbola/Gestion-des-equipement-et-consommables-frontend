@@ -97,7 +97,7 @@ export default function UserDashboard() {
                       className={`w-4 h-4 rounded-full ${enCours.statut !== "EnCours"? "bg-red-600" : "bg-green-500"}`}
                     >
                     </div>
-                    <p className="text-center text-gray-600 dark:text-gray-200 font-normal">
+                    <div className="text-center text-gray-600 dark:text-gray-200 font-normal">
                       {enCours.statut == "EnCours" ? (
                         <p>En cours</p>
                       ): enCours.statut == "EnRetard" ? (
@@ -105,7 +105,7 @@ export default function UserDashboard() {
                       ):(
                         <p>Retourner</p>
                       )}
-                    </p>
+                    </div>
                   </div>
                   <button 
                     onClick={() => handleRetour(enCours.equipement[0].id, enCours.id)}

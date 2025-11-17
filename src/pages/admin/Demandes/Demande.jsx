@@ -66,6 +66,7 @@ export default function Demande() {
                         <th className="py-3 px-4 text-left">Date de retour effective</th>
                         <th className="py-3 px-4 text-left">Statut</th>
                         <th className="py-3 px-4 text-left">Équipements</th>
+                        <th className="py-3 px-4 text-left">Type</th>
                         <th className="py-3 px-4 text-left">Actions</th>
                       </tr>
                     </thead>
@@ -97,6 +98,7 @@ export default function Demande() {
                               </span>
                             </td>
                             <td className="py-2 px-4">{demande.equipement.nom}</td>
+                             <td className="py-2 px-4">{demande.type}</td>
                             <td className="p-2 space-x-8 flex">
                                 <button onClick={() => handleEdit(demande)} className="text-xl hover:text-white">
                                    <GrUpdate />

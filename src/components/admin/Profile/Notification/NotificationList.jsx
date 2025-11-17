@@ -14,7 +14,7 @@ export default function NotificationList() {
           {notifications.map((notif) => (
             <li
               key={notif.id}
-              className="rounded-xl dark:bg-gray-600 py-2 px-3"
+              className="rounded-xl bg-gray-100 dark:bg-gray-600 py-2 px-3"
             >
               <div className="flex items-center gap-2">
                 {notif.type == "AlerteStock" ? (
@@ -35,4 +35,5 @@ export default function NotificationList() {
       )}
     </div>
   );
+  
 }

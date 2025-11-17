@@ -15,7 +15,7 @@ export default function DemandeEmprunt() {
         <div className="">
           <h1 className="text-3xl font-semibold lg:ml-7">Vos demandes </h1>
           {items.length === 0 ? (
-            <p className="text-gray-600 mt-16 text-center">Aucun demande en attente. </p>
+            <p className="text-gray-600 dark:text-white mt-16 text-center lg:text-start lg:ml-7">Aucun demande en attente. </p>
           ) : (
             <div className="overflow-auto h-[800px]">
             <div className="grid lg:grid-cols-1 gap-6 mt-10 lg:px-6">
@@ -30,7 +30,7 @@ export default function DemandeEmprunt() {
                       </div>
                       <p>Date d'emprunt: <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
                       <p>Date de retour prévu: <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
-                      <p>
+                      <div>
                         {demande.equipement.etatMateriel == "BonEtat" ? (
                           <p>Etat matériel: Bon état</p>
                         ) : demande.equipement.etatMateriel == "EtatMoyen" ? (
@@ -44,7 +44,7 @@ export default function DemandeEmprunt() {
                         ) : (
                           <p>Neuf</p>
                         )}
-                      </p>
+                      </div>
                       <div className="flex flex-row justify-between items-center -mt-2">
                         <div className="flex flex-row items-center space-x-2 mt-2">
                           <div className="w-4 h-4 rounded-full bg-gray-500 dark:bg-gray-400"></div>
