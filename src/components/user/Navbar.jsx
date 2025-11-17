@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import socket from "../../configs/socket";
-import { fetchUserNotifications, addNotification } from "../../redux/slices/user/notificationSlice";
+import { fetchUserNotifications, addNotification, markAllNotificationsAsRead } from "../../redux/slices/user/notificationSlice";
 import { X, Menu, Bell } from 'lucide-react';
 import { FaSun, FaMoon } from "react-icons/fa";
 import YouthComputing from "../../assets/YouthComputing.svg";
@@ -21,7 +21,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
     const [showNotif, setShowNotif] = useState(false);
 
-    const notifications = useSelector(state => state.notification.list)
+    const {list: notifications, hasUnread} = useSelector(state => state.notification)
 
     const navItems = [
         { id: 1, name: "Accueil", path: "/UserDashboard" },
@@ -38,6 +38,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     }
 
     const toggleNavbar = () => {
+        console.log(notifications);
+        console.log("hasUnread", hasUnread);
         setIsOpen(!isOpen);
     };
 
@@ -152,18 +154,28 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                         
                         <div className="relative">
                             <button
-                                onClick={() => setShowNotif(!showNotif)}
-                                className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+                                onClick={() => {
+                                    setShowNotif(!showNotif);
+
+                                    if (!showNotif) {
+                                        dispatch(markAllNotificationsAsRead());
+                                    }
+                                }}
+                                
+                                className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative"
                             >
                                 <Bell size={24} />
-                                {notifications.length > 0 && (
-                                <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full" />
+                                {hasUnread && (
+                                  <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full" />
                                 )}
                             </button>
 
                             {showNotif && (
                                 <Notification
-                                    onClose={() => setShowNotif(false)}
+                                    onClose={() => {
+                                        setShowNotif(false);
+                                        dispatch(markAllNotificationsAsRead());
+                                    }}
                                     notifications={notifications}
                                 />
                             )}

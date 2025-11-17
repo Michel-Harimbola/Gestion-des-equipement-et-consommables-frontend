@@ -4,7 +4,7 @@ import { AlertOctagon, AlertTriangle } from "lucide-react";
 
 export default function Notification({ notifications, onClose }) {
   return (
-    <div className="absolute right-4 top-16 w-80 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-4 border border-gray-300 dark:border-gray-600 z-50">
+    <div className="absolute right-4 top-16 w-[450px] bg-white dark:bg-gray-800 shadow-xl rounded-xl p-4 border border-gray-300 dark:border-gray-600 z-50">
 
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold dark:text-white">Notifications</h2>
@@ -17,10 +17,14 @@ export default function Notification({ notifications, onClose }) {
         <p className="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
           Aucune notification
         </p>
-      ) : (
+      ):(
         <ul className="flex flex-col gap-2 max-h-64 overflow-y-auto">
           {notifications.map((notif) => (           
-            <li key={notif.id} className="p-3 rounded-lg flex gap-3 items-center bg-gray-100 dark:bg-gray-700">
+            <li 
+              key={notif.id} 
+              className={`p-3 rounded-lg flex gap-3 items-center 
+              ${notif.vu ? "bg-gray-100 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900"}`}
+            >
               {notif.type == "AlerteStock" ? (
                   <AlertOctagon className="w-8 h-8 text-red-500" />
                 ):(
