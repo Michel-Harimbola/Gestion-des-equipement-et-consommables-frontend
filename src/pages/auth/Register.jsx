@@ -6,7 +6,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { FaSun, FaMoon } from "react-icons/fa";
 
 const Register = () => {
-  const [form, setForm] = useState({ nom: "", prenom: "", email: "", motDePasse: "", role: "" });
+  const [form, setForm] = useState({ nom: "", prenom: "", email: "", motdepasse: "", role: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (form.motDePasse !== confirm) {
+    if (form.motdepasse !== confirm) {
       setError("Les mots de passe ne correspondent pas !");
       return;
     }
@@ -110,8 +110,8 @@ const Register = () => {
   
                   <div className="relative">
                     <input
-                      name='motDePasse'
-                      value={form.motDePasse}
+                      name='motdepasse'
+                      value={form.motdepasse}
                       onChange={handleChange}
                       type={ showPassword ? "text" : "password" }
                       placeholder="votre mot de passe"

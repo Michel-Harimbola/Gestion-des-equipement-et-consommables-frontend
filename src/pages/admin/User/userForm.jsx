@@ -7,8 +7,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
     nom: "",
     prenom: "",
     email: "",
-    motDePasse: "",
-    role: "utilisateurSimple",
+    motdepasse: "",
+    role: "personnelInterne",
   });
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
         nom: initialData.nom || "",
         prenom: initialData.prenom || "",
         email: initialData.email || "",
-        role: initialData.role || "utilisateurSimple",
+        role: initialData.role || "personnelInterne",
       });
     }
   }, [initialData]);
@@ -80,8 +80,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             <>
               <div className="relative">
                 <input
-                  name='motDePasse'
-                  value={form.motDePasse}
+                  name='motdepasse'
+                  value={form.motdepasse}
                   onChange={handleChange}
                   type={ showPassword ? "text" : "password" }
                   placeholder="votre mot de passe"
@@ -132,9 +132,10 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
                   dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
             >
               <option value="" disabled>Choisir un rôle</option>
-              <option value="utilisateurSimple">Utilisateur Simple</option>
-              <option value="responsableRH">Responsable RH</option>
-              <option value="admin">Admin</option>
+                    <option value="client">client</option>
+                    <option value="partenaire">Partenaire</option>
+                    <option value="personnelInterne">Personnel interne</option>
+                    <option value="regisseurEquipementInterne">Régisseur des équipement interne</option>
             </select>
           </div>
 

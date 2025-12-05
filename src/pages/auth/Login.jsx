@@ -7,7 +7,7 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", motDePasse: "" });
+  const [form, setForm] = useState({ email: "", motdepasse: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export default function Login() {
     const token = localStorage.getItem("token");
     if(token) {
       const decoded = jwtDecode(token);
-      if (decoded.role === "admin" || decoded.role === "responsableRH") {
+      if (decoded.role === "admin" || decoded.role === "regisseurEquipementInterne") {
         navigate("/adminDashboard");
       } else {
         navigate("/userDashboard");
@@ -90,8 +90,8 @@ export default function Login() {
                       <div className='ml-2 h-5 w-2 border-l-2 border-gray-400'></div>
                     </div>
                     <input
-                      name='motDePasse'
-                      value={form.motDePasse}
+                      name='motdepasse'
+                      value={form.motdepasse}
                       onChange={handleChange}
                       type={ showPassword ? "text" : "password" }
                       placeholder="Entrer votre mot de passe ici"
