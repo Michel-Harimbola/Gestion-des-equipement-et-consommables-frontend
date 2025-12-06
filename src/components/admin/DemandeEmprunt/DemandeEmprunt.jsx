@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDemandes, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
 import Title from "../../../ui/Title";
 import GlobalLoader from "../../shared/GlobalLoader";
 import { LuCheck, LuX } from "react-icons/lu";
@@ -67,7 +68,11 @@ export default function DemandeEmprunt() {
                                         </button>
                                         <div className="flex flex-col lg:flex-row gap-2">
                                             <button
-                                                onClick={() => dispatch(approuverEmprunt(demande.id))}
+                                                onClick={() => dispatch(approuverEmprunt(demande.id))
+                                                    .unwrap()
+                                                    .then(() => (dispatch(fetchRecentEmprunts())))
+
+                                                }
                                                 className="bg-slate-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                                             >
                                                 <LuCheck className="w-7 h-7 text-green-500 dark:text-green-400"/>

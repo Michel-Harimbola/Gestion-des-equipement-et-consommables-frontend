@@ -39,7 +39,7 @@ export const refuserEmprunt = createAsyncThunk("demande/refuser", async (id, thu
     toast.success("Demande refuser !");
     return res;
   } catch (error) {
-    toast.error("Erreur lors de la confirmation");
+    toast.error("Erreur lors de la refus");
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -50,7 +50,7 @@ export const updateDemande = createAsyncThunk("demande/update", async ({ id, dat
     toast.success("Demande mis à jour !");
     return res;
   } catch (error) {
-    toast.error("Erreur lors de l'édition");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -61,7 +61,7 @@ export const deleteDemande = createAsyncThunk("demande/delete", async (id, thunk
     toast.success("Demande supprimer !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la suppresion");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });

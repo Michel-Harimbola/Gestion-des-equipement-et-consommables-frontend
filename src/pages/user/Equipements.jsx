@@ -35,7 +35,7 @@ export default function Equipements() {
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
         <div className="flex flex-wrap lg:justify-start items-center justify-center gap-3 mb-8 mt-10">
-          {["all", "Disponible", "Emprunté", "En maintenance", "Indisponible"].map((val) => (
+          {["all", "Disponible", "Emprunte", "EnMaintenance"].map((val) => (
             <button
               key={val}
               onClick={() => setFilter(val)}
@@ -45,7 +45,14 @@ export default function Equipements() {
                   : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
               }`}
             >
-              {val === "all" ? "Tous" : val}
+              { val === "all" 
+              ? "Tous"
+              : val === "Emprunte"
+              ? "Emprunté"
+              : val === "EnMaintenance"
+              ? "En Maintenance"
+              : val
+              }
             </button>
           ))}
         </div>
@@ -102,7 +109,7 @@ export default function Equipements() {
                       disabled={ eq.disponibilite !== "Disponible" }
                       className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.disponibilite !== "Disponible"? 
                             "bg-gray-400 dark:bg-gray-500" 
-                            : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"}
+                            : "bg-fuchsia border-3 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
                       `}>
                       Emprunter
                     </button>

@@ -78,7 +78,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     return (
         <div
             id="navbar"
-            className="w-full h-[7.5ch] backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
+            className="w-full h-16 backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
             md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 bg-transparent dark:bg-gray-800 shadow-md" 
         >
             {/* Logo */}
@@ -136,7 +136,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     setIsActive(item.id);
                                     isOpen(false);                                
                                 }}
-                                className={`ease-in-out ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-6" : "hover:text-fuchsia"}`}>
+                                className={`ease-in-out ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}>
                                     {item.name}
                                 </Link>
                             </li>
@@ -147,7 +147,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                     <div className="flex flex-col md:flex-row items-center gap-4">
                         <button 
                             onClick={toggleDarkMode}
-                            className="hover:bg-gray-200 dark:bg-slate-50 dark:text-slate-700 rounded-full p-2 -mr-2" 
+                            className="hover:bg-gray-200 dark:bg-slate-50 dark:text-slate-700 rounded-full p-2 -mr-2 cursor-pointer" 
                         >
                             {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
                         </button>
@@ -161,8 +161,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                         dispatch(markAllNotificationsAsRead());
                                     }
                                 }}
-                                
-                                className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative"
+                                className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
                             >
                                 <Bell size={24} />
                                 {hasUnread && (

@@ -44,8 +44,8 @@ export default function ContratInfo({ onClose, onNext }) {
             onClick={onNext}
             disabled={!accepted}
             className={`${accepted
-                ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
-                : "bg-blue-300 cursor-not-allowed"
+                ? "bg-fuchsia hover:bg-red-600 cursor-pointer"
+                : "bg-red-300 cursor-not-allowed"
               } px-4 py-2 rounded-lg text-white font-bold`}
           >
             Suivant

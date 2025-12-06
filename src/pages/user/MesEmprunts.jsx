@@ -33,7 +33,12 @@ export default function MesEmprunts() {
                 : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
             }`}
           >
-            {val === "all" ? "Tous" : val}
+            { val === "all" 
+            ? "Tous" 
+            : val === "EnCours"
+            ? "En Cours"
+            : "Retourné"
+            }
           </button>
         ))}
       </div>

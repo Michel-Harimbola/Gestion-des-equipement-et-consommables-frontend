@@ -11,7 +11,7 @@ export const fetchEmprunts = createAsyncThunk("emprunt/fetchAll", async (_, thun
   }
 });
 
-export const fetchRecent = createAsyncThunk("emprunt/recent", async (_, thunkAPI) => {
+export const fetchRecentEmprunts = createAsyncThunk("emprunt/fetchRecent", async (_, thunkAPI) => {
   try {
     return await empruntService.getRecent();
   } catch (error) {
@@ -52,11 +52,11 @@ export const deleteEmprunt = createAsyncThunk("emprunt/delete", async (id, thunk
   }
 });
 
-
 const empruntSlice = createSlice({
   name: "emprunts",
   initialState: {
     items: [],
+    recent: [],
     loading: false,
     error: null,
   },
@@ -74,9 +74,16 @@ const empruntSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(fetchRecent.fulfilled, (state, action) => {
+      .addCase(fetchRecentEmprunts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.recent = action.payload;
+      })
+      .addCase(fetchRecentEmprunts.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchRecentEmprunts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
       .addCase(createEmprunt.fulfilled, (state, action) => {
         state.items.push(action.payload);

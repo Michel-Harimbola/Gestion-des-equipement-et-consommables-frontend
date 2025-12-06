@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchRecent } from "../../../redux/slices/admin/EmpruntSlice";
+import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
 import GlobalLoader from "../../shared/GlobalLoader";
 import Title from "../../../ui/Title";
 import { FaRegEnvelope } from "react-icons/fa";
@@ -10,10 +10,10 @@ import { FiChevronDown } from "react-icons/fi";
 
 export default function Event() {
     const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.emprunts);
+    const { recent, loading } = useSelector((state) => state.emprunts);
 
     useEffect(() => {
-        dispatch(fetchRecent());
+        dispatch(fetchRecentEmprunts());
     }, [dispatch]);
 
     const [openDetails, setOpenDetails] = useState({});
@@ -29,7 +29,7 @@ export default function Event() {
             ): (
                 <div className="h-full overflow-y-auto">
                     <div className="flex flex-col gap-3">
-                        {items.map((emprunt, index) => (
+                        {recent.map((emprunt, index) => (
                             <div key={index} className="flex justify-between items-center">
                                 <div className="w-full flex flex-row justify-between bg-gray-100 dark:bg-gray-600 px-4 py-3 rounded-xl">
                                     <div className="flex flex-row items-start gap-4">

@@ -61,7 +61,7 @@ export default function DemandeEmprunt() {
                         <button 
                           onClick={() => dispatch(annulerDemande(demande.id))}
                           className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
-                            bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
+                            bg-marine hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
                           Annuler
                         </button>
                       </div>
