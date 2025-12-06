@@ -6,6 +6,11 @@ const EmpruntSevice = {
         return res.data;
     },
 
+    getRecent: async () => {
+        const res = await axiosInstance.get("/emprunt/recent");
+        return res.data;
+    },
+
     create: async (data) => {
         const res = await axiosInstance.post("/emprunt/create", data);
         return res.data;

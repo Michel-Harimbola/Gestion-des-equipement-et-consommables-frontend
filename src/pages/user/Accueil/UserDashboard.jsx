@@ -39,52 +39,35 @@ export default function UserDashboard() {
               > 
                 <div className="flex justify-between mb-2">
                   <div>
-                    {enCours.equipement.map(eq => ( 
-                      <h1 
-                        key={`${enCours.id}-${eq.id}`}
-                        className="text-2xl font-semibold">
-                          {eq.marque}
+                      <h1 className="text-2xl font-semibold">
+                        {enCours.equipement.marque}
                       </h1>
-                    ))}
                   </div>
                   <div className="flex space-x-2">
-                    {enCours.equipement.map(eq => ( 
-                      <p 
-                        key={`${enCours.id}-${eq.id}`}
-                        className="text-lg font-semibold mr-1"
-                      >
-                        N° {eq.numeroDeSerie}
+                      <p className="text-lg font-semibold mr-1">
+                        N° {enCours.equipement.numeroDeSerie}
                       </p>
-                    ))}
                   </div>
                 </div>
                 
                 <div className="flex justify-between">
                   <div className="flex space-x-2">
-                    {enCours.equipement.map(eq => ( 
-                      <p key={`${enCours.id}-${eq.id}`}>
-                        Nom: {eq.nom}
-                      </p>
-                    ))}
+                    {enCours.equipement.nom}
                   </div>
                   <div className="flex space-x-2 mr-1 ">
-                    {enCours.equipement.map(eq => ( 
-                      <div key={`${enCours.id}-${eq.id}`}>
-                        {eq.etatMateriel == "BonEtat" ? (
+                        {enCours.equipement.etatMateriel == "BonEtat" ? (
                           <p>Bon état</p>
-                        ) : eq.etatMateriel == "EtatMoyen" ? (
+                        ) : enCours.equipement.etatMateriel == "EtatMoyen" ? (
                           <p>Etat moyen</p>
-                        ) : eq.etatMateriel == "MauvaisEtat" ? (  
+                        ) : enCours.equipement.etatMateriel == "MauvaisEtat" ? (  
                           <p>Mauvais état</p>
-                        ) : eq.etatMateriel == "HorsUsage" ? (
+                        ) : enCours.equipement.etatMateriel == "HorsUsage" ? (
                           <p>Hors usage</p>
-                        ) : eq.etatMateriel == "EnReparation" ? (
+                        ) : enCours.equipement.etatMateriel == "EnReparation" ? (
                           <p>En réparation</p>
                         ) : (
                           <p>Neuf</p>
                         )}
-                      </div>
-                    ))}
                   </div>
                 </div>
 

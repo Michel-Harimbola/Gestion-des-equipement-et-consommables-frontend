@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import userService from "../../../services/admin/usersService";
 import { toast } from "react-toastify";
 
@@ -7,7 +7,16 @@ export const fetchUsers = createAsyncThunk("user/fetchAll", async (_, thunkAPI) 
   try {
     return await userService.getAll();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
+    return thunkAPI.rejectWithValue(error.response?.data?.message);
+  }
+});
+
+export const getUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
+  try {
+    const res = await userService.getById();
+    return res;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
 
@@ -44,11 +53,13 @@ export const deleteUser = createAsyncThunk("user/delete", async (id, thunkAPI) =
   }
 });
 
+const savedUser = localStorage.getItem("currentUser");
 
 const userSlice = createSlice({
   name: "users",
   initialState: {
     items: [],
+    currentUser: savedUser ? JSON.parse(savedUser) : null,
     loading: false,
     error: null,
   },
@@ -65,6 +76,14 @@ const userSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        localStorage.setItem("currentUser", JSON.stringify(action.payload));
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.items.push(action.payload);

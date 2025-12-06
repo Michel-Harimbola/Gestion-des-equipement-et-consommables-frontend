@@ -51,8 +51,8 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                   value={form.equipementId}
                   onChange={handleChange}  
                   name="equipementId"
-                  className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white 
-                    dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer">
+                  className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white 
+                    dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer">
                   {items
                     .filter((eq) => eq.etat === "Disponible")
                     .map((eq) => (
@@ -68,8 +68,8 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                 value={form.dateRetourPrevu}
                 onChange={handleChange}
                 type="date"
-                className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-white 
-                  dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-white 
+                  dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
               />
           </div>
 
@@ -78,8 +78,8 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
               name='statut'
               value={form.statut}
               onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white 
-                dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+              className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white 
+                dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer"
             >
               <option value="enAttente">En attente</option>
               <option value="approuver">Approuver</option>
@@ -99,7 +99,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
             <button
               type="submit"
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-blue-500 hover:bg-blue-600 dark:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"
+                    bg-fuchsia hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md"
             >
               {initialData ? "Mettre à jour" : "Créer"}
             </button>

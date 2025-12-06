@@ -34,9 +34,9 @@ export default function DemandeEmprunt() {
                         .filter((demande) => demande.statut === "enAttente")
                         .map((demande, index) => (
                             <div key={index} className="flex justify-between items-center">
-                                <div className="w-full flex flex-row justify-between bg-gray-50 dark:bg-gray-600 px-4 py-3 rounded-xl">
+                                <div className="w-full flex flex-row justify-between bg-gray-100 dark:bg-gray-600 px-4 py-3 rounded-xl">
                                     <div className="flex flex-row items-center gap-4">
-                                        <div className="bg-gray-200 px-2 py-4 rounded-lg">
+                                        <div className="bg-slate-200 px-2 py-4 rounded-lg">
                                             <FaRegEnvelope className="w-8 h-8 dark:text-gray-600"/>
                                         </div>
                                         <div>
@@ -59,7 +59,7 @@ export default function DemandeEmprunt() {
                                     <div className="flex flex-row items-center gap-2">
                                         <button
                                             onClick={() => toggleDetails(demande.id)}
-                                            className="p-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-800 transition-transform"
+                                            className="p-2 bg-slate-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-800 transition-transform"
                                         >
                                             <FiChevronDown 
                                                 className={`w-6 h-6 transition-transform ${openDetails[demande.id] ? 'rotate-90' : 'rotate-0'}`} 
@@ -68,13 +68,13 @@ export default function DemandeEmprunt() {
                                         <div className="flex flex-col lg:flex-row gap-2">
                                             <button
                                                 onClick={() => dispatch(approuverEmprunt(demande.id))}
-                                                className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
+                                                className="bg-slate-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                                             >
                                                 <LuCheck className="w-7 h-7 text-green-500 dark:text-green-400"/>
                                             </button>
                                             <button 
                                                 onClick={() => dispatch(refuserEmprunt(demande.id))}
-                                                className="bg-gray-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
+                                                className="bg-slate-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                                             >
                                                 <LuX className="w-7 h-7 text-red-500 dark:text-red-400"/>
                                             </button>

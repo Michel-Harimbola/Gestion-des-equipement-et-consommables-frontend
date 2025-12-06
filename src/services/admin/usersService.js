@@ -6,6 +6,11 @@ const userService = {
     return res.data;
   },
 
+  getById: async (id) => {
+    const res = await axiosInstance.get(`/user/${id}`);
+    return res.data;
+  },
+
   create: async (data) => {
     const res = await axiosInstance.post("/user/create", data);
     return res.data;

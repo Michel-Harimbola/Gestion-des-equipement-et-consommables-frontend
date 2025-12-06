@@ -83,8 +83,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         >
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
-                <Link to="/UserDashboard" className="text-3xl font-serif font-semibold flex items-center gap-x-2">
-                    <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-blue-500 rounded-full" />
+                <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                    <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia dark:bg-marine rounded-full" />
                     YouthBorrow
                 </Link>
             </div>
@@ -109,7 +109,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                 {/* Logo and close icon Inside Toggle Menu */}
                 <div className="w-full md:hidden flex items-center justify-between px-4">
                     <Link to="/UserDashboard" className="text-2xl font-semibold text-sky-700 dark:text-white flex items-center gap-x-2">
-                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-blue-500 rounded-full" />
+                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia rounded-full" />
                         YouthBorrow
                     </Link>
                     <div className="md:hidden flex justify-end py-6">
@@ -136,7 +136,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     setIsActive(item.id);
                                     isOpen(false);                                
                                 }}
-                                className={`ease-in-out ${isActive == item.id ? "text-blue-500 hover:text-blue-700  lg:border-b-3 pb-6" : "hover:text-blue-500"}`}>
+                                className={`ease-in-out ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-6" : "hover:text-fuchsia"}`}>
                                     {item.name}
                                 </Link>
                             </li>
@@ -147,7 +147,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                     <div className="flex flex-col md:flex-row items-center gap-4">
                         <button 
                             onClick={toggleDarkMode}
-                            className="hover:bg-gray-200 dark:bg-slate-50 dark:text-slate-700 rounded-full p-3 -mr-2" 
+                            className="hover:bg-gray-200 dark:bg-slate-50 dark:text-slate-700 rounded-full p-2 -mr-2" 
                         >
                             {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
                         </button>

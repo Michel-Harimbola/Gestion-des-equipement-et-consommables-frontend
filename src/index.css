@@ -8,3 +8,8 @@
     --toastify-color-warning: #facc15;
     --toastify-color-info: #3b82f6;
 }
+
+@theme {
+  --color-marine: #010b40;
+  --color-fuchsia: #f13544; /* Remplace par ta vraie couleur */
+}

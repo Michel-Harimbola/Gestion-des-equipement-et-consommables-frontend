@@ -7,6 +7,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
   const [form, setForm] = useState({
     dateRetourPrevu: "",
     equipementId: "",
+    usage: "",
   });
   const dispatch = useDispatch();
 
@@ -15,7 +16,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
       setForm({
         dateRetourPrevu: initialData.dateRetourPrevu?.split("T")[0]  || "",
         equipementId: initialData.equipementId || "",
-        statut: initialData.statut || ""
+        usage: initialData.usage || ""
       });
     }
   }, [initialData]);
@@ -38,6 +39,8 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
       dispatch(fetchEquipements());
   }, [dispatch]);
 
+  const equipementsDisponibles = items.filter((eq) => eq.disponibilite === "Disponible");
+
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
       <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg">
@@ -51,13 +54,11 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                   value={form.equipementId}
                   onChange={handleChange}  
                   name="equipementId"
-                  className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
-                    dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer">
-                  {items
-                    .filter((eq) => eq.etat === "Disponible")
-                    .map((eq) => (
-                    <option key={eq.id} value={form.equipementId = eq.id}>
-                        {eq.nom}
+                  className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
+                    dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer">
+                  {equipementsDisponibles.map((eq) => (
+                    <option key={eq.id} value={eq.id}>
+                        {eq.marque}
                     </option>
                   ))}
               </select>
@@ -68,24 +69,21 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                 value={form.dateRetourPrevu}
                 onChange={handleChange}
                 type="date"
-                className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-gray-400 
-                  dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 dark:bg-gray-600 dark:placeholder-gray-400 
+                  dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
               />
           </div>
 
-          <div className="relative">
-            <select
-              name='statut'
-              value={form.statut}
-              onChange={handleChange}
-              className="w-full pl-5 pr-4 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
-                dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
-            >
-              <option value="EnCours">En cours</option>
-              <option value="EnRetard">En retard</option>
-              <option value="Retourner">Retourner</option>
-            </select>
-          </div>
+          <textarea 
+              name="usage" 
+              type="description"
+              value={form.usage}
+              onChange={handleChange} 
+              placeholder="Usage"
+              className="w-full text-xl pl-3 pt-2 pb-8 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
+              required
+            />
 
           <div className="flex justify-end gap-3 pt-2">
             <button
@@ -99,7 +97,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
             <button
               type="submit"
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-blue-500 hover:bg-blue-600 dark:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"
+                    bg-fuchsia hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md"
             >
               {initialData ? "Mettre à jour" : "Créer"}
             </button>

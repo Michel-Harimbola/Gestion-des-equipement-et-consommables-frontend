@@ -7,7 +7,15 @@ export const fetchEmprunts = createAsyncThunk("emprunt/fetchAll", async (_, thun
   try {
     return await empruntService.getAll();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
+    return thunkAPI.rejectWithValue(error.response?.data?.message);
+  }
+});
+
+export const fetchRecent = createAsyncThunk("emprunt/recent", async (_, thunkAPI) => {
+  try {
+    return await empruntService.getRecent();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message);
   }
 });
 
@@ -17,7 +25,7 @@ export const createEmprunt = createAsyncThunk("emprunt/create", async (data, thu
     toast.success("Emprunt créé avec succès !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la création");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -28,7 +36,7 @@ export const updateEmprunt = createAsyncThunk("emprunt/update", async ({ id, dat
     toast.success("Emprunt mis à jour !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -39,7 +47,7 @@ export const deleteEmprunt = createAsyncThunk("emprunt/delete", async (id, thunk
     toast.success("Emprunt supprimé !");
     return id;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la suppression");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -65,6 +73,10 @@ const empruntSlice = createSlice({
       .addCase(fetchEmprunts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchRecent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload;
       })
       .addCase(createEmprunt.fulfilled, (state, action) => {
         state.items.push(action.payload);

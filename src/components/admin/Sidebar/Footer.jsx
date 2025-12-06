@@ -1,13 +1,22 @@
 import { IoIosLogOut } from "react-icons/io"
 import { FaUserCircle } from "react-icons/fa"
 import { logout } from "../../../redux/slices/auth/authSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { getUser } from "../../../redux/slices/admin/UserSlice"
+import { useEffect } from "react"
 
 
 export default function Footer() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { currentUser } = useSelector((state) => state.users); 
+
+    useEffect(() => {
+        if(!currentUser) {
+            dispatch(getUser(0))
+        }
+    }, [dispatch, currentUser]);
 
     const toggleLogout = () => {
         dispatch(logout());
@@ -23,8 +32,15 @@ export default function Footer() {
             </button>
             <div className="flex flex-row items-center gap-2">
                 <div className="text-sm font-semibold">
-                    <p className="text-end">Admin</p>
-                    <p className="text-end">Harimbola</p>
+                    <div className="text-end">
+                        {currentUser == "admin" ? (
+                            <p>Admin</p>
+                        ) : (
+                            <p>Régisseur</p>
+                        )
+                        }
+                    </div>
+                    <p className="text-end">{currentUser?.prenom}</p>
                 </div>
                 <FaUserCircle className="w-12 h-12"/>
             </div>

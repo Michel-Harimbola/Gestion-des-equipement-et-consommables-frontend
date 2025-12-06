@@ -62,7 +62,7 @@ export default function Login() {
       <div className='grid w-full h-screen place-items-center md:bg-gray-100 dark:bg-gray-900'>
         <div className="flex w-full max-w-6xl bg-white dark:bg-gray-900 md:dark:bg-gray-800 md:shadow-[0_0_40px_3px_rgba(0,0,0,0.2)] rounded-xl overflow-hidden">
           <div className='w-full md:w-1/2 px-20 pt-40 pb-28 flex flex-col justify-center'>
-              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-14 -mt-10 text-center'>Se connexion</h2>
+              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-14 -mt-10 text-center'>Se connecter</h2>
 
               <form onSubmit={handleSubmit} className='space-y-10'>
 
@@ -78,8 +78,8 @@ export default function Login() {
                       onChange={handleChange}
                       type="text"
                       placeholder="Entrer votre email ici"
-                      className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
-                          dark:placeholder-white dark:text-white focus:ring-blue-500 transition duration-150"
+                      className="w-full pl-16 pr-4 py-4 border-l-5 border-fuchsia rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
+                          dark:placeholder-white dark:text-white focus:ring-fuchsia transition duration-150"
                       required
                     /> 
                   </div>
@@ -95,14 +95,14 @@ export default function Login() {
                       onChange={handleChange}
                       type={ showPassword ? "text" : "password" }
                       placeholder="Entrer votre mot de passe ici"
-                      className="w-full pl-16 pr-4 py-4 border-l-5 border-blue-700 rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
-                          dark:placeholder-white dark:text-white focus:ring-blue-500 transition duration-150"
+                      className="w-full pl-16 pr-4 py-4 border-l-5 border-fuchsia rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
+                          dark:placeholder-white dark:text-white focus:ring-fuchsia transition duration-150"
                       required
                     />
                     <button
                       type="button"
                       onClick={togglePasswordVisibility}
-                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400  hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 focus:outline-none"
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400  hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 focus:outline-none cursor-pointer"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -118,7 +118,7 @@ export default function Login() {
                   <button
                   type="submit"
                   className="flex space-x-2 px-4 py-3 border border-transparent text-sm font-medium rounded-lg text-white
-                   bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"
+                   bg-fuchsia hover:bg-red-600 dark:hover:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"
                   >
                     <LogInIcon className="w-5 h-5" />
                     <span>CONNEXTION</span>
@@ -129,7 +129,7 @@ export default function Login() {
                   Vous n'avez pas de compte?
                   <span 
                    onClick={() => navigate("/register")}
-                   className='text-blue-600 hover:text-blue-400'>
+                   className='text-fuchsia hover:text-fuchsia cursor-pointer'>
                     S'inscrire
                   </span> 
                 </p>
@@ -138,7 +138,7 @@ export default function Login() {
           </div>
 
           <div className="hidden md:flex md:w-1/2 p-12 flex-col items-center justify-center text-center text-white 
-              bg-linear-to-br/srgb from-blue-700 via-blue-600 to-indigo-700 dark:from-blue-900 dark:via-blue-800 dark:to-indigo-900 relative">
+              bg-fuchsia relative">
                       
             <div className="absolute top-0 left-0 w-full h-full opacity-30 "></div>
                     
@@ -153,7 +153,7 @@ export default function Login() {
                 onClick={() => navigate("/register")}
                 type="button"
                 className="px-8 py-3 border-2 border-white text-white font-medium rounded-full 
-                           hover:bg-white hover:text-blue-600 transition duration-300 backdrop-blur-sm"
+                           hover:bg-white hover:text-fuchsia transition duration-300 backdrop-blur-sm cursor-pointer"
               >
                 S'INSCRIRE
               </button>
@@ -164,7 +164,7 @@ export default function Login() {
       </div>
       <div 
         onClick={toggleDarkMode}
-        className='w-full flex justify-end absolute'>
+        className='w-full flex justify-end absolute cursor-pointer'>
         {darkMode? <FaSun className='w-6 h-6 mt-6 mr-8 dark:text-white'/> : <FaMoon className='w-6 h-6 mt-6 mr-8' /> }
       </div>
     </div>

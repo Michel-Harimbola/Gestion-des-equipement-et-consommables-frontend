@@ -17,8 +17,8 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                             <HiOutlineMenuAlt2 className="text-2xl"/>
                         </button>
                         <a href="#" className="flex ms-2 md:me-24 gap-2">
-                            <img src={YouthComputing} alt="Logo" className="w-8 h-8 bg-blue-500 rounded-full"/>
-                            <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                            <img src={YouthComputing} alt="Logo" className="w-8 h-8 bg-fuchsia dark:bg-marine rounded-full"/>
+                            <span className="self-center text-marine dark:text-fuchsia text-xl font-semibold sm:text-2xl whitespace-nowrap">
                                 YouthStock
                             </span>
                         </a>
@@ -28,7 +28,7 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                         <NotificationBell />
                         <button 
                             onClick={toggleDarkMode}
-                            className="dark:bg-slate-50 dark:text-slate-700 rounded-full p-2" 
+                            className="dark:bg-slate-50 dark:text-slate-700 hover:bg-slate-200 rounded-full p-2 cursor-pointer"
                         >
                             {darkMode ? <FaSun /> : <FaMoon />}
                         </button>

@@ -45,7 +45,7 @@ export default function MesEmprunts() {
           {/* ordi */}
           <div className="hidden md:block overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl">
             <table className="w-full text-sm sm:text-base text-gray-700">
-              <thead className="bg-sky-600 dark:bg-blue-900 text-white">
+              <thead className="bg-fuchsia text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">#</th>
                   <th className="py-3 px-4 text-left">Date d’emprunt</th>
@@ -59,7 +59,7 @@ export default function MesEmprunts() {
                 {filteredItems.map((emprunt, index) => (
                   <tr
                     key={emprunt.id}
-                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-900 dark:odd:bg-gray-800 dark:text-white transition-colors"
                   >
                     <td className="py-2 px-4 font-medium">{index + 1}</td>
                     <td className="py-2 px-4">
@@ -85,9 +85,7 @@ export default function MesEmprunts() {
                       </span>
                     </td>
                     <td className="py-2 px-4">
-                      {emprunt.equipement.map((eq, i) => (
-                        <p key={i}>{eq.nom}</p>
-                      ))}
+                      {emprunt.equipement.nom}
                     </td>
                   </tr>
                 ))}
@@ -104,9 +102,7 @@ export default function MesEmprunts() {
               >
                 <div className="flex justify-between mb-2">
                   <div className="text-2xl font-semibold">
-                    {emprunt.equipement.map((eq, i) => (
-                      <span key={i}>{eq.nom}</span>
-                    ))}
+                    {emprunt.equipement.nom}
                   </div>
                 </div>
                 <p>

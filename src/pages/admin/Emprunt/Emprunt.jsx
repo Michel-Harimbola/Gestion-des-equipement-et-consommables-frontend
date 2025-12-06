@@ -47,7 +47,7 @@ export default function Emprunt() {
                 <button
                     onClick={handleAdd}
                     className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-blue-500 hover:bg-blue-600 dark:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md"       
+                    bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
                 >
                     Ajouter <span className="text-2xl font-bold">+</span>
                 </button>
@@ -58,7 +58,7 @@ export default function Emprunt() {
                   <p>Chargement...</p>
                 ) : (
                   <table className="min-w-full text-lg text-gray-700">
-                    <thead className="bg-sky-500 dark:bg-blue-900 text-white">
+                    <thead className="bg-fuchsia text-white">
                       <tr>
                         <th className="py-3 px-4 text-left">ID</th>
                         <th className="py-3 px-4 text-left">Date d’emprunt</th>
@@ -97,9 +97,7 @@ export default function Emprunt() {
                               </span>
                             </td>
                             <td className="py-2 px-4">
-                              {emprunt.equipement.map(eq => (
-                                <p>{eq.nom}</p>
-                              ))}
+                              {emprunt.equipement.nom}
                             </td>
                             <td className="p-2 space-x-8 flex">
                                 <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">
