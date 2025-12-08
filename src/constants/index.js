@@ -4,8 +4,6 @@ import {
   IoIosStats,
   IoIosSettings,
   IoIosPerson,
-  IoIosPersonAdd,
-  IoIosEyeOff,
 } from "react-icons/io";
 import {
   FaChartBar,
@@ -13,10 +11,10 @@ import {
   FaHandHolding,
   FaBoxOpen,
   FaTools,
-  FaCogs
+  FaCogs,
+  FaBox
 } from "react-icons/fa";
-
-import { LuClipboardList} from "react-icons/lu";
+import { LuClipboardList, LuLaptop } from "react-icons/lu";
 
 
 export const links = [
@@ -69,21 +67,21 @@ export const links = [
 
 export const employeesData = [
   {
-    title: "Total Empolyees",
-    icon: IoIosPerson,
+    title: "Total Utilisateur",
     count: 200,
+    icon: IoIosPerson,
     bgColor: "bg-gray-100",
   },
   {
-    title: "On Leave",
-    icon: IoIosEyeOff,
-    count: 15,
+    title: "Equipement Plus emprunté",
+    count: 200,
+    icon: LuLaptop,
     bgColor: "bg-blue-100",
   },
   {
-    title: "New Joinee",
-    icon: IoIosPersonAdd,
-    count: 25,
+    title: "Consommable Plus utilisé",
+    count: 200,
+    icon: FaBox,
     bgColor: "bg-yellow-100",
   },
 ];

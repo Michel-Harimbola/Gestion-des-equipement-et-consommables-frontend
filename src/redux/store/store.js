@@ -14,6 +14,7 @@ import equipementsReducer from "../slices/admin/EquipementSlice";
 import consommableReducer from "../slices/admin/ConsommableSlice";
 import utilisationConsommableReducer from "../slices/admin/utilisationConsommableSlice";
 import notificationsReducer from "../slices/admin/notificationSlice";
+import dashboardReducer from "../slices/admin/dashboardSlice";
 
 export const store = configureStore({
     reducer: { 
@@ -32,5 +33,6 @@ export const store = configureStore({
         consommables: consommableReducer,
         utilisation: utilisationConsommableReducer,
         notifications: notificationsReducer,
+        dashboard: dashboardReducer,
     },
 });

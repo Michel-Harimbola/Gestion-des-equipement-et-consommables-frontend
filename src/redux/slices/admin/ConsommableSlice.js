@@ -7,7 +7,7 @@ export const fetchConsommables = createAsyncThunk("consommable/fetchAll", async 
   try {
     return await ConsommableSevice.getAll();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
+    return thunkAPI.rejectWithValue(error.response?.data?.message);
   }
 });
 
@@ -17,7 +17,7 @@ export const createConsommable = createAsyncThunk("consommable/create", async (d
     toast.success("Consommable créé avec succès !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la création");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -28,7 +28,7 @@ export const updateConsommable = createAsyncThunk("consommable/update", async ({
     toast.success("Consommable mis à jour !");
     return res;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -39,7 +39,7 @@ export const deleteConsommable = createAsyncThunk("consommable/delete", async (i
     toast.success("Consommable supprimé !");
     return id;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Erreur lors de la suppression");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
