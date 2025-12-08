@@ -8,7 +8,7 @@ export default function Notification({ notifications, onClose }) {
 
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold dark:text-white">Notifications</h2>
-        <button onClick={onClose} className="text-gray-600 dark:text-gray-300">
+        <button onClick={onClose} className="text-gray-600 dark:text-gray-300 cursor-pointer">
           <X size={20} />
         </button>
       </div>
@@ -22,7 +22,7 @@ export default function Notification({ notifications, onClose }) {
           {notifications.map((notif) => (           
             <li 
               key={notif.id} 
-              className={`p-3 rounded-lg flex gap-3 items-center 
+              className={`p-3 rounded-lg flex gap-3 items-center hover:bg-gray-200 dark:hover:bg-gray-600
               ${notif.vu ? "bg-gray-100 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900"}`}
             >
               {notif.type == "AlerteStock" ? (

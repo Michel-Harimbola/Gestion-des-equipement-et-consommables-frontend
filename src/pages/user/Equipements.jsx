@@ -50,7 +50,7 @@ export default function Equipements() {
               : val === "Emprunte"
               ? "Emprunté"
               : val === "EnMaintenance"
-              ? "En Maintenance"
+              ? "En maintenance"
               : val
               }
             </button>

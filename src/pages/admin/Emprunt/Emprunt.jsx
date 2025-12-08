@@ -61,11 +61,12 @@ export default function Emprunt() {
                     <thead className="bg-fuchsia text-white">
                       <tr>
                         <th className="py-3 px-4 text-left">ID</th>
+                        <th className="py-3 px-4 text-left">Utilisateur</th>
+                        <th className="py-3 px-4 text-left">Équipements</th>
+                        <th className="py-3 px-4 text-left">Statut</th>
                         <th className="py-3 px-4 text-left">Date d’emprunt</th>
                         <th className="py-3 px-4 text-left">Date de retour prévu</th>
                         <th className="py-3 px-4 text-left">Date de retour effective</th>
-                        <th className="py-3 px-4 text-left">Statut</th>
-                        <th className="py-3 px-4 text-left">Équipements</th>
                         <th className="py-3 px-4 text-left">Actions</th>
                       </tr>
                     </thead>
@@ -76,6 +77,25 @@ export default function Emprunt() {
                             className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
+                            <td className="py-2 px-4 font-medium">{emprunt.utilisateur.nom}</td>
+                            <td className="py-2 px-4">
+                              {emprunt.equipement.nom || "_"}
+                            </td>
+                            <td className="py-2 px-4 -ml-4 flex">
+                                {emprunt.statut === "EnCours"? (
+                                  <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    En cours
+                                  </p>
+                                ):emprunt.statut === "EnRetard"?(
+                                  <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    En retard
+                                  </p>
+                                ):(
+                                  <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    Retourné
+                                  </p>
+                                )}
+                            </td>
                             <td className="py-2 px-4">
                               {new Date(emprunt.dateEmprunt).toLocaleDateString()}
                             </td>
@@ -84,20 +104,6 @@ export default function Emprunt() {
                             </td>
                             <td className="py-2 px-4">
                               {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
-                            </td>
-                            <td className="py-2 px-4">
-                              <span
-                                className={`px-3 py-1 rounded-full text-lg font-semibold ${
-                                  emprunt.statut === "EnCours"
-                                    ? "bg-yellow-100 text-yellow-700"
-                                    : "bg-green-100 text-green-700"
-                                }`}
-                              >
-                                {emprunt.statut}
-                              </span>
-                            </td>
-                            <td className="py-2 px-4">
-                              {emprunt.equipement.nom}
                             </td>
                             <td className="p-2 space-x-8 flex">
                                 <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">

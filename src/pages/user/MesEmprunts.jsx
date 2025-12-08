@@ -23,7 +23,7 @@ export default function MesEmprunts() {
 
       {/* Boutons de filtre */}
       <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-10 mb-8">
-        {["all", "EnCours", "Retourner"].map((val) => (
+        {["all", "EnCours", "EnRetard", "Retourner"].map((val) => (
           <button
             key={val}
             onClick={() => setFilter(val)}
@@ -36,7 +36,9 @@ export default function MesEmprunts() {
             { val === "all" 
             ? "Tous" 
             : val === "EnCours"
-            ? "En Cours"
+            ? "En cours"
+            : val === "EnRetard" 
+            ?"En ratard"
             : "Retourné"
             }
           </button>
@@ -78,17 +80,21 @@ export default function MesEmprunts() {
                         ? "Pas encore"
                         : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
                     </td>
-                    <td className="py-2 px-4">
-                      <span
-                        className={`px-3 py-1 rounded-full font-semibold ${
-                          emprunt.statut === "EnCours"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-green-100 text-green-700"
-                        }`}
-                      >
-                        {emprunt.statut}
-                      </span>
-                    </td>
+                    <td className="py-2 px-4 flex">
+                                {emprunt.statut === "EnCours"? (
+                                  <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    En cours
+                                  </p>
+                                ):emprunt.statut === "EnRetard"?(
+                                  <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    En retard
+                                  </p>
+                                ):(
+                                  <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    Retourné
+                                  </p>
+                                )}
+                            </td>
                     <td className="py-2 px-4">
                       {emprunt.equipement.nom}
                     </td>

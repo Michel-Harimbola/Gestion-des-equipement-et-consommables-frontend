@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDemandes, createDemande, deleteDemande, updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { fetchDemandes, deleteDemande, updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
 import DemandeForm from "./demandeForm";
 import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
@@ -16,11 +16,6 @@ export default function Demande() {
       dispatch(fetchDemandes());
     }, [dispatch]);
 
-    const handleAdd = () => {
-      setSelectedDemande(null);
-      setIsModalOpen(true);
-    };
-
     const handleEdit = (demande) => {
       setSelectedDemande(demande);
       setIsModalOpen(true);
@@ -35,25 +30,13 @@ export default function Demande() {
     const handleSubmit = (formData) => {
       if (selectedDemande) {
         dispatch(updateDemande({ id: selectedDemande.id, data: formData }));
-      } else {
-        dispatch(createDemande(formData));
       }
       setIsModalOpen(false);
     };
 
     return (
         <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
-            <div className="flex justify-end">
-                <button
-                    onClick={handleAdd}
-                    className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
-                >
-                    Ajouter <span className="text-2xl font-bold">+</span>
-                </button>
-            </div>
-
-            <div className="overflow-x-auto rounded-lg mt-10">
+            <div className="overflow-x-auto rounded-lg mt-22">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -61,11 +44,11 @@ export default function Demande() {
                     <thead className="bg-fuchsia text-white">
                       <tr>
                         <th className="py-3 px-4 text-left">ID</th>
+                        <th className="py-3 px-4 text-left">Utilisateur</th>
+                        <th className="py-3 px-4 text-left">Équipements</th>
+                        <th className="py-3 px-4 text-left">Statut</th>
                         <th className="py-3 px-4 text-left">Date d’emprunt</th>
                         <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                        <th className="py-3 px-4 text-left">Date de retour effective</th>
-                        <th className="py-3 px-4 text-left">Statut</th>
-                        <th className="py-3 px-4 text-left">Équipements</th>
                         <th className="py-3 px-4 text-left">Type</th>
                         <th className="py-3 px-4 text-left">Actions</th>
                       </tr>
@@ -77,27 +60,25 @@ export default function Demande() {
                             className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
+                            <td className="py-2 px-4 font-medium">{demande.utilisateur.nom}</td>
+                            <td className="py-2 px-4">{demande.equipement.nom}</td>
+                            <td className="py-2 px-4 -ml-4 flex">
+                                {demande.statut === "refuser"? (
+                                  <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    Refuser
+                                  </p>
+                                ):(
+                                  <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                    Approuver
+                                  </p>
+                                )}
+                            </td>
                             <td className="py-2 px-4">
                               {new Date(demande.dateDemande).toLocaleDateString()}
                             </td>
                             <td className="py-2 px-4">
                               {new Date(demande.dateRetourPrevu).toLocaleDateString()}
                             </td>
-                            <td className="py-2 px-4">
-                              {demande.dateRetourEffective == null ? "pas encore" : new Date(demande.dateRetourEffective).toLocaleDateString()}
-                            </td>
-                            <td className="py-2 px-4">
-                              <span
-                                className={`px-3 py-1 rounded-full text-lg font-semibold ${
-                                  demande.statut === "EnCours"
-                                    ? "bg-yellow-100 text-yellow-700"
-                                    : "bg-green-100 text-green-700"
-                                }`}
-                              >
-                                {demande.statut}
-                              </span>
-                            </td>
-                            <td className="py-2 px-4">{demande.equipement.nom}</td>
                              <td className="py-2 px-4">{demande.type}</td>
                             <td className="p-2 space-x-8 flex">
                                 <button onClick={() => handleEdit(demande)} className="text-xl hover:text-white">

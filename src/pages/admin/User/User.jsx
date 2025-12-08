@@ -78,7 +78,15 @@ export default function User() {
                           <td className="p-2">{user.nom}</td>
                           <td className="p-2">{user.prenom}</td>
                           <td className="p-2">{user.email}</td>
-                          <td className="p-2">{user.role}</td>
+                          <td className="p-2">
+                            { user.role === "regisseurEquipementInterne"? (
+                              <p>Régisseur des équipements interne</p>
+                            ): user.role === "personnelInterne"? (
+                              <p>Personnel interne</p>
+                            ): (
+                              <p>{user.role}</p>
+                            )}
+                          </td>
                           <td className="p-2 space-x-8 flex">
                             <button onClick={() => handleEdit(user)} className="text-xl hover:text-white">
                                <GrUpdate />

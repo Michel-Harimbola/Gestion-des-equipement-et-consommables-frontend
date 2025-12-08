@@ -39,7 +39,11 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
       dispatch(fetchEquipements());
   }, [dispatch]);
 
-  const equipementsDisponibles = items.filter((eq) => eq.disponibilite === "Disponible");
+  const equipementsDisponibles = initialData
+    ? items.filter((eq) => 
+        eq.disponibilite === "Disponible" || eq.id === initialData.equipementId
+      )
+    : items.filter((eq) => eq.disponibilite === "Disponible");
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
@@ -56,6 +60,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
                   name="equipementId"
                   className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-gray-400 
                     dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer">
+                  <option value="">Choisir un équipement</option>
                   {equipementsDisponibles.map((eq) => (
                     <option key={eq.id} value={eq.id}>
                         {eq.marque}

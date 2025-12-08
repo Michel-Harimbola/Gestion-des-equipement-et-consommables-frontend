@@ -81,16 +81,20 @@ export default function Equipement() {
                             <td className="py-2 px-4">{equipement.nom}</td>
                             <td className="py-2 px-4">{equipement.numeroDeSerie}</td>
                             <td className="py-2 px-4">{equipement.marque}</td>
-                            <td className="py-2 px-4">
-                              <span
-                                className={`px-3 py-1 rounded-full text-lg font-semibold ${
-                                  equipement.disponibilite === "Disponible"
-                                  ? "bg-green-100 text-green-700"
-                                    : "bg-yellow-100 text-yellow-700"
-                                }`}
-                              >
-                                {equipement.disponibilite}
-                              </span>
+                            <td className="py-2 px-4 flex">
+                              {equipement.disponibilite === "Emprunte"? (
+                                <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                  Emprunté
+                                </p>
+                              ):equipement.disponibilite === "EnMaintenance"? (
+                                <p className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-lg font-semibold">
+                                  En maintenance
+                                </p>
+                              ):(
+                                <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                                  Disponible
+                                </p>
+                              )}
                             </td>
                             <td className="py-2 px-4">{equipement.etatMateriel}</td>
                             <td className="py-2 px-4">{equipement.obtention}</td>
