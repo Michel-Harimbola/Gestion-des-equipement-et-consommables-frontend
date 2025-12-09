@@ -10,6 +10,11 @@ const DashboardService = {
         const res = await axiosInstance.get("/dashboard/empruntsParMois");
         return res.data;
     },
+
+    getEquipementsStatus: async () => {
+        const res = await axiosInstance.get("/dashboard/equipementsStatus");
+        return res.data;
+    }
 };
 
 export default DashboardService;

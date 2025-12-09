@@ -34,17 +34,19 @@ export default function AdminDashboardLayout() {
     }, [darkMode]);
 
     return (
-        <div className={darkMode ? "dark" : ""}>
+        <div className={`flex flex-col h-screen ${darkMode ? "dark" : ""}`}>
             <Header 
                 toggleDarkMode={toggleDarkMode} 
                 darkMode={darkMode}
                 toggleSidebar={toggleSidebar}
             />
-            <Sidebar isSidebarOpen={isSidebarOpen} />
-            
-            <main>
-                <Outlet />
-            </main>
+            <div className="flex flex-1 overflow-hidden">
+                <Sidebar isSidebarOpen={isSidebarOpen} />
+                
+                <main className="flex-1 bg-gray-100 dark:bg-gray-900 lg:overflow-hidden overflow-auto">
+                    <Outlet />
+                </main>
+            </div>
         </div>
     );
 }

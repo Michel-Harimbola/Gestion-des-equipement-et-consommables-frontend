@@ -8,19 +8,17 @@ import Team from "../../../components/admin/Team/Team";
 
 function AdminDashboard({ darkMode }) {
   return (
-    <div>
-      <Main>
-          <Content>
-              <Stats darkMode={darkMode}/>
-              <div className="flex flex-col gap-3 lg:flex-row">
-                  <DemandeEmprunt />
-                  <Team />
-              </div>
-          </Content>
-          <Profile darkMode={darkMode}/>
-      </Main>
-    </div>
+    <Main>
+        <Content>
+            <Stats darkMode={darkMode}/>
+            <div className="flex flex-col gap-3 lg:flex-row">
+                <DemandeEmprunt />
+                <Team />
+            </div>
+        </Content>
+        <Profile darkMode={darkMode}/>
+    </Main>
   )
 }
 
-export default AdminDashboard
+export default AdminDashboard;

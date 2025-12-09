@@ -18,6 +18,13 @@ export const fetchEmpruntsParMois = createAsyncThunk("consommable/fetchEmpruntsP
   }
 });
 
+export const fetchEquipementsStatus = createAsyncThunk("dashboard/fetchEquipementsStatus", async (_, thunkAPI) => {
+  try {
+    return await DashboardService.getEquipementsStatus();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message);
+  }
+});
 
 const adminStatsSlice = createSlice({
   name: "dashboard",
@@ -32,6 +39,14 @@ const adminStatsSlice = createSlice({
     emprunts: [],
     loadingEmprunts: false,
     errorEmprunts: null,
+
+    equipementsStatus: {
+      disponibles: 0,
+      empruntes: 0,
+      maintenance: 0
+    },
+    loadingEquipements: false,
+    errorEquipements: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -61,6 +76,17 @@ const adminStatsSlice = createSlice({
         .addCase(fetchEmpruntsParMois.rejected, (state, action) => {
           state.loadingEmprunts = false;
           state.errorEmprunts = action.payload;
+        })
+        .addCase(fetchEquipementsStatus.pending, (state) => {
+          state.loadingEquipements = true;
+        })
+        .addCase(fetchEquipementsStatus.fulfilled, (state, action) => {
+          state.loadingEquipements = false;
+          state.equipementsStatus = action.payload;
+        })
+        .addCase(fetchEquipementsStatus.rejected, (state, action) => {
+          state.loadingEquipements = false;
+          state.errorEquipements = action.payload;
         });
   },
 });

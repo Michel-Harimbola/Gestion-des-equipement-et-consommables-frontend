@@ -3,9 +3,9 @@ import demandeEmpruntService from "../../../services/admin/demandeEmpruntService
 import { toast } from "react-toastify";
 
 
-export const fetchDemandes = createAsyncThunk("demande/fetchAll", async (_, thunkAPI) => {
+export const fetchDemandes = createAsyncThunk("demande/fetchAll", async ({ page = 1, limit = 10 }, thunkAPI) => {
   try {
-    return await demandeEmpruntService.getAll();
+    return await demandeEmpruntService.getAll(page, limit);
   } catch (error) {
     return thunkAPI.rejectWithValue("Erreur lors du chargement");
   }
@@ -72,8 +72,16 @@ const demandeEmpruntSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    page: 1,
+    limit: 12,
+    total: 0,
+    totalPages: 0,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDemandes.pending, (state) => {
@@ -81,7 +89,11 @@ const demandeEmpruntSlice = createSlice({
       })
       .addCase(fetchDemandes.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = action.payload.demandes;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchDemandes.rejected, (state, action) => {
         state.loading = false;
@@ -108,4 +120,5 @@ const demandeEmpruntSlice = createSlice({
   },
 });
 
+export const { setPage } = demandeEmpruntSlice.actions;
 export default demandeEmpruntSlice.reducer;

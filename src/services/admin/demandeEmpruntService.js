@@ -6,8 +6,8 @@ const demandeEmpruntService = {
         return res.data;
     },
 
-    getAll: async () => {
-        const res = await axiosInstance.get("/demande");
+    getAll: async (page = 1, limit = 12) => {
+        const res = await axiosInstance.get(`/demande?page=${page}&limit=${limit}`);
         return res.data;
     },
 

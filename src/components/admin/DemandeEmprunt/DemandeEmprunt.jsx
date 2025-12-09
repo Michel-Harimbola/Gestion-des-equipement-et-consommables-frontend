@@ -24,7 +24,7 @@ export default function DemandeEmprunt() {
     }
 
     return (
-        <div className="bg-white p-3 h-[470px] rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-4">
+        <div className="bg-white p-3 lg:h-[460px] rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-4">
             <Title>Demandes d'emprunts</Title>
             { loading ? (
                 <GlobalLoader />

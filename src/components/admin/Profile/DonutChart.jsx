@@ -1,51 +1,66 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEquipementsStatus } from "../../../redux/slices/admin/dashboardSlice";
 import Chart from "react-apexcharts";
 
 
 export default function DonutChart({ darkMode }) {
-    const options = {
-      series: [44, 55, 41],
-      options: {
-        chart: {
-          type: "donut",
-          height: 350,
+  const dispatch = useDispatch();
+
+  const { equipementsStatus } = useSelector((state) => state.dashboard);
+
+  useEffect(() => {
+      dispatch(fetchEquipementsStatus());
+  }, [dispatch]);
+
+  const options = {
+    series: [
+        equipementsStatus.disponibles,
+        equipementsStatus.empruntes,
+        equipementsStatus.maintenance,
+    ],
+    options: {
+      chart: {
+        type: "donut",
+        height: 350,
+      },
+      labels: ["Disponibles", "Empruntés", "En maintenance"],
+      colors: ["#FF5733", "#33FF57", "#3357FF"],
+      legend: {
+        position: "bottom",
+        labels: {
+          colors: darkMode ? "#dddddd" : "#000000",
         },
-        labels: ["Desktop", "Tablet", "Mobile"],
-        colors: ["#FF5733", "#33FF57", "#3357FF"],
-        legend: {
-          position: "bottom",
-          labels: {
-            colors: darkMode ? "#dddddd" : "#000000",
-          },
+      },
+      dataLabels: {
+        style: {
+          colors: ["#dddddd"],
         },
-        dataLabels: {
-          style: {
-            colors: ["#dddddd"],
-          },
-        },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 200,
-              },
-              legend: {
-                position: "bottom",
-              },
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "bottom",
             },
           },
-        ],
-      },
-    };
+        },
+      ],
+    },
+  };
 
-    return (
-        <div className="py-10 bg-white rounded-lg px-5 flex dark:bg-gray-700 items-center justify-center">
-            <Chart 
-                options={options.options} 
-                series={options.series} 
-                type="donut"
-                height={350}
-            />
-        </div>
-    )
+  return (
+    <div className="py-4 bg-white rounded-lg px-5 flex dark:bg-gray-700 items-center justify-center">
+        <Chart 
+            options={options.options} 
+            series={options.series} 
+            type="donut"
+            height={350}
+        />
+    </div>
+  )
 }
