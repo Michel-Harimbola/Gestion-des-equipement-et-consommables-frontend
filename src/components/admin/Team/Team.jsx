@@ -22,7 +22,7 @@ export default function Event() {
     }
 
     return (
-        <div className="bg-white p-5 rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-5">
+        <div className="bg-white p-5 rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-5 lg:h-[460px]">
             <Title>Les emprunts le plus récent</Title>
             {loading? (
                 <GlobalLoader />
@@ -33,8 +33,8 @@ export default function Event() {
                             <div key={index} className="flex justify-between items-center">
                                 <div className="w-full flex flex-row justify-between bg-gray-100 dark:bg-gray-600 px-4 py-3 rounded-xl">
                                     <div className="flex flex-row items-start gap-4">
-                                        <div className="px-2 py-5 bg-slate-200 rounded-lg">
-                                            <FaRegEnvelope className="w-8 h-8 dark:text-gray-600"/>
+                                        <div className="px-3 py-5 bg-gray-300 dark:bg-gray-400 rounded-lg">
+                                            <FaRegEnvelope className="w-8 h-8 dark:text-gray-200"/>
                                         </div>
                                         <div>
                                             <h1 className="text-lg font-semibold dark:text-white">{emprunt.utilisateur.prenom}</h1>

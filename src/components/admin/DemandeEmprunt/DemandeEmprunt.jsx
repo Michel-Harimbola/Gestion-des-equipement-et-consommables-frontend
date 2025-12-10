@@ -1,23 +1,31 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDemandes, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { fetchDemandesEnAttente, setPage, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
 import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
 import Title from "../../../ui/Title";
 import GlobalLoader from "../../shared/GlobalLoader";
 import { LuCheck, LuX } from "react-icons/lu";
 import { FaRegEnvelope } from "react-icons/fa";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 
 export default function DemandeEmprunt() {
     const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.demandes);
+    const { items, loading, page, totalPages } = useSelector((state) => state.demandes);
 
     const [openDetails, setOpenDetails] = useState({});
 
     useEffect(() => {
-        dispatch(fetchDemandes());
-    }, [dispatch]);
+        dispatch(fetchDemandesEnAttente({ page, limit: 3 }));
+    }, [dispatch, page]);
+
+    const handlePrev = () => {
+        if (page > 1) dispatch(setPage(page - 1));
+    };
+
+    const handleNext = () => {
+        if (page < totalPages) dispatch(setPage(page + 1));
+    };
 
     const toggleDetails = (id) => {
         setOpenDetails(prev => ({ ...prev, [id]: !prev[id] }));
@@ -32,7 +40,6 @@ export default function DemandeEmprunt() {
                 <div className="h-full overflow-y-auto">
                     <div className="flex flex-col gap-3">
                         {items
-                        .filter((demande) => demande.statut === "enAttente")
                         .map((demande, index) => (
                             <div key={index} className="flex justify-between items-center">
                                 <div className="w-full flex flex-row justify-between bg-gray-100 dark:bg-gray-600 px-4 py-3 rounded-xl">
@@ -89,6 +96,27 @@ export default function DemandeEmprunt() {
                             </div>
                         ))}
                     </div>
+                </div>
+            )}
+
+            {/* Pagination */}
+            { totalPages > 1 && (
+                <div className="flex justify-end mb-2">
+                    <button
+                        onClick={handlePrev}
+                        disabled={page === 1}
+                        className="p-1 hover:bg-gray-200 dark:hover:bg-gray-500 dark:text-gray-100 rounded disabled:opacity-40"
+                    >
+                        <FiChevronLeft className="w-6 h-6" />
+                    </button>
+                    <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+                    <button
+                        onClick={handleNext}
+                        disabled={page === totalPages}
+                        className="p-1 hover:bg-gray-200 dark:hover:bg-gray-500 dark:text-gray-100 rounded disabled:opacity-40"
+                    >
+                        <FiChevronRight className="w-6 h-6" />
+                    </button>
                 </div>
             )}
         </div>

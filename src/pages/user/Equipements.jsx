@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
+import { fetchEquipements, setPage } from "../../redux/slices/user/equipementSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
 import Emprunter from "./Emprunter";
 import ContratInfo from "./ContratInfo"; 
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 
 export default function Equipements() {
   const dispatch = useDispatch();
-  const { items, loading } = useSelector((state => state.equipement));
+  const { items, loading, page, totalPages } = useSelector((state => state.equipement));
   const [filter, setFilter] = useState("all");
   const [selectedEquipementId, setSelectedEquipementId] = useState(null);
 
@@ -16,9 +17,17 @@ export default function Equipements() {
   const [showEmprunter, setShowEmprunter] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchEquipements());
-  }, [dispatch]);
+    dispatch(fetchEquipements({ page, limit: 12 }));
+  }, [dispatch, page]);
   
+  const handlePrev = () => {
+    if (page > 1) dispatch(setPage(page - 1));
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) dispatch(setPage(page + 1));
+  };
+
   const filteredItems = items.filter((eq) => {
     if (filter == "all") return true;
     return eq.disponibilite == filter;
@@ -138,6 +147,27 @@ export default function Equipements() {
             selectedEquipementId={selectedEquipementId}
             onClose={() => setShowEmprunter(false)}
           />
+        )}
+
+        {/* Pagination */}
+        { totalPages > 1 && (
+          <div className="flex justify-center mt-8 gap-2">
+            <button
+                onClick={handlePrev}
+                disabled={page === 1}
+                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+            >
+              <FiChevronLeft className="w-7 h-7" />
+            </button>
+            <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+            <button
+              onClick={handleNext}
+              disabled={page === totalPages}
+              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+            >
+              <FiChevronRight className="w-7 h-7" />
+            </button>
+          </div>
         )}
     </div>
   )

@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEquipements, createEquipement, deleteEquipement, updateEquipement } from "../../../redux/slices/admin/EquipementSlice";
+import { fetchEquipements, createEquipement, setPage, deleteEquipement, updateEquipement } from "../../../redux/slices/admin/EquipementSlice";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import EquipementForm from "./equipementForm";
 import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
 export default function Equipement() {
     const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.equipements);
+    const { items, loading, page, totalPages } = useSelector((state) => state.equipements);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEquipement, setSelectedEquipement] = useState(null);
 
     useEffect(() => {
-      dispatch(fetchEquipements());
-    }, [dispatch]);
+      dispatch(fetchEquipements({ page, limit: 12 }));
+    }, [dispatch, page]);
+
+    const handlePrev = () => {
+      if (page > 1) dispatch(setPage(page - 1));
+    };
+  
+    const handleNext = () => {
+      if (page < totalPages) dispatch(setPage(page + 1));
+    };
 
     const handleAdd = () => {
       setSelectedEquipement(null);
@@ -115,6 +124,27 @@ export default function Equipement() {
                   </table>
                 )}
             </div>
+
+            {/* Pagination */}
+            { totalPages > 1 && (
+              <div className="flex justify-center mt-8 gap-2">
+                <button
+                    onClick={handlePrev}
+                    disabled={page === 1}
+                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+                >
+                  <FiChevronLeft className="w-7 h-7" />
+                </button>
+                <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+                <button
+                  onClick={handleNext}
+                  disabled={page === totalPages}
+                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+                >
+                  <FiChevronRight className="w-7 h-7" />
+                </button>
+              </div>
+            )}
 
             {isModalOpen && (
                 <EquipementForm

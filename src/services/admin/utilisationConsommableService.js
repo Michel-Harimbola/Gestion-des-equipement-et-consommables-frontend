@@ -6,8 +6,8 @@ const UtilisationConsommableService = {
     return res.data;
   },
 
-  async getAllUtilisations() {
-    const res = await axiosInstance.get("/utilisation");
+  async getAllUtilisations(page = 1, limit = 12) {
+    const res = await axiosInstance.get(`/utilisation?page=${page}&limit=${limit}`);
     return res.data;
   },
 

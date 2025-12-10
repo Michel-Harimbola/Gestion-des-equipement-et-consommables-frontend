@@ -11,6 +11,11 @@ const demandeEmpruntService = {
         return res.data;
     },
 
+    getDemandeEnAttente: async (page = 1, limit = 3) => {
+        const res = await axiosInstance.get(`/demande/demandesEnAttente?page=${page}&limit=${limit}`);
+        return res.data;
+    },
+
     approuver: async (id) => {
         const res = await axiosInstance.put(`/demande/${id}/approuver`);
         return res.data;

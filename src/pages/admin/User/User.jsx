@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, createUser, deleteUser, updateUser } from "../../../redux/slices/admin/UserSlice";
+import { fetchUsers, setPage, createUser, deleteUser, updateUser } from "../../../redux/slices/admin/UserSlice";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import UserForm from "./userForm";
 import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
@@ -8,13 +9,21 @@ import { GrUpdate } from "react-icons/gr";
 
 export default function User() {
     const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.users);
+    const { items, loading, page, totalPages } = useSelector((state) => state.users);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
-      dispatch(fetchUsers());
-    }, [dispatch]);
+      dispatch(fetchUsers({ page, limit: 12 }));
+    }, [dispatch, page]);
+
+    const handlePrev = () => {
+      if (page > 1) dispatch(setPage(page - 1));
+    };
+  
+    const handleNext = () => {
+      if (page < totalPages) dispatch(setPage(page + 1));
+    };
 
     const handleAdd = () => {
       setSelectedUser(null);
@@ -101,6 +110,27 @@ export default function User() {
                   </table>
                 )}
             </div>
+
+            {/* Pagination */}
+            { totalPages > 1 && (
+              <div className="flex justify-center mt-8 gap-2">
+                <button
+                    onClick={handlePrev}
+                    disabled={page === 1}
+                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+                >
+                  <FiChevronLeft className="w-7 h-7" />
+                </button>
+                <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+                <button
+                  onClick={handleNext}
+                  disabled={page === totalPages}
+                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+                >
+                  <FiChevronRight className="w-7 h-7" />
+                </button>
+              </div>
+            )}
 
             {isModalOpen && (
                 <UserForm

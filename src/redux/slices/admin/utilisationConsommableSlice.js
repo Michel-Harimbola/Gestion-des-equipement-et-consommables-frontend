@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 export const fetchUtilisations = createAsyncThunk(
   "utilisationConsommable/fetchAll",
-  async (_, thunkAPI) => {
+  async ({ page = 1, limit = 12 }, thunkAPI) => {
     try {
-      return await UtilisationConsommableService.getAllUtilisations();
+      return await UtilisationConsommableService.getAllUtilisations(page, limit);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data || err.message);
     }
@@ -62,8 +62,16 @@ const utilisationConsommableSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    page: 1,
+    limit: 12,
+    total: 0,
+    totalPages: 0,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUtilisations.pending, (state) => {
@@ -71,7 +79,11 @@ const utilisationConsommableSlice = createSlice({
       })
       .addCase(fetchUtilisations.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = action.payload.UseCons;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchUtilisations.rejected, (state, action) => {
         state.loading = false;
@@ -86,4 +98,5 @@ const utilisationConsommableSlice = createSlice({
   },
 });
 
+export const { setPage } = utilisationConsommableSlice.actions;
 export default utilisationConsommableSlice.reducer;

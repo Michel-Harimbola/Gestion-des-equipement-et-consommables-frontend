@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import notificationService from "../../../services/admin/notificationService";
 
-export const fetchNotifications = createAsyncThunk("notifications/fetchAll", async (_, thunkAPI) => {
+export const fetchNotificationsActif = createAsyncThunk("notifications/fetchAllActif", async (_, thunkAPI) => {
     try {
-        return await notificationService.getAll();
+        return await notificationService.getAllActif();
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur lors du chargement");
     }
@@ -21,7 +21,7 @@ reducers: {
     },
 },
 extraReducers: (builder) => {
-    builder.addCase(fetchNotifications.fulfilled, (state, action) => {
+    builder.addCase(fetchNotificationsActif.fulfilled, (state, action) => {
     state.list = action.payload;
     });
 },

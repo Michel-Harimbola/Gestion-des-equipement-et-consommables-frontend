@@ -3,9 +3,17 @@ import demandeEmpruntService from "../../../services/admin/demandeEmpruntService
 import { toast } from "react-toastify";
 
 
-export const fetchDemandes = createAsyncThunk("demande/fetchAll", async ({ page = 1, limit = 10 }, thunkAPI) => {
+export const fetchDemandes = createAsyncThunk("demande/fetchAll", async ({ page = 1, limit = 12 }, thunkAPI) => {
   try {
     return await demandeEmpruntService.getAll(page, limit);
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Erreur lors du chargement");
+  }
+});
+
+export const fetchDemandesEnAttente = createAsyncThunk("demande/fetchEnAttente", async ({ page = 1, limit = 3 }, thunkAPI) => {
+  try {
+    return await demandeEmpruntService.getDemandeEnAttente(page, limit);
   } catch (error) {
     return thunkAPI.rejectWithValue("Erreur lors du chargement");
   }
@@ -99,15 +107,28 @@ const demandeEmpruntSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchDemandesEnAttente.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchDemandesEnAttente.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.demandes;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchDemandesEnAttente.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(createDemande.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
       .addCase(approuverEmprunt.fulfilled, (state, action) => {
-      // Retire la demande de la liste une fois approuvée
           state.items = state.items.filter(d => d.id !== action.meta.arg);
       })
       .addCase(refuserEmprunt.fulfilled, (state, action) => {
-          // Retire la demande de la liste une fois refusée
           state.items = state.items.filter(d => d.id !== action.meta.arg);
       })
       .addCase(updateDemande.fulfilled, (state, action) => {

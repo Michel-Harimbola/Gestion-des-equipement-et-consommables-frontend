@@ -1,8 +1,8 @@
 import axiosInstance from "../../configs/axios";
 
 const EmpruntSevice = {
-    getAll: async () => {
-        const res = await axiosInstance.get("/emprunt/");
+    getAll: async (page = 1, limit = 12) => {
+        const res = await axiosInstance.get(`/emprunt?page=${page}&limit=${limit}`);
         return res.data;
     },
 

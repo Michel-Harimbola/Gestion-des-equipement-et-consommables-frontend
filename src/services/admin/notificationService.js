@@ -1,8 +1,8 @@
 import axiosInstance from "../../configs/axios";
 
 const notificationService = {
-    getAll: async () => {
-        const res = await axiosInstance.get("/notification");
+    getAllActif: async () => {
+        const res = await axiosInstance.get("/notification/actif");
         return res.data;
     },
 };

@@ -1,8 +1,8 @@
 import axiosInstance from "../../configs/axios";
 
 export const equipementService = {
-  async getAll() {
-    const response = await axiosInstance.get("/equipement");
+  async getAll(page = 1, limit = 12) {
+    const response = await axiosInstance.get(`/equipement?page=${page}&limit=${limit}`);
     return response.data;
   },
 };

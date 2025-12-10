@@ -3,9 +3,9 @@ import empruntService from "../../../services/admin/empruntService";
 import { toast } from "react-toastify";
 
 
-export const fetchEmprunts = createAsyncThunk("emprunt/fetchAll", async (_, thunkAPI) => {
+export const fetchEmprunts = createAsyncThunk("emprunt/fetchAll", async ({ page = 1, limit = 12 }, thunkAPI) => {
   try {
-    return await empruntService.getAll();
+    return await empruntService.getAll(page, limit);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message);
   }
@@ -59,8 +59,16 @@ const empruntSlice = createSlice({
     recent: [],
     loading: false,
     error: null,
+    page: 1,
+    limit: 12,
+    total: 0,
+    totalPages: 0,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchEmprunts.pending, (state) => {
@@ -68,7 +76,11 @@ const empruntSlice = createSlice({
       })
       .addCase(fetchEmprunts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = action.payload.emprunts;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchEmprunts.rejected, (state, action) => {
         state.loading = false;
@@ -98,4 +110,5 @@ const empruntSlice = createSlice({
   },
 });
 
+export const { setPage } = empruntSlice.actions;
 export default empruntSlice.reducer;

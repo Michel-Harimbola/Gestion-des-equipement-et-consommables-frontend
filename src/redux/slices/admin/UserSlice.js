@@ -3,9 +3,9 @@ import userService from "../../../services/admin/usersService";
 import { toast } from "react-toastify";
 
 
-export const fetchUsers = createAsyncThunk("user/fetchAll", async (_, thunkAPI) => {
+export const fetchUsers = createAsyncThunk("user/fetchAll", async ({ page = 1, limit = 12 }, thunkAPI) => {
   try {
-    return await userService.getAll();
+    return await userService.getAll(page, limit);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data?.message);
   }
@@ -62,8 +62,16 @@ const userSlice = createSlice({
     currentUser: savedUser ? JSON.parse(savedUser) : null,
     loading: false,
     error: null,
+    page: 1,
+    limit: 12,
+    total: 0,
+    totalPages: 0,
   },
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -71,7 +79,11 @@ const userSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = action.payload.users;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
@@ -98,4 +110,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setPage } = userSlice.actions;
 export default userSlice.reducer;

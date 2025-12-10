@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserEmprunts } from "../../redux/slices/user/empruntSlice";
+import { fetchUserEmprunts, setPage } from "../../redux/slices/user/empruntSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
 
 export default function MesEmprunts() {
   const dispatch = useDispatch();
-  const { items, loading } = useSelector((state) => state.emprunt);
+  const { items, loading, page, totalPages } = useSelector((state) => state.emprunt);
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    dispatch(fetchUserEmprunts());
-  }, [dispatch]);
+    dispatch(fetchUserEmprunts({ page, limit: 12 }));
+  }, [dispatch, page]);
+
+  const handlePrev = () => {
+    if (page > 1) dispatch(setPage(page - 1));
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) dispatch(setPage(page + 1));
+  };
 
   const filteredItems = items.filter((eq) => {
     if (filter === "all") return true;
@@ -145,6 +155,26 @@ export default function MesEmprunts() {
             ))}
           </div>
         </>
+      )}
+      {/* Pagination */}
+      { totalPages > 1 && (
+        <div className="flex justify-center mt-8 gap-2">
+          <button
+              onClick={handlePrev}
+              disabled={page === 1}
+              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+          >
+            <FiChevronLeft className="w-7 h-7" />
+          </button>
+          <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+          <button
+            onClick={handleNext}
+            disabled={page === totalPages}
+            className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+          >
+            <FiChevronRight className="w-7 h-7" />
+          </button>
+        </div>
       )}
     </div>
   );

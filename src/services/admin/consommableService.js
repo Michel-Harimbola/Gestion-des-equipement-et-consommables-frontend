@@ -1,8 +1,8 @@
 import axiosInstance from "../../configs/axios";
 
 const ConsommableSevice = {
-    getAll: async () => {
-        const res = await axiosInstance.get("/consommable/");
+    getAll: async (page = 1, limit = 12) => {
+        const res = await axiosInstance.get(`/consommable?page=${page}&limit=${limit}`);
         return res.data;
     },
 

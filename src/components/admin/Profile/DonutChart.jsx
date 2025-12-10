@@ -54,12 +54,13 @@ export default function DonutChart({ darkMode }) {
   };
 
   return (
-    <div className="py-4 bg-white rounded-lg px-5 flex dark:bg-gray-700 items-center justify-center">
+    <div className="py-4 bg-white rounded-lg px-5 flex dark:text-gray-50 dark:bg-gray-700 items-center justify-center">
         <Chart 
             options={options.options} 
             series={options.series} 
             type="donut"
             height={350}
+            className="dark:text-gray-50"
         />
     </div>
   )
