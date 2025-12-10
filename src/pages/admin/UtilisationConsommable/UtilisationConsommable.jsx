@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUtilisations, createUtilisation, setPage, deleteUtilisation, updateUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
+import { fetchUtilisations, fetchSearchUtilisation, setQuery, createUtilisation, setPage, deleteUtilisation, updateUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import UtilisationConsommableForm from "./UtilisationConsommableForm";
+import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
 
 
 export default function UtilisationConsommable() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages } = useSelector((state) => state.utilisation);
+    const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.utilisation);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUtilisation, setSelectedUtilisation] = useState(null);
 
     useEffect(() => {
-      dispatch(fetchUtilisations({ page, limit: 12 }));
-    }, [dispatch, page]);
+      const delay = 400;
+      const timer = setTimeout(() => {
+        if (query && query.trim() !== "") {
+          // recherche live
+          dispatch(fetchSearchUtilisation({ q: query.trim(), page, limit: stateLimit }));
+        } else {
+          // pas de query => fetch normal (pagination normale)
+          dispatch(fetchUtilisations({ page, limit: stateLimit }));
+        }
+      }, delay);
+  
+      return () => clearTimeout(timer);
+    }, [dispatch, query, page, stateLimit]);
 
     const handlePrev = () => {
       if (page > 1) dispatch(setPage(page - 1));
@@ -62,7 +74,37 @@ export default function UtilisationConsommable() {
                 </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg mt-10">
+            <div className="flex justify-end mt-8 mb-4">
+              <div className="relative">
+                          
+                <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
+
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) =>{ 
+                    dispatch(setQuery(e.target.value));
+                    dispatch(setPage(1));
+                  }}
+                  placeholder="Rechercher"
+                  className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+                />
+
+                {query && (
+                  <button
+                    onClick={() => {
+                      dispatch(setQuery(""));
+                      dispatch(setPage(1));
+                    }}
+                    className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                  >
+                    <FiX size={18} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -82,7 +124,7 @@ export default function UtilisationConsommable() {
                       {items.map((utilisation, index) => (
                         <tr 
                             key={utilisation.id} 
-                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">{utilisation.utilisateur?.nom || "_"}</td>

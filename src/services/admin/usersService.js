@@ -11,6 +11,11 @@ const userService = {
     return res.data;
   },
 
+  searchUser: async (q, page = 1, limit = 12) => {
+      const res = await axiosInstance.get("/user/search", { params: { q, page, limit } });
+      return res.data;
+  },
+
   create: async (data) => {
     const res = await axiosInstance.post("/user/create", data);
     return res.data;

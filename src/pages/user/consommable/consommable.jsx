@@ -1,19 +1,42 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchConsommables }from "../../../redux/slices/admin/ConsommableSlice";
+import { fetchConsommables, fetchSearchConsommable, setPage, setQuery }from "../../../redux/slices/admin/ConsommableSlice";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 import UtilisationConsommable from "./UtilisationConsommable";
 
 
 export default function Consommable() {
   const dispatch = useDispatch();
-  const { items, loading } = useSelector((state => state.consommables));
+
+  const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.consommables));
+  
   const [showPopup, setShowPopup] = useState(false);
   const [selectedUtilisationId, setSelectedUtilisationId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchConsommables());
-  }, [dispatch]);
+    const delay = 400;
+    const timer = setTimeout(() => {
+      if (query && query.trim() !== "") {
+        // recherche live
+        dispatch(fetchSearchConsommable({ q: query.trim(), page, limit: stateLimit }));
+      } else {
+        // pas de query => fetch normal (pagination normale)
+        dispatch(fetchConsommables({ page, limit: stateLimit }));
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [dispatch, query, page, stateLimit]);
+
+  const handlePrev = () => {
+    if (page > 1) dispatch(setPage(page - 1));
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) dispatch(setPage(page + 1));
+  };
 
   const handleUtilisationConsommableClick = (consommableId) => {
     setSelectedUtilisationId(consommableId);
@@ -23,6 +46,37 @@ export default function Consommable() {
   return (
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les consommables</h1>
+
+        <div className="flex justify-end mb-8 mt-10">
+          <div className="relative">
+                      
+            <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
+
+            <input
+              type="text"
+              value={query}
+              onChange={(e) =>{ 
+                dispatch(setQuery(e.target.value));
+                dispatch(setPage(1));
+              }}
+              placeholder="Rechercher"
+              className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            />
+
+            {query && (
+              <button
+                onClick={() => {
+                  dispatch(setQuery(""));
+                  dispatch(setPage(1));
+                }}
+                className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+              >
+                <FiX size={18} />
+              </button>
+            )}
+          </div>
+        </div>
+
         {loading ? (
           <GlobalLoader />
         ) : (
@@ -47,7 +101,7 @@ export default function Consommable() {
                       disabled={ UC.quantiteDisponible == 0 }
                       className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${UC.quantiteDisponible == 0 ? 
                             "bg-gray-400 dark:bg-gray-500" 
-                            : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"}
+                            : "bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"}
                       `}>
                       UTILISISER
                     </button>
@@ -60,6 +114,28 @@ export default function Consommable() {
               )}
           </div>
         )}
+
+        {/* Pagination */}
+        { totalPages > 1 && (
+          <div className="flex justify-center mt-8 gap-2">
+            <button
+                onClick={handlePrev}
+                disabled={page === 1}
+                className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+            >
+              <FiChevronLeft className="w-7 h-7" />
+            </button>
+            <span className="dark:text-gray-50 p-1">{page} / {totalPages}</span>
+            <button
+              onClick={handleNext}
+              disabled={page === totalPages}
+              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+            >
+              <FiChevronRight className="w-7 h-7" />
+            </button>
+          </div>
+        )}
+
         {/* Popup uitlisation consommable */}
         {showPopup && (
           <UtilisationConsommable

@@ -13,7 +13,7 @@ export default function DemandeEmprunt() {
 
     return (
         <div className="">
-          <h1 className="text-3xl font-semibold lg:ml-7">Vos demandes </h1>
+          <h1 className="text-3xl font-semibold lg:ml-7">Vos demandes</h1>
           {items.length === 0 ? (
             <p className="text-gray-600 dark:text-white mt-16 text-center lg:text-start lg:ml-7">Aucun demande en attente. </p>
           ) : (

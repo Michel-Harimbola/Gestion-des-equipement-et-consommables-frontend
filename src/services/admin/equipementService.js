@@ -5,6 +5,10 @@ const EquipementSevice = {
         const res = await axiosInstance.get(`/equipement?page=${page}&limit=${limit}`);
         return res.data;
     },
+    async searchEquipements(q, page = 1, limit = 12) {
+        const response = await axiosInstance.get("/equipement/search", { params: { q, page, limit } });
+        return response.data;
+    },
 
     create: async (data) => {
         const res = await axiosInstance.post("/equipement/create", data);

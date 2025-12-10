@@ -19,6 +19,17 @@ export const fetchDemandesEnAttente = createAsyncThunk("demande/fetchEnAttente",
   }
 });
 
+export const fetchSearchDemandeEmprunt = createAsyncThunk(
+    "demande/search",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await demandeEmpruntService.searchDemandeEmprunt(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
 export const createDemande = createAsyncThunk("demande/emprunt", async (data, thunkAPI) => {
   try {
     const res = await demandeEmpruntService.create(data);
@@ -84,11 +95,15 @@ const demandeEmpruntSlice = createSlice({
     limit: 12,
     total: 0,
     totalPages: 0,
+    query: ""
   },
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setQuery(state, action) {
+      state.query = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -122,6 +137,21 @@ const demandeEmpruntSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchSearchDemandeEmprunt.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchDemandeEmprunt.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.demandes;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchDemandeEmprunt.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(createDemande.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
@@ -141,5 +171,5 @@ const demandeEmpruntSlice = createSlice({
   },
 });
 
-export const { setPage } = demandeEmpruntSlice.actions;
+export const { setPage, setQuery } = demandeEmpruntSlice.actions;
 export default demandeEmpruntSlice.reducer;

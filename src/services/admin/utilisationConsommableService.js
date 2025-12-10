@@ -11,6 +11,11 @@ const UtilisationConsommableService = {
     return res.data;
   },
 
+  searchUtilisation: async (q, page = 1, limit = 12) => {
+    const res = await axiosInstance.get("/utilisation/search", { params: { q, page, limit } });
+    return res.data;
+  },
+
   async deleteUtilisation(id) {
     await axiosInstance.delete(`/utilisation/${id}`);
     return id;

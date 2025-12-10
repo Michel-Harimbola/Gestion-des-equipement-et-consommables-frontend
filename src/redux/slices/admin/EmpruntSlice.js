@@ -19,6 +19,17 @@ export const fetchRecentEmprunts = createAsyncThunk("emprunt/fetchRecent", async
   }
 });
 
+export const fetchSearchEmprunt = createAsyncThunk(
+    "emprunt/search",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await empruntService.searchEmprunt(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
 export const createEmprunt = createAsyncThunk("emprunt/create", async (data, thunkAPI) => {
   try {
     const res = await empruntService.create(data);
@@ -63,11 +74,15 @@ const empruntSlice = createSlice({
     limit: 12,
     total: 0,
     totalPages: 0,
+    query: ""
   },
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setQuery(state, action) {
+      state.query = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -97,6 +112,21 @@ const empruntSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchSearchEmprunt.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchEmprunt.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.emprunts;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchEmprunt.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(createEmprunt.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
@@ -110,5 +140,5 @@ const empruntSlice = createSlice({
   },
 });
 
-export const { setPage } = empruntSlice.actions;
+export const { setPage, setQuery } = empruntSlice.actions;
 export default empruntSlice.reducer;

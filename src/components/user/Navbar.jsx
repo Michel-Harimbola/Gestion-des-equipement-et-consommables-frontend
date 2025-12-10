@@ -17,7 +17,6 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     
     const [isActive, setIsActive] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
 
     const [showNotif, setShowNotif] = useState(false);
 
@@ -43,35 +42,12 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         setIsOpen(!isOpen);
     };
 
-    const handleScroll = () => {
-        if (window.scrollY > 50) {
-            setIsScrolled(true);
-        } else {
-            setIsScrolled(false);
-        }
-    };
-
-    useEffect(() => {
-      const currentItem = navItems.find((item) => location.pathname.startsWith(item.path));
-      if (currentItem) setIsActive(currentItem.id);
-    }, [location.pathname]);
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
     useEffect(() => {
             dispatch(fetchUserNotifications());
-    
-            // Écouter les notifications temps réel
             socket.on("notif_retard", (notification) => {
                 dispatch(addNotification(notification));
             });
     
-            // Nettoyer l'écouteur à la fermeture du composant
             return () => socket.off("notif_retard");
         }, [dispatch]);
 
@@ -90,17 +66,45 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             </div>
 
             {/* Hamburger Menu for Mobile */}
-            <div className="md:hidden">
+            <div className="md:hidden flex gap-4">
+                <div className="relative">
+                    <button
+                        onClick={() => {
+                            setShowNotif(!showNotif);
+
+                            if (!showNotif) {
+                                dispatch(markAllNotificationsAsRead());
+                            }
+                        }}
+                        className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
+                    >
+                        <Bell size={24} />
+                        {hasUnread && (
+                            <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full" />
+                        )}
+                    </button>
+
+                    {showNotif && (
+                        <Notification
+                            onClose={() => {
+                                setShowNotif(false);
+                                dispatch(markAllNotificationsAsRead());
+                            }}
+                            notifications={notifications}
+                        />
+                    )}
+                </div>
+
                 <button
                     onClick={toggleNavbar}
-                    className="text-neutral-600 dark:text-white focus:outline-none"
+                    className="text-neutral-600 dark:text-white focus:outline-none cursor-pointer"
                 >
                     <Menu size={24} color="currentColor" />
                 </button>
             </div>
 
             {/* Navbar items and buttons */}
-            <div
+            <div 
                 className={`fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto bg-sky-50 dark:bg-gray-800 dark:border-gray-600 border-l 
                     md:border-none border-neutral-300 md:bg-transparent shadow-lg md:shadow-none transition-transform 
                     duration-300 ease-in-out transform flex-1 ${isOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 z-60`}
@@ -108,14 +112,14 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
                 {/* Logo and close icon Inside Toggle Menu */}
                 <div className="w-full md:hidden flex items-center justify-between px-4">
-                    <Link to="/UserDashboard" className="text-2xl font-semibold text-sky-700 dark:text-white flex items-center gap-x-2">
-                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia rounded-full" />
+                    <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia dark:bg-marine rounded-full" />
                         YouthBorrow
                     </Link>
                     <div className="md:hidden flex justify-end py-6">
                         <button
                             onClick={toggleNavbar}
-                            className="text-red-600 dark:text-red-500 focus:outline-none"
+                            className="text-red-600 dark:text-red-500 focus:outline-none cursor-pointer"
                         >
                             <X size={24} color="currentColor" />
                         </button>
@@ -152,7 +156,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                             {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
                         </button>
                         
-                        <div className="relative">
+                        <div className="relative hidden md:block">
                             <button
                                 onClick={() => {
                                     setShowNotif(!showNotif);
@@ -179,7 +183,6 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                 />
                             )}
                         </div>
-
 
                         <button 
                             onClick={handleLogout}

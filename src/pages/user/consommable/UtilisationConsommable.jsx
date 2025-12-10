@@ -50,8 +50,8 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
                 value={form.consommableId}
                 onChange={handleChange}  
                 name="consommableId"
-                className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600  
-                  dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 cursor-pointer"
+                className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600  
+                  dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer"
                 required
             >
               {items.length === 0 ? (
@@ -72,8 +72,8 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
               placeholder="Quantité"
               value={form.quantiteUtilise}
               onChange={handleChange}
-              className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
-                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
               required
             />
 
@@ -83,8 +83,8 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
               placeholder="description"
               value={form.description}
               onChange={handleChange}
-              className="w-full text-xl pl-6 py-3 border-l-5 border-blue-700 bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
-                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              className="w-full text-xl pl-6 py-3 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
+                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
             />
 
             <div className="flex flex-row justify-end gap-4 mt-8">
@@ -98,8 +98,8 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
               </button>
               <button 
                 type="submit"
-                className="text-white font-bold border border-transparent rounded-lg px-4 py-2 bg-blue-600 hover:bg-blue-700 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 shadow-md cursor-pointer"
+                className="text-white font-bold border border-transparent rounded-lg px-4 py-2 bg-fuchsia hover:bg-red-500 
+                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"
               >
                 Envoyer
               </button>

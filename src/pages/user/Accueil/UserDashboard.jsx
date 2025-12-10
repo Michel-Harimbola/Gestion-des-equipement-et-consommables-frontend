@@ -34,7 +34,7 @@ export default function UserDashboard() {
             {items.map((emprunt) => (
               <div 
                 key={emprunt.id}
-                className={`flex flex-col space-y-1 bg-white dark:bg-gray-700 border ${emprunt.statut === "EnRetard"? "border-red-500": "dark:border-gray-500"} 
+                className={`flex flex-col space-y-1 bg-white dark:bg-gray-700 border ${emprunt.statut === "EnRetard"? "border-red-400": "border-gray-300 dark:border-gray-500"} 
                   dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-6 rounded-2xl`}
               > 
                 <div className="flex justify-between mb-2">

@@ -11,6 +11,11 @@ const EmpruntSevice = {
         return res.data;
     },
 
+    searchEmprunt: async (q, page = 1, limit = 12) => {
+        const res = await axiosInstance.get("/emprunt/search", { params: { q, page, limit } });
+        return res.data;
+    },
+
     create: async (data) => {
         const res = await axiosInstance.post("/emprunt/create", data);
         return res.data;

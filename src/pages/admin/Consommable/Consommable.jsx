@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchConsommables, setPage, createConsommable, deleteConsommable, updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
+import { fetchConsommables, fetchSearchConsommable, setPage, setQuery, createConsommable, deleteConsommable, updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import ConsommableForm from "./consommableForm";
+import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
 
 
 export default function Consommables() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages } = useSelector((state) => state.consommables);
+    const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.consommables);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedConsommable, setSelectedConsommable] = useState(null);
 
     useEffect(() => {
-      dispatch(fetchConsommables({ page, limit: 12 }));
-    }, [dispatch, page]);
+      const delay = 400;
+      const timer = setTimeout(() => {
+        if (query && query.trim() !== "") {
+          // recherche live
+          dispatch(fetchSearchConsommable({ q: query.trim(), page, limit: stateLimit }));
+        } else {
+          // pas de query => fetch normal (pagination normale)
+          dispatch(fetchConsommables({ page, limit: stateLimit }));
+        }
+      }, delay);
+  
+      return () => clearTimeout(timer);
+    }, [dispatch, query, page, stateLimit]);
 
     const handlePrev = () => {
       if (page > 1) dispatch(setPage(page - 1));
@@ -62,7 +74,37 @@ export default function Consommables() {
                 </button>
             </div>
 
-            <div className="overflow-x-auto rounded-lg mt-10">
+            <div className="flex justify-end mt-8 mb-4">
+              <div className="relative">
+                          
+                <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
+
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) =>{ 
+                    dispatch(setQuery(e.target.value));
+                    dispatch(setPage(1));
+                  }}
+                  placeholder="Rechercher"
+                  className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+                />
+
+                {query && (
+                  <button
+                    onClick={() => {
+                      dispatch(setQuery(""));
+                      dispatch(setPage(1));
+                    }}
+                    className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                  >
+                    <FiX size={18} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -79,8 +121,8 @@ export default function Consommables() {
                     <tbody>
                       {items.map((consommable, index) => (
                         <tr 
-                            key={consommable.id} 
-                            className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-700 dark:odd:bg-gray-800 dark:text-white transition-colors"
+                          key={consommable.id} 
+                          className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">{consommable.nom}</td>

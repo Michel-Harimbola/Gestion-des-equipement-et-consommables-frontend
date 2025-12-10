@@ -11,6 +11,17 @@ export const fetchConsommables = createAsyncThunk("consommable/fetchAll", async 
   }
 });
 
+export const fetchSearchConsommable = createAsyncThunk(
+    "consommable/search",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await ConsommableSevice.searchConsommable(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
 export const createConsommable = createAsyncThunk("consommable/create", async (data, thunkAPI) => {
   try {
     const res = await ConsommableSevice.create(data);
@@ -55,11 +66,15 @@ const consommableSlice = createSlice({
     limit: 12,
     total: 0,
     totalPages: 0,
+    query: ""
   },
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setQuery(state, action) {
+        state.query = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -78,6 +93,22 @@ const consommableSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchSearchConsommable.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+      })
+      .addCase(fetchSearchConsommable.fulfilled, (state, action) => {
+          state.loading = false;
+          state.items = action.payload.consommables;
+          state.total = action.payload.total;
+          state.page = action.payload.page;
+          state.limit = action.payload.limit;
+          state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchConsommable.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+      })
       .addCase(createConsommable.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
@@ -91,5 +122,5 @@ const consommableSlice = createSlice({
   },
 });
 
-export const { setPage } = consommableSlice.actions;
+export const { setPage, setQuery } = consommableSlice.actions;
 export default consommableSlice.reducer;

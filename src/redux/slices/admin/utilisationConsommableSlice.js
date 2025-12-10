@@ -14,6 +14,17 @@ export const fetchUtilisations = createAsyncThunk(
   }
 );
 
+export const fetchSearchUtilisation = createAsyncThunk(
+    "utilisationConsommable/search",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await UtilisationConsommableService.searchUtilisation(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
 export const createUtilisation = createAsyncThunk(
   "utilisationConsommable/create",
   async (data, thunkAPI) => {
@@ -66,11 +77,15 @@ const utilisationConsommableSlice = createSlice({
     limit: 12,
     total: 0,
     totalPages: 0,
+    query: ""
   },
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setQuery(state, action) {
+      state.query = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -89,6 +104,21 @@ const utilisationConsommableSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(fetchSearchUtilisation.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchUtilisation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.UseCons;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchUtilisation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(createUtilisation.fulfilled, (state, action) => {
         state.items.unshift(action.payload);
       })
@@ -98,5 +128,5 @@ const utilisationConsommableSlice = createSlice({
   },
 });
 
-export const { setPage } = utilisationConsommableSlice.actions;
+export const { setPage, setQuery } = utilisationConsommableSlice.actions;
 export default utilisationConsommableSlice.reducer;

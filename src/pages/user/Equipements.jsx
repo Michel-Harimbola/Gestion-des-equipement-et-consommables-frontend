@@ -1,24 +1,39 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchEquipements, setPage } from "../../redux/slices/user/equipementSlice";
+import { fetchEquipements, fetchSearchEquipements, setPage, setQuery } from "../../redux/slices/user/equipementSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
 import Emprunter from "./Emprunter";
 import ContratInfo from "./ContratInfo"; 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
 
 
 export default function Equipements() {
   const dispatch = useDispatch();
-  const { items, loading, page, totalPages } = useSelector((state => state.equipement));
+
+  const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.equipement));
+
   const [filter, setFilter] = useState("all");
   const [selectedEquipementId, setSelectedEquipementId] = useState(null);
-
   const [showContrat, setShowContrat] = useState(false);
   const [showEmprunter, setShowEmprunter] = useState(false);
 
+
   useEffect(() => {
-    dispatch(fetchEquipements({ page, limit: 12 }));
-  }, [dispatch, page]);
+    const delay = 400;
+    const timer = setTimeout(() => {
+      if (query && query.trim() !== "") {
+        // recherche live
+        dispatch(fetchSearchEquipements({ q: query.trim(), page, limit: stateLimit }));
+      } else {
+        // pas de query => fetch normal (pagination normale)
+        dispatch(fetchEquipements({ page, limit: stateLimit }));
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, query, page, stateLimit]);
   
   const handlePrev = () => {
     if (page > 1) dispatch(setPage(page - 1));
@@ -29,8 +44,8 @@ export default function Equipements() {
   };
 
   const filteredItems = items.filter((eq) => {
-    if (filter == "all") return true;
-    return eq.disponibilite == filter;
+    if (filter === "all") return true;
+    return eq.disponibilite === filter;
   });
 
   const handleEmprunterClick = (equipementId) => {
@@ -43,27 +58,60 @@ export default function Equipements() {
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50 relative">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
-        <div className="flex flex-wrap lg:justify-start items-center justify-center gap-3 mb-8 mt-10">
-          {["all", "Disponible", "Emprunte", "EnMaintenance"].map((val) => (
-            <button
-              key={val}
-              onClick={() => setFilter(val)}
-              className={`px-4 py-1 rounded-lg  transition cursor-pointer ${
-                filter === val
-                  ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
-                  : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
-              }`}
-            >
-              { val === "all" 
-              ? "Tous"
-              : val === "Emprunte"
-              ? "Emprunté"
-              : val === "EnMaintenance"
-              ? "En maintenance"
-              : val
-              }
-            </button>
-          ))}
+        <div className="flex items-center justify-between mb-8 mt-10">
+          <div className="flex flex-wrap gap-3">
+            {["all", "Disponible", "Emprunte", "EnMaintenance"].map((val) => (
+              <button
+                key={val}
+                onClick={() => {
+                  setFilter(val);
+                  dispatch(setPage(1));
+                }}
+                className={`px-4 py-1 rounded-lg  transition cursor-pointer ${
+                  filter === val
+                    ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                    : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
+                }`}
+              >
+                { val === "all" 
+                ? "Tous"
+                : val === "Emprunte"
+                ? "Emprunté"
+                : val === "EnMaintenance"
+                ? "En maintenance"
+                : val
+                }
+              </button>
+            ))}
+          </div>
+          
+          <div className="relative">
+            
+            <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
+
+            <input
+              type="text"
+              value={query}
+              onChange={(e) =>{ 
+                dispatch(setQuery(e.target.value));
+                dispatch(setPage(1));
+              }}
+              placeholder="Rechercher"
+              className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+            />
+
+            {query && (
+              <button
+                onClick={() => {
+                  dispatch(setQuery(""));
+                  dispatch(setPage(1));
+                }}
+                className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+              >
+                <FiX size={18} />
+              </button>
+            )}
+          </div>
         </div>
 
         {loading ? (

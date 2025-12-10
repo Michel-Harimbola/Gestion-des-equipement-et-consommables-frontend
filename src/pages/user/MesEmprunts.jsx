@@ -156,6 +156,7 @@ export default function MesEmprunts() {
           </div>
         </>
       )}
+      
       {/* Pagination */}
       { totalPages > 1 && (
         <div className="flex justify-center mt-8 gap-2">
@@ -176,6 +177,7 @@ export default function MesEmprunts() {
           </button>
         </div>
       )}
+
     </div>
   );
 }

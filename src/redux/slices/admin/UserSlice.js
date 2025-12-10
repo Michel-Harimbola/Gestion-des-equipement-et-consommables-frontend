@@ -20,6 +20,17 @@ export const getUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) =>
   }
 });
 
+export const fetchSearchUser = createAsyncThunk(
+    "user/search",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await userService.searchUser(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
 export const createUser = createAsyncThunk("user/create", async (data, thunkAPI) => {
   try {
     const res = await userService.create(data);
@@ -66,11 +77,15 @@ const userSlice = createSlice({
     limit: 12,
     total: 0,
     totalPages: 0,
+    query: ""
   },
   reducers: {
     setPage: (state, action) => {
       state.page = action.payload;
     },
+    setQuery(state, action) {
+      state.query = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -86,6 +101,21 @@ const userSlice = createSlice({
         state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchSearchUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.users;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -110,5 +140,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setPage } = userSlice.actions;
+export const { setPage, setQuery } = userSlice.actions;
 export default userSlice.reducer;

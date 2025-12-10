@@ -16,6 +16,11 @@ const demandeEmpruntService = {
         return res.data;
     },
 
+    searchDemandeEmprunt: async (q, page = 1, limit = 12) => {
+        const res = await axiosInstance.get("/demande/search", { params: { q, page, limit } });
+        return res.data;
+    },
+
     approuver: async (id) => {
         const res = await axiosInstance.put(`/demande/${id}/approuver`);
         return res.data;
