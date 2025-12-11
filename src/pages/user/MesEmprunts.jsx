@@ -11,7 +11,7 @@ export default function MesEmprunts() {
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    dispatch(fetchUserEmprunts({ page, limit: 12 }));
+    dispatch(fetchUserEmprunts({ page, limit: 10 }));
   }, [dispatch, page]);
 
   const handlePrev = () => {
@@ -65,11 +65,13 @@ export default function MesEmprunts() {
               <thead className="bg-fuchsia text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">#</th>
+                  <th className="py-3 px-4 text-left">Équipements</th>
+                  <th className="py-3 px-4 text-left">Marque</th>
+                  <th className="py-3 px-4 text-left">N° série</th>
                   <th className="py-3 px-4 text-left">Date d’emprunt</th>
                   <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                  <th className="py-3 px-4 text-left">Date de retour effective</th>
+                  <th className="py-3 text-left">Date de retour effective</th>
                   <th className="py-3 px-4 text-left">Statut</th>
-                  <th className="py-3 px-4 text-left">Équipements</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,6 +81,9 @@ export default function MesEmprunts() {
                     className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-900 dark:odd:bg-gray-800 dark:text-white transition-colors"
                   >
                     <td className="py-2 px-4 font-medium">{index + 1}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.nom}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.marque}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
                     <td className="py-2 px-4">
                       {new Date(emprunt.dateEmprunt).toLocaleDateString()}
                     </td>
@@ -105,9 +110,6 @@ export default function MesEmprunts() {
                                   </p>
                                 )}
                             </td>
-                    <td className="py-2 px-4">
-                      {emprunt.equipement.nom}
-                    </td>
                   </tr>
                 ))}
               </tbody>

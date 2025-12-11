@@ -16,8 +16,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const navigate = useNavigate();
     
     const [isActive, setIsActive] = useState(0);
-    const [isOpen, setIsOpen] = useState(false);
-
+    const [isOpen, setIsOpen] = useState(false)
     const [showNotif, setShowNotif] = useState(false);
 
     const {list: notifications, hasUnread} = useSelector(state => state.notification)
@@ -37,8 +36,6 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     }
 
     const toggleNavbar = () => {
-        console.log(notifications);
-        console.log("hasUnread", hasUnread);
         setIsOpen(!isOpen);
     };
 
@@ -135,12 +132,13 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                         {navItems.map((item) => (
                             <li key={item.id}>
                                 <Link 
-                                to={item.path} 
-                                onClick={() => {
-                                    setIsActive(item.id);
-                                    isOpen(false);                                
-                                }}
-                                className={`ease-in-out ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}>
+                                    to={item.path} 
+                                    onClick={() => {
+                                        setIsActive(item.id);
+                                        setIsOpen(false);                                
+                                    }}
+                                    className={`ease-in-out border-fuchsia ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}
+                                >
                                     {item.name}
                                 </Link>
                             </li>

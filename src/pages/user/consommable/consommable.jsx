@@ -47,7 +47,7 @@ export default function Consommable() {
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les consommables</h1>
 
-        <div className="flex justify-end mb-8 mt-10">
+        <div className="flex lg:justify-end justify-center mb-8 mt-10">
           <div className="relative">
                       
             <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
