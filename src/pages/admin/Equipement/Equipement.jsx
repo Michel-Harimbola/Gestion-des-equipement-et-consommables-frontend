@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipements, createEquipement,fetchSearchEquipements, setQuery, setPage, deleteEquipement, updateEquipement } from "../../../redux/slices/admin/EquipementSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import EquipementForm from "./equipementForm";
 import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
@@ -11,6 +12,8 @@ export default function Equipement() {
     const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.equipements);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEquipement, setSelectedEquipement] = useState(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
       const delay = 400;
@@ -46,9 +49,14 @@ export default function Equipement() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet équipement ?")) {
-        dispatch(deleteEquipement(id));
-      }
+      setDeleteId(id);
+      setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+      dispatch(deleteEquipement(deleteId));
+      setIsConfirmOpen(false);
+      setDeleteId(null);
     };
 
     const handleSubmit = (formData) => {
@@ -126,7 +134,7 @@ export default function Equipement() {
                       {items.map((equipement, index) => (
                         <tr 
                             key={equipement.id} 
-                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">{equipement.nom}</td>
@@ -196,6 +204,14 @@ export default function Equipement() {
                   items={items}
                 />
             )}
+
+            <ConfirmModal
+              isOpen={isConfirmOpen}
+              title="Confirmation"
+              message="Voulez-vous vraiment supprimer cet équipement ?"
+              onConfirm={confirmDelete}
+              onCancel={() => setIsConfirmOpen(false)}
+            />
         </div>
     );
 }

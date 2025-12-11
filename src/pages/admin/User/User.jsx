@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, fetchSearchUser, setQuery, setPage, createUser, deleteUser, updateUser } from "../../../redux/slices/admin/UserSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import UserForm from "./userForm";
 import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
@@ -13,6 +14,8 @@ export default function User() {
     const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.users);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
       const delay = 400;
@@ -48,9 +51,14 @@ export default function User() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet utilisateur ?")) {
-        dispatch(deleteUser(id));
-      }
+      setDeleteId(id);
+      setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+      dispatch(deleteUser(deleteId));
+      setIsConfirmOpen(false);
+      setDeleteId(null);
     };
 
     const handleSubmit = (formData) => {
@@ -123,7 +131,8 @@ export default function User() {
                       {items.map((user, index) => (
                         <tr 
                             key={user.id} 
-                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 
+                              dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                           <td className="p-2">{index + 1}</td>
                           <td className="p-2">{user.nom}</td>
@@ -181,6 +190,14 @@ export default function User() {
                   initialData={selectedUser}
                 />
             )}
+
+            <ConfirmModal
+              isOpen={isConfirmOpen}
+              title="Confirmation"
+              message="Voulez-vous vraiment supprimer cet utilisateur ?"
+              onConfirm={confirmDelete}
+              onCancel={() => setIsConfirmOpen(false)}
+            />
       </div>
     );
 }

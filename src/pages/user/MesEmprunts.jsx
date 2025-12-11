@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserEmprunts, setPage } from "../../redux/slices/user/empruntSlice";
+import { fetchUserEmprunts, searchUserEmprunts, setPage, setQuery } from "../../redux/slices/user/empruntSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-
+import { FiSearch, FiX } from "react-icons/fi";
 
 export default function MesEmprunts() {
   const dispatch = useDispatch();
-  const { items, loading, page, totalPages } = useSelector((state) => state.emprunt);
+
+  const { items, loading, page, totalPages, query, limit: stateLimit = 10 } = useSelector((state) => state.emprunt);
+  
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    dispatch(fetchUserEmprunts({ page, limit: 10 }));
-  }, [dispatch, page]);
+    const delay = 400;
+    const timer = setTimeout(() => {
+      if (query && query.trim() !== "") {
+        dispatch(searchUserEmprunts({ q: query.trim(), page, limit: stateLimit }));
+      } else {
+        dispatch(fetchUserEmprunts({ page, limit: stateLimit }));
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [dispatch, query, page, stateLimit]);
 
   const handlePrev = () => {
     if (page > 1) dispatch(setPage(page - 1));
@@ -31,29 +42,60 @@ export default function MesEmprunts() {
     <div className="mt-24 px-4 sm:px-8 dark:text-white">
       <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">Mes emprunts</h1>
 
-      {/* Boutons de filtre */}
-      <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-10 mb-8">
-        {["all", "EnCours", "EnRetard", "Retourner"].map((val) => (
-          <button
-            key={val}
-            onClick={() => setFilter(val)}
-            className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
-              filter === val
-                ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
-                : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
-            }`}
-          >
-            { val === "all" 
-            ? "Tous" 
-            : val === "EnCours"
-            ? "En cours"
-            : val === "EnRetard" 
-            ?"En ratard"
-            : "Retourné"
-            }
-          </button>
-        ))}
+      <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-3">
+        <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+          {["all", "EnCours", "EnRetard", "Retourner"].map((val) => (
+            <button
+              key={val}
+              onClick={() => setFilter(val)}
+              className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
+                filter === val
+                  ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                  : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
+              }`}
+            >
+              { val === "all" 
+              ? "Tous" 
+              : val === "EnCours"
+              ? "En cours"
+              : val === "EnRetard" 
+              ?"En ratard"
+              : "Retourné"
+              }
+            </button>
+          ))}
+        </div>
+
+        <div className="relative">
+                    
+          <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
+
+          <input
+            type="text"
+            value={query}
+            onChange={(e) =>{ 
+              dispatch(setQuery(e.target.value));
+              dispatch(setPage(1));
+            }}
+            placeholder="Rechercher"
+            className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+          />
+
+          {query && (
+            <button
+              onClick={() => {
+                dispatch(setQuery(""));
+                dispatch(setPage(1));
+              }}
+              className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+            >
+              <FiX size={18} />
+            </button>
+          )}
+        </div>
       </div>
+
+      
 
       {loading ? (
         <GlobalLoader />

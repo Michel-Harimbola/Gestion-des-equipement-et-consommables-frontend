@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmprunts, fetchSearchEmprunt, setQuery, setPage, createEmprunt, deleteEmprunt, updateEmprunt } from "../../../redux/slices/admin/EmpruntSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import EmpruntForm from "./empruntForm";
 import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
@@ -13,6 +14,9 @@ export default function Emprunt() {
     const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.emprunts);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEmprunt, setSelectedEmprunt] = useState(null);
+
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
       const delay = 400;
@@ -48,9 +52,14 @@ export default function Emprunt() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet emprunt ?")) {
-        dispatch(deleteEmprunt(id));
-      }
+      setDeleteId(id);
+      setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+      dispatch(deleteEmprunt(deleteId));
+      setIsConfirmOpen(false);
+      setDeleteId(null);
     };
 
     const handleSubmit = (formData) => {
@@ -128,7 +137,7 @@ export default function Emprunt() {
                       {items.map((emprunt, index) => (
                         <tr 
                             key={emprunt.id} 
-                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4 font-medium">{emprunt.utilisateur.nom}</td>
@@ -204,6 +213,14 @@ export default function Emprunt() {
                   items={items}
                 />
             )}
+
+            <ConfirmModal
+              isOpen={isConfirmOpen}
+              title="Confirmation"
+              message="Voulez-vous vraiment supprimer cet emprunt ?"
+              onConfirm={confirmDelete}
+              onCancel={() => setIsConfirmOpen(false)}
+            />
         </div>
     );
 }

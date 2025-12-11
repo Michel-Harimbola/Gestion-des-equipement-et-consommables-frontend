@@ -25,7 +25,7 @@ export default function DonutChart({ darkMode }) {
         height: 350,
       },
       labels: ["Disponibles", "Empruntés", "En maintenance"],
-      colors: ["#FF5733", "#33FF57", "#3357FF"],
+      colors: ["#33FF57", "#FF5733", "#3357FF"],
       legend: {
         position: "bottom",
         labels: {

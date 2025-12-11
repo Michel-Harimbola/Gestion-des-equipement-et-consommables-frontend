@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userService from "../../../services/admin/usersService";
 import { toast } from "react-toastify";
 

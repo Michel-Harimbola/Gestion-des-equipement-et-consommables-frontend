@@ -18,21 +18,17 @@ export default function Equipements() {
   const [showContrat, setShowContrat] = useState(false);
   const [showEmprunter, setShowEmprunter] = useState(false);
 
-
   useEffect(() => {
     const delay = 400;
     const timer = setTimeout(() => {
       if (query && query.trim() !== "") {
-        // recherche live
         dispatch(fetchSearchEquipements({ q: query.trim(), page, limit: stateLimit }));
       } else {
-        // pas de query => fetch normal (pagination normale)
         dispatch(fetchEquipements({ page, limit: stateLimit }));
       }
     }, delay);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, query, page, stateLimit]);
   
   const handlePrev = () => {

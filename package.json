@@ -14,6 +14,8 @@
     "@tailwindcss/vite": "^4.1.16",
     "apexcharts": "^5.3.6",
     "axios": "^1.13.1",
+    "jspdf": "^3.0.4",
+    "jspdf-autotable": "^5.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.552.0",
     "react": "^19.1.1",

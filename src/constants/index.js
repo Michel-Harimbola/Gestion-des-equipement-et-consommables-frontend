@@ -1,10 +1,3 @@
-import { GoGoal } from "react-icons/go";
-import { GrPlan } from "react-icons/gr";
-import {
-  IoIosStats,
-  IoIosSettings,
-  IoIosPerson,
-} from "react-icons/io";
 import {
   FaChartBar,
   FaUsers,
@@ -12,9 +5,9 @@ import {
   FaBoxOpen,
   FaTools,
   FaCogs,
-  FaBox
+  FaListAlt
 } from "react-icons/fa";
-import { LuClipboardList, LuLaptop } from "react-icons/lu";
+import { LuClipboardList } from "react-icons/lu";
 
 
 export const links = [
@@ -63,190 +56,12 @@ export const links = [
     icon: FaCogs,
     text: "UtilisationCons",
   },
-];
-
-export const employeesData = [
   {
-    title: "Total Utilisateur",
-    count: 200,
-    icon: IoIosPerson,
-    bgColor: "bg-gray-100",
-  },
-  {
-    title: "Equipement Plus emprunté",
-    count: 200,
-    icon: LuLaptop,
-    bgColor: "bg-blue-100",
-  },
-  {
-    title: "Consommable Plus utilisé",
-    count: 200,
-    icon: FaBox,
-    bgColor: "bg-yellow-100",
+    href: "/Rapport",
+    icon: FaListAlt,
+    text: "Rapport",
   },
 ];
 
-export const shortcutLink = [
-  {
-    title: "Goals",
-    icon: GoGoal,
-  },
-  {
-    title: "Plan",
-    icon: GrPlan,
-  },
-  {
-    title: "Stats",
-    icon: IoIosStats,
-  },
-  {
-    title: "Setting",
-    icon: IoIosSettings,
-  },
-];
 
-export const events = [
-  {
-    date: "01 Aug",
-    title: "Upcoming Event",
-    description: "Lorem ipsum dolor sit amet.",
-  },
-  {
-    date: "15 Sept",
-    title: "Annual Conference",
-    description: "Join us for our annual conference.",
-  },
-  {
-    date: "20 Sept",
-    title: "Networking Meetup",
-    description: "Connect with professionals in your field.",
-  },
-];
 
-// ------- ==
-// chart data, later we will use this!!!
-
-// const options = {
-//   series: [44, 55, 41],
-//   options: {
-//     chart: {
-//       type: "donut",
-//       height: 350,
-//     },
-//     labels: ["Desktop", "Tablet", "Mobile"],
-//     colors: ["#FF5733", "#33FF57", "#3357FF"],
-//     legend: {
-//       position: "bottom",
-//       labels: {
-//         colors: darkMode ? "#dddddd" : "#000000",
-//       },
-//     },
-//     dataLabels: {
-//       style: {
-//         colors: ["#dddddd"],
-//       },
-//     },
-//     responsive: [
-//       {
-//         breakpoint: 480,
-//         options: {
-//           chart: {
-//             width: 200,
-//           },
-//           legend: {
-//             position: "bottom",
-//           },
-//         },
-//       },
-//     ],
-//   },
-// };
-
-// ..........
-// const chartConfig = {
-//   series: [
-//     {
-//       name: "Sales",
-//       data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-//     },
-//   ],
-//   options: {
-//     chart: {
-//       type: "bar",
-//       height: 240,
-//       toolbar: {
-//         show: false,
-//       },
-//     },
-//     title: {
-//       show: false,
-//     },
-//     dataLabels: {
-//       enabled: false,
-//     },
-//     colors: ["#020617"],
-//     plotOptions: {
-//       bar: {
-//         columnWidth: "40%",
-//         borderRadius: 2,
-//       },
-//     },
-//     xaxis: {
-//       axisTicks: {
-//         show: false,
-//       },
-//       axisBorder: {
-//         show: false,
-//       },
-//       labels: {
-//         style: {
-//           colors: darkMode ? "#dddddd" : "#616161",
-//           fontSize: "12px",
-//           fontFamily: "inherit",
-//           fontWeight: 400,
-//         },
-//       },
-//       categories: [
-//         "Apr",
-//         "May",
-//         "Jun",
-//         "Jul",
-//         "Aug",
-//         "Sep",
-//         "Oct",
-//         "Nov",
-//         "Dec",
-//       ],
-//     },
-//     yaxis: {
-//       labels: {
-//         style: {
-//           colors: darkMode ? "#dddddd" : "#616161",
-//           fontSize: "12px",
-//           fontFamily: "inherit",
-//           fontWeight: 400,
-//         },
-//       },
-//     },
-//     grid: {
-//       show: true,
-//       borderColor: "#a0a0a0",
-//       strokeDashArray: 5,
-//       xaxis: {
-//         lines: {
-//           show: true,
-//         },
-//       },
-//       padding: {
-//         top: 5,
-//         right: 20,
-//       },
-//     },
-//     fill: {
-//       opacity: 0.8,
-//     },
-//     tooltip: {
-//       theme: "dark",
-//     },
-//   },
-// };

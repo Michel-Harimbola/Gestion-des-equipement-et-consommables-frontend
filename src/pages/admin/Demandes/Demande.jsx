@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDemandes, fetchSearchDemandeEmprunt, setQuery, setPage, deleteDemande, updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import DemandeForm from "./demandeForm";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
@@ -13,6 +14,8 @@ export default function Demande() {
   const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.demandes);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDemande, setSelectedDemande] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     const delay = 400;
@@ -43,9 +46,14 @@ export default function Demande() {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm("Voulez-vous vraiment supprimer cet demande ?")) {
-      dispatch(deleteDemande(id));
-    }
+    setDeleteId(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    dispatch(deleteDemande(deleteId));
+    setIsConfirmOpen(false);
+    setDeleteId(null);
   };
 
   const handleSubmit = (formData) => {
@@ -112,7 +120,7 @@ export default function Demande() {
               {items.map((demande, index) => (
                 <tr 
                     key={demande.id} 
-                    className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                    className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                 >
                     <td className="py-2 px-4 font-medium">{index + 1}</td>
                     <td className="py-2 px-4 font-medium">{demande.utilisateur.nom}</td>
@@ -182,6 +190,14 @@ export default function Demande() {
           items={items}
         />
       )}
+
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        title="Confirmation"
+        message="Voulez-vous vraiment supprimer cet demande ?"
+        onConfirm={confirmDelete}
+        onCancel={() => setIsConfirmOpen(false)}
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { EnCoursService } from "../../../services/user/empruntService";
+import { empruntService } from "../../../services/user/empruntService";
 import toast from "react-hot-toast";
 
 
@@ -7,7 +7,7 @@ export const fetchEnCours = createAsyncThunk(
   "enCours/fetchEnCours",
   async (_, { rejectWithValue }) => {
     try {
-      const data = await EnCoursService.getUserEmpruntsInProgress();
+      const data = await empruntService.getUserEmpruntsInProgress();
       return data;
     } catch (error) {
       toast.error("Erreur lors du chargement des emprunts en cours");

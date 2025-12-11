@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUtilisations, fetchSearchUtilisation, setQuery, createUtilisation, setPage, deleteUtilisation, updateUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import UtilisationConsommableForm from "./UtilisationConsommableForm";
 import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
@@ -13,6 +14,8 @@ export default function UtilisationConsommable() {
     const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.utilisation);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUtilisation, setSelectedUtilisation] = useState(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
       const delay = 400;
@@ -48,9 +51,14 @@ export default function UtilisationConsommable() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet utilisation ?")) {
-        dispatch(deleteUtilisation(id));
-      }
+      setDeleteId(id);
+      setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+      dispatch(deleteUtilisation(deleteId));
+      setIsConfirmOpen(false);
+      setDeleteId(null);
     };
 
     const handleSubmit = (formData) => {
@@ -124,7 +132,7 @@ export default function UtilisationConsommable() {
                       {items.map((utilisation, index) => (
                         <tr 
                             key={utilisation.id} 
-                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                            className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">{utilisation.utilisateur?.nom || "_"}</td>
@@ -171,13 +179,21 @@ export default function UtilisationConsommable() {
             )}
 
             {isModalOpen && (
-                <UtilisationConsommableForm
-                  onSubmit={handleSubmit}
-                  onClose={() => setIsModalOpen(false)}
-                  initialData={selectedUtilisation}
-                  items={items}
-                />
+              <UtilisationConsommableForm
+                onSubmit={handleSubmit}
+                onClose={() => setIsModalOpen(false)}
+                initialData={selectedUtilisation}
+                items={items}
+              />
             )}
+
+            <ConfirmModal
+              isOpen={isConfirmOpen}
+              title="Confirmation"
+              message="Voulez-vous vraiment supprimer cet utilisation de consommable ?"
+              onConfirm={confirmDelete}
+              onCancel={() => setIsConfirmOpen(false)}
+            />
         </div>
     );
 }

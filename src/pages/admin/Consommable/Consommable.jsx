@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchConsommables, fetchSearchConsommable, setPage, setQuery, createConsommable, deleteConsommable, updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import ConfirmModal from "../../../components/shared/confirmModal";
 import ConsommableForm from "./consommableForm";
 import { FiSearch, FiX } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
@@ -13,6 +14,8 @@ export default function Consommables() {
     const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.consommables);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedConsommable, setSelectedConsommable] = useState(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
       const delay = 400;
@@ -48,9 +51,14 @@ export default function Consommables() {
     };
 
     const handleDelete = (id) => {
-      if (window.confirm("Voulez-vous vraiment supprimer cet consommable ?")) {
-        dispatch(deleteConsommable(id));
-      }
+      setDeleteId(id);
+      setIsConfirmOpen(true);
+    };
+
+    const confirmDelete = () => {
+      dispatch(deleteConsommable(deleteId));
+      setIsConfirmOpen(false);
+      setDeleteId(null);
     };
 
     const handleSubmit = (formData) => {
@@ -122,7 +130,7 @@ export default function Consommables() {
                       {items.map((consommable, index) => (
                         <tr 
                           key={consommable.id} 
-                          className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                          className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
                             <td className="py-2 px-4 font-medium">{index + 1}</td>
                             <td className="py-2 px-4">{consommable.nom}</td>
@@ -172,6 +180,14 @@ export default function Consommables() {
                   items={items}
                 />
             )}
+
+            <ConfirmModal
+              isOpen={isConfirmOpen}
+              title="Confirmation"
+              message="Voulez-vous vraiment supprimer cet consommable ?"
+              onConfirm={confirmDelete}
+              onCancel={() => setIsConfirmOpen(false)}
+            />
         </div>
     );
 }
