@@ -1,6 +1,6 @@
 import { FaMoon, FaSun } from "react-icons/fa";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import YouthComputing from "../../../assets/YouthComputing.svg";
+import YouthComputing from "../../../assets/YouthComputing.png";
 import NotificationBell from "./NotificationBell";
 
 export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
@@ -17,7 +17,7 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                             <HiOutlineMenuAlt2 className="text-2xl"/>
                         </button>
                         <a href="#" className="flex ms-2 md:me-24 gap-2">
-                            <img src={YouthComputing} alt="Logo" className="w-8 h-8 bg-fuchsia dark:bg-marine rounded-full"/>
+                            <img src={YouthComputing} alt="Logo" className="w-8 h-8 rounded-full"/>
                             <span className="self-center text-marine dark:text-fuchsia text-xl font-semibold sm:text-2xl whitespace-nowrap">
                                 YouthStock
                             </span>

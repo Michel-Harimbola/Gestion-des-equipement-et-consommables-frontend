@@ -83,14 +83,16 @@ export default function UserDashboard() {
                     <div className="text-center text-gray-600 dark:text-gray-200 font-normal">
                       { emprunt.statut == "EnCours" ? (
                         <p>En cours</p>
-                      ): (
+                      ):emprunt.statut == "EnRetard"? (
                         <p>En retard</p>
+                      ):(
+                        <p>En attente</p>
                       )}
                     </div>
                   </div>
                   <button 
                     onClick={() => handleRetour(emprunt.equipement.id, emprunt.id)}
-                    className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
+                    className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white cursor-pointer
                       bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
                     Retourner
                   </button>
