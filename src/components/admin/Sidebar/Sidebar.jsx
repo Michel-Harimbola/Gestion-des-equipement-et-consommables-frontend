@@ -1,9 +1,13 @@
+import { useSelector } from "react-redux";
 import { links } from "../../../constants/index";  
 import Footer from "./Footer";
 import LinkItem from "./LinkItem";
 
 
 export default function Sidebar({ isSidebarOpen }) {
+    const { user } = useSelector(state => state.auth);
+    const role = user?.role;
+
     return (
         <aside 
             className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-900
@@ -15,9 +19,11 @@ export default function Sidebar({ isSidebarOpen }) {
                 <div className="px-3 pb-4 overflow-y-auto">
                     <ul className="space-y-2 font-medium">
                         {
-                            links.map((link, index) => (
-                                <LinkItem key={index} {...link}/>
-                            ))
+                            links
+                                .filter(link => link.roles.includes(role))
+                                .map((link, index) => (
+                                    <LinkItem key={index} {...link}/>
+                                ))
                         }
                     </ul>
                 </div>

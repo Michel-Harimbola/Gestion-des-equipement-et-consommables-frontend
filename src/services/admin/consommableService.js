@@ -6,7 +6,7 @@ const ConsommableSevice = {
         return res.data;
     },
 
-    searchConsommable: async (q, page = 1, limit = 12) => {
+    searchConsommable: async (q, page = 1, limit = 11) => {
         const res = await axiosInstance.get("/consommable/search", { params: { q, page, limit } });
         return res.data;
     },

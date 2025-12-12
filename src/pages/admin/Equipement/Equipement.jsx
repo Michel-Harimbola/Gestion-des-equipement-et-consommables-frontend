@@ -9,7 +9,7 @@ import { FiDelete } from "react-icons/fi";
 import { GrUpdate } from "react-icons/gr";
 export default function Equipement() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.equipements);
+    const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.equipements);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEquipement, setSelectedEquipement] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);

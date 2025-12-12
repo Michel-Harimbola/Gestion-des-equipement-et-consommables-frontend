@@ -1,7 +1,7 @@
 import axiosInstance from "../../configs/axios";
 
 const rapportService = {
-  getAll: async (page = 1, limit = 12) => {
+  getAll: async (page = 1, limit = 11) => {
     const res = await axiosInstance.get(`/rapport?page=${page}&limit=${limit}`);
     return res.data;
   },

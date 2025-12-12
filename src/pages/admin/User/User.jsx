@@ -11,7 +11,7 @@ import { GrUpdate } from "react-icons/gr";
 
 export default function User() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.users);
+    const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.users);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);

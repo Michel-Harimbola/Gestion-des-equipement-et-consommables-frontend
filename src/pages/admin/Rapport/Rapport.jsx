@@ -15,7 +15,7 @@ export default function Rapport() {
     const [deleteId, setDeleteId] = useState(null);
 
     useEffect(() => {
-      dispatch(fetchRapports({ page, limit: 12 }));
+      dispatch(fetchRapports({ page, limit: 11 }));
     }, [dispatch, page]);
 
     const handlePrev = () => {

@@ -11,7 +11,7 @@ import { GrUpdate } from "react-icons/gr";
 
 export default function Demande() {
   const dispatch = useDispatch();
-  const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.demandes);
+  const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.demandes);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDemande, setSelectedDemande] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);

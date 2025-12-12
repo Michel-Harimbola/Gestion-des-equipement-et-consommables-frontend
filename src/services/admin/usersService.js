@@ -1,7 +1,7 @@
 import axiosInstance from "../../configs/axios";
 
 const userService = {
-  getAll: async (page = 1, limit = 12) => {
+  getAll: async (page = 1, limit = 11) => {
     const res = await axiosInstance.get(`/user?page=${page}&limit=${limit}`);
     return res.data;
   },
@@ -11,7 +11,7 @@ const userService = {
     return res.data;
   },
 
-  searchUser: async (q, page = 1, limit = 12) => {
+  searchUser: async (q, page = 1, limit = 11) => {
       const res = await axiosInstance.get("/user/search", { params: { q, page, limit } });
       return res.data;
   },

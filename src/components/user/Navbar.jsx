@@ -19,14 +19,16 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [isOpen, setIsOpen] = useState(false)
     const [showNotif, setShowNotif] = useState(false);
 
-    const {list: notifications, hasUnread} = useSelector(state => state.notification)
+    const {list: notifications, hasUnread} = useSelector(state => state.notification);
+    const { user } = useSelector(state => state.auth);
+    const role = user?.role;   
+    console.log(role); 
 
     const navItems = [
-        { id: 1, name: "Accueil", path: "/UserDashboard" },
-        { id: 2, name: "Equipements", path: "/userDashboard/Equipements" },
-        { id: 3, name: "Consommables", path: "/userDashboard/Consommable"},
-        { id: 4, name: "Historique", path: "/userDashboard/MesEmprunts" },
-
+        { id: 1, name: "Accueil", path: "/UserDashboard", roles: ["personnelInterne", "client", "partenaire"] },
+        { id: 2, name: "Equipements", path: "/userDashboard/Equipements", roles: ["personnelInterne", "client", "partenaire"] },
+        { id: 3, name: "Consommables", path: "/userDashboard/Consommable", roles: ["personnelInterne"] },
+        { id: 4, name: "Historique", path: "/userDashboard/MesEmprunts", roles: ["personnelInterne", "client", "partenaire"] },
     ];
 
     
@@ -129,19 +131,21 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                 <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-0">
                     {/* Navbar items */}
                     <ul className="flex flex-col md:flex-row items-center gap-5 text-lg font-semibold cursor-pointer">
-                        {navItems.map((item) => (
-                            <li key={item.id}>
-                                <Link 
-                                    to={item.path} 
-                                    onClick={() => {
-                                        setIsActive(item.id);
-                                        setIsOpen(false);                                
-                                    }}
-                                    className={`ease-in-out border-fuchsia ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}
-                                >
-                                    {item.name}
-                                </Link>
-                            </li>
+                        {navItems
+                            .filter(item => item.roles.includes(role))
+                            .map((item) => (
+                                <li key={item.id}>
+                                    <Link 
+                                        to={item.path} 
+                                        onClick={() => {
+                                            setIsActive(item.id);
+                                            setIsOpen(false);                                
+                                        }}
+                                        className={`ease-in-out border-fuchsia ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </li>
                         ))}
                     </ul>
 

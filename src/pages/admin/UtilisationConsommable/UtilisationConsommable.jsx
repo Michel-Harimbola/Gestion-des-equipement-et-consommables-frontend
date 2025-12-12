@@ -11,7 +11,7 @@ import { GrUpdate } from "react-icons/gr";
 
 export default function UtilisationConsommable() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state) => state.utilisation);
+    const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.utilisation);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUtilisation, setSelectedUtilisation] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);

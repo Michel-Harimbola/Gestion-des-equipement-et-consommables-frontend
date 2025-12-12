@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "../../../services/auth/authService.js";
+import getUserFromToken from "../../../utils/getUserFromToken.js";
 import { toast } from "react-toastify";
 
 
@@ -10,7 +11,7 @@ export const loginUser = createAsyncThunk(
       const res = await authService.login(credentials);
       localStorage.setItem("token", res.token);
       toast.success("Connexion réussie !");
-      return res.user;
+      return res;
     } catch (error) {
       toast.error(error.response?.data?.message || "Erreur de connexion");
       return rejectWithValue(error.response?.data);
@@ -24,7 +25,7 @@ export const registerUser = createAsyncThunk(
     try {
       const res = await authService.register(data);
       toast.success("Inscription réussie !");
-      return res.user;
+      return res;
     } catch (error) {
       toast.error(error.response?.data?.message || "Erreur d'inscription");
       return rejectWithValue(error.response?.data);
@@ -34,7 +35,10 @@ export const registerUser = createAsyncThunk(
 
 const authSlice = createSlice({
     name: "auth",
-    initialState: { user: null, loading: false },
+    initialState: { 
+      user: getUserFromToken(), 
+      loading: false 
+    },
     reducers: { 
         logout: (state) => { 
             authService.logout();

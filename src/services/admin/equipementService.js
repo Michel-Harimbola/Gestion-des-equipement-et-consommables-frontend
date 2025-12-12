@@ -1,11 +1,11 @@
 import axiosInstance from "../../configs/axios";
 
 const EquipementSevice = {
-    getAll: async (page = 1, limit = 12) => {
+    getAll: async (page = 1, limit = 11) => {
         const res = await axiosInstance.get(`/equipement?page=${page}&limit=${limit}`);
         return res.data;
     },
-    async searchEquipements(q, page = 1, limit = 12) {
+    async searchEquipements(q, page = 1, limit = 11) {
         const response = await axiosInstance.get("/equipement/search", { params: { q, page, limit } });
         return response.data;
     },
