@@ -12,6 +12,8 @@ export default function Equipements() {
   const dispatch = useDispatch();
 
   const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.equipement));
+  const { user } = useSelector(state => state.auth);
+  const role = user?.role;
 
   const [filter, setFilter] = useState("all");
   const [selectedEquipementId, setSelectedEquipementId] = useState(null);
@@ -123,6 +125,9 @@ export default function Equipements() {
                     <div >
                         <h1 className="text-xl font-semibold text-center">{eq.nom}: </h1>
                         <p className="font-semibold text-lg text-center">{eq.marque}</p>
+                        {role === "client" && (
+                          <p className="font-semibold text-lg text-center">Prix: {eq.prix} ar</p>
+                        )}
                         <p className="font-semibold text-lg text-center">N° {eq.numeroDeSerie}</p>
                         <div className="font-semibold text-lg text-center">
                           {eq.etatMateriel == "BonEtat" ? (

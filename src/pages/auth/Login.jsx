@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { loginUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 

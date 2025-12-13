@@ -46,8 +46,15 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             socket.on("notif_retard", (notification) => {
                 dispatch(addNotification(notification));
             });
+
+            socket.on("notif_demande", (notification) => {
+                dispatch(addNotification(notification));
+            });
     
-            return () => socket.off("notif_retard");
+            return () => {
+                socket.off("notif_retard");
+                socket.off("notif_demande");
+            }
         }, [dispatch]);
 
     return (

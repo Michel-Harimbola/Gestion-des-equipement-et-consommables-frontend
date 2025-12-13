@@ -1,4 +1,4 @@
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 
 export default function getUserFromToken() {
   const token = localStorage.getItem("token");
@@ -9,7 +9,7 @@ export default function getUserFromToken() {
     return {
       id: decoded.id,
       role: decoded.role,
-      email: decoded.email || "", // si besoin
+      email: decoded.email || "", 
       token
     };
   } catch (error) {
