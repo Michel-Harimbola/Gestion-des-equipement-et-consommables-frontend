@@ -19,10 +19,8 @@ export default function Consommable() {
     const delay = 400;
     const timer = setTimeout(() => {
       if (query && query.trim() !== "") {
-        // recherche live
         dispatch(fetchSearchConsommable({ q: query.trim(), page, limit: stateLimit }));
       } else {
-        // pas de query => fetch normal (pagination normale)
         dispatch(fetchConsommables({ page, limit: stateLimit }));
       }
     }, delay);

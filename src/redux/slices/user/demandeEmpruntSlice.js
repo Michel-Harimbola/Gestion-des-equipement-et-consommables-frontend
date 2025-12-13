@@ -4,19 +4,30 @@ import {
   CreateDemandeRetourService, userDemandes, 
   annulerDemande as annulerDemandeService
  } from "../../../services/user/demandeEmpruntService";
-import toast from "react-hot-toast";
+import { fetchEnCours } from "../user/EnCoursSlice";
+import { fetchEquipements } from"./equipementSlice";
+import { toast } from "react-toastify";
 
 export const createDemandeEmprunt = createAsyncThunk(
   "demande/emprunt",
-  async (data, { rejectWithValue }) => {
+  async (data, { dispatch, rejectWithValue, getState }) => {
+    let response;
     try {
-      const response = await CreateDemandeEmpruntService.create(data);
+      response = await CreateDemandeEmpruntService.create(data);
       toast.success("demande d'emprunt envoyée avec succès !");
-      return response;
     } catch (error) {
       toast.error(error.response?.data?.error || "Erreur lors de la création de la demande d'emprunt");
       return rejectWithValue(error.response?.data || error.message);
     }
+
+    try {
+      const { page, limit } = getState().equipement;
+      dispatch(fetchEquipements({ page, limit }));
+    } catch (error) {
+      console.warn(" Refresh équipements échoué", error);
+    }
+
+    return response;
   }
 );
 
@@ -47,14 +58,16 @@ export const fetchUserDemandes = createAsyncThunk(
   }
 );
 
-export const annulerDemande = createAsyncThunk("demande/annulerDemande", async (id, thunkAPI) => {
+export const annulerDemande = createAsyncThunk("demande/annulerDemande", async (id, { dispatch, rejectWithValue }) => {
   try {
     const res = await annulerDemandeService.deleteDemande(id);
     toast.success("Demande annuler !");
+    dispatch(fetchEnCours());
+    dispatch(fetchUserDemandes());
     return res;
   } catch (error) {
     toast.error(error.response?.data?.message || "Erreur lors de la confirmation");
-    return thunkAPI.rejectWithValue(error.response?.data);
+    return rejectWithValue(error.response?.data);
   }
 });
 
@@ -84,7 +97,6 @@ const createDemandeEmpruntSlice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(annulerDemande.fulfilled, (state, action) => {
-      // Retire la demande de la liste une fois refusée
       state.items = state.items.filter(d => d.id !== action.meta.arg);
       })
 

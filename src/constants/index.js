@@ -71,5 +71,28 @@ export const links = [
   },
 ];
 
+export const navItems = [
+  { 
+    id: 1, 
+    name: "Emprunts & Demandes", 
+    path: "/UserDashboard", 
+    roles: ["personnelInterne", "client", "partenaire"] 
+  },
+  { id: 2, 
+    name: "Equipements", 
+    path: "/userDashboard/Equipements", 
+    roles: ["personnelInterne", "client", "partenaire"] 
+  },
+  { id: 3, 
+    name: "Consommables", 
+    path: "/userDashboard/Consommable", 
+    roles: ["personnelInterne"] 
+  },
+  { id: 4, 
+    name: "Historique", 
+    path: "/userDashboard/MesEmprunts", 
+    roles: ["personnelInterne", "client", "partenaire"] },
+];
+
 
 

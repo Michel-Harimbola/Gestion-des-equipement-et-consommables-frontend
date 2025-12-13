@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-    --toastify-color-success: #10b981; /* vert Tailwind */
-    --toastify-color-error: #ef4444;  /* rouge Tailwind */
+    --toastify-color-success: #10b981; 
+    --toastify-color-error: #ef4444; 
     --toastify-color-warning: #facc15;
     --toastify-color-info: #3b82f6;
 }

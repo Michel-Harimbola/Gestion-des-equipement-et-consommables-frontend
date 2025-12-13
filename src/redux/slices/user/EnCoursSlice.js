@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { empruntService } from "../../../services/user/empruntService";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 
 export const fetchEnCours = createAsyncThunk(

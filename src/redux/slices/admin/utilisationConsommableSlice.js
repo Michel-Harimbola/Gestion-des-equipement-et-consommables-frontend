@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import UtilisationConsommableService from "../../../services/admin/utilisationConsommableService";
+import { fetchConsommables } from "./ConsommableSlice";
 import { toast } from "react-toastify";
 
 
@@ -27,15 +28,24 @@ export const fetchSearchUtilisation = createAsyncThunk(
 
 export const createUtilisation = createAsyncThunk(
   "utilisationConsommable/create",
-  async (data, thunkAPI) => {
+  async (data, {rejectWithValue, dispatch, getState}) => {
+    let res;
     try {
-      const res = await UtilisationConsommableService.createUtilisation(data);
+      res = await UtilisationConsommableService.createUtilisation(data);
       toast.success("Utilisation consommable créé avec succès !");
-      return res;
     } catch (err) {
       toast.error("Erreur lors de la création");
-      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+      return rejectWithValue(err.response?.data || err.message);
     }
+
+    try {
+      const { page, limit } = getState().consommables;
+      dispatch(fetchConsommables({ page, limit }));
+    } catch (err) {
+      console.warn(" Refresh consommables échoué", error);
+    }
+
+    return res;
   }
 );
 

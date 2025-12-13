@@ -6,7 +6,7 @@ import AdminDashboardLayout from "../layouts/AdminDashboardLayout";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 
-import UserDashboard from "../pages/user/Accueil/UserDashboard";
+import UserDashboard from "../pages/user/Emprunt_et_Demandes/UserDashboard";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Consommable from "../pages/user/consommable/consommable";

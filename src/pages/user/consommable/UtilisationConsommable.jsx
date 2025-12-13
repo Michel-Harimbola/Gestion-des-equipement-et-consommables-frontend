@@ -32,8 +32,6 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(createUtilisation(form)).unwrap();
-    dispatch(fetchConsommables());
-    console.log(form);
     setForm({ consommableId: "", quantiteUtilise: "", description: "" });
     onClose(); 
   };

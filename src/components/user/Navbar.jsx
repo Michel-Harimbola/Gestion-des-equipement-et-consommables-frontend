@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import socket from "../../configs/socket";
 import { fetchUserNotifications, addNotification, markAllNotificationsAsRead } from "../../redux/slices/user/notificationSlice";
+import { navItems } from "../../constants/index";
 import { X, Menu, Bell } from 'lucide-react';
 import { FaSun, FaMoon } from "react-icons/fa";
 import YouthComputing from "../../assets/YouthComputing.svg";
@@ -21,16 +22,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
     const {list: notifications, hasUnread} = useSelector(state => state.notification);
     const { user } = useSelector(state => state.auth);
-    const role = user?.role;   
-    console.log(role); 
-
-    const navItems = [
-        { id: 1, name: "Accueil", path: "/UserDashboard", roles: ["personnelInterne", "client", "partenaire"] },
-        { id: 2, name: "Equipements", path: "/userDashboard/Equipements", roles: ["personnelInterne", "client", "partenaire"] },
-        { id: 3, name: "Consommables", path: "/userDashboard/Consommable", roles: ["personnelInterne"] },
-        { id: 4, name: "Historique", path: "/userDashboard/MesEmprunts", roles: ["personnelInterne", "client", "partenaire"] },
-    ];
-
+    const role = user?.role; 
     
     const handleLogout = () => {
       dispatch(logout());

@@ -32,7 +32,6 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(createDemandeEmprunt(form)).unwrap();
-    dispatch(fetchEquipements());
     setForm(form);
     onClose(); 
   };
