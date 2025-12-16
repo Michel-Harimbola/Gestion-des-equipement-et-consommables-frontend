@@ -48,7 +48,7 @@ export const updateUser = createAsyncThunk("user/update", async ({ id, data }, t
     toast.success("Utilisateur mis à jour !");
     return res;
   } catch (error) {
-    toast.error("Erreur lors de la mise à jour");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });
@@ -59,7 +59,7 @@ export const deleteUser = createAsyncThunk("user/delete", async (id, thunkAPI) =
     toast.success("Utilisateur supprimé !");
     return id;
   } catch (error) {
-    toast.error("Erreur lors de la suppression");
+    toast.error(error.response?.data?.message);
     return thunkAPI.rejectWithValue(error.response?.data);
   }
 });

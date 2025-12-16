@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, fetchSearchUser, setQuery, setPage, createUser, deleteUser, updateUser } from "../../../redux/slices/admin/UserSlice";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import UserForm from "./userForm";
-import { FiSearch, FiX } from "react-icons/fi";
-import { FiDelete } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
+import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
 
@@ -15,16 +14,17 @@ export default function User() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [openMenuUserId, setOpenMenuUserId] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
+
+    const menuRef = useRef(null);
 
     useEffect(() => {
       const delay = 400;
       const timer = setTimeout(() => {
         if (query && query.trim() !== "") {
-          // recherche live
           dispatch(fetchSearchUser({ q: query.trim(), page, limit: stateLimit }));
         } else {
-          // pas de query => fetch normal (pagination normale)
           dispatch(fetchUsers({ page, limit: stateLimit }));
         }
       }, delay);
@@ -70,49 +70,68 @@ export default function User() {
       setIsModalOpen(false);
     };
 
+    useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+          setOpenMenuUserId(null);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+      if (isConfirmOpen || isModalOpen) {
+        setOpenMenuUserId(null);
+      }
+    }, [isConfirmOpen, isModalOpen]);
+
     return (
-      <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
-            <div className="flex justify-end">
-                <button
-                    onClick={handleAdd}
-                    className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-fuchsia hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
-                >
-                    Ajouter <span className="text-2xl font-bold">+</span>
-                </button>
-            </div>
+      <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
+            <div className="flex justify-between items-center mb-5">
+              <div className="mt-2">
+                <div className="relative">
+                            
+                  <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
 
-            <div className="flex justify-end mt-8 mb-4">
-              <div className="relative">
-                          
-                <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
-
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) =>{ 
-                    dispatch(setQuery(e.target.value));
-                    dispatch(setPage(1));
-                  }}
-                  placeholder="Rechercher"
-                  className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
-                />
-
-                {query && (
-                  <button
-                    onClick={() => {
-                      dispatch(setQuery(""));
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) =>{ 
+                      dispatch(setQuery(e.target.value));
                       dispatch(setPage(1));
                     }}
-                    className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
-                  >
-                    <FiX size={18} />
-                  </button>
-                )}
+                    placeholder="Rechercher"
+                    className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+                  />
+
+                  {query && (
+                    <button
+                      onClick={() => {
+                        dispatch(setQuery(""));
+                        dispatch(setPage(1));
+                      }}
+                      className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                    >
+                      <FiX size={18} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <button
+                  onClick={handleAdd}
+                  className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
+                  bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
+                >
+                  Ajouter <span className="text-2xl font-bold">+</span>
+                </button>
               </div>
             </div>
 
-            <div className="overflow-x-auto rounded-lg">
+            <div className="md:block hidden overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -160,6 +179,86 @@ export default function User() {
                     </tbody>
                   </table>
                 )}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
+              {items.map((user, index) => (
+                <div
+                  key={user.id}
+                  className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
+                >
+                  <div className="flex justify-between" >
+                    <p>
+                      <span className="font-medium">Nom : </span>
+                      {user.nom}
+                    </p>
+                    <div className="relative" ref={openMenuUserId === user.id ? menuRef : null}>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenuUserId(
+                            openMenuUserId === user.id ? null : user.id
+                          );
+                        }}
+                        className="-mt-3 -mr-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full p-2">
+                          <MoreVertical />  
+                      </button>
+
+                      {openMenuUserId === user.id  && (
+                        <div className="absolute right-7 -top-1 bg-gray-50 dark:bg-gray-600 rounded-xl">
+                          <button
+                            onClick={() => {
+                              setOpenMenuUserId(null); 
+                              handleEdit(user);
+                            }}
+                            className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
+                          >
+                            <GrUpdate />
+                            Modifier
+                          </button>
+                          
+                          <button
+                            onClick={() => {
+                              setOpenMenuUserId(null);
+                              setIsConfirmOpen(true);
+                            }}
+                            className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
+                          >
+                            <FiDelete />
+                            Supprimer
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <p>
+                    <span className="font-medium">Prénom : </span>
+                    {user.prenom}
+                  </p>
+                  <p>
+                    <span className="font-medium">Email: </span>
+                    {user.email}
+                  </p>
+                  <div>
+                    { user.role === "regisseurEquipementInterne"? (
+                      <p>
+                        <span className="font-medium">Rôle: </span>
+                        Régisseur des équipements interne
+                      </p>
+                    ): user.role === "personnelInterne"? (
+                      <p>
+                        <span className="font-medium">Rôle: </span>
+                        Personnel interne
+                      </p>
+                    ): (
+                      <p>
+                        <span className="font-medium">Rôle: </span>
+                        {user.role}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Pagination */}

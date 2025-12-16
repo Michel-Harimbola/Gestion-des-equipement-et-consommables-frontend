@@ -38,9 +38,9 @@ export default function Rapport() {
     };
 
     return (
-      <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
+      <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
 
-            <div className="overflow-x-auto rounded-lg mt-32">
+            <div className="md:block hidden overflow-x-auto rounded-lg mt-32">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -93,13 +93,32 @@ export default function Rapport() {
                 )}
             </div>
 
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 lg:hidden dark:text-white">
+              {items.map((rapport, index) => {
+                const data = JSON.parse(rapport.contenu);
+
+                return (
+                  <div
+                    key={rapport.id}
+                    className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
+                  >
+                    <p className="font-medium"><span>Période: </span>{data.periode}</p>
+                    <p className="font-medium"><span>Total emprunt: </span>{data.utilisationEquipements}</p>
+                    <p className="font-medium">Consommation Totale: {data.consommationTotale}</p>
+                    <p className="font-medium">Stock disponible: {data.stockDisponible}</p>
+                    <p className="font-medium">Période: {rapport.periode}</p>
+                  </div>
+                );
+              })}
+            </div>
+
             {/* Pagination */}
             { totalPages > 1 && (
               <div className="flex justify-center mt-8 gap-2">
                 <button
-                    onClick={handlePrev}
-                    disabled={page === 1}
-                    className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
+                  onClick={handlePrev}
+                  disabled={page === 1}
+                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded disabled:opacity-40"
                 >
                   <FiChevronLeft className="w-7 h-7" />
                 </button>

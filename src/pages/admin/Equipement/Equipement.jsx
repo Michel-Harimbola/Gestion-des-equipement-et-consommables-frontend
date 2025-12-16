@@ -19,10 +19,8 @@ export default function Equipement() {
       const delay = 400;
       const timer = setTimeout(() => {
         if (query && query.trim() !== "") {
-          // recherche live
           dispatch(fetchSearchEquipements({ q: query.trim(), page, limit: stateLimit }));
         } else {
-          // pas de query => fetch normal (pagination normale)
           dispatch(fetchEquipements({ page, limit: stateLimit }));
         }
       }, delay);
@@ -69,48 +67,50 @@ export default function Equipement() {
     };
 
     return (
-        <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
-            <div className="flex justify-end">
-                <button
-                    onClick={handleAdd}
-                    className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
-                >
-                    Ajouter <span className="text-2xl font-bold">+</span>
-                </button>
-            </div>
+        <div className="h-screen dark:bg-gray-900 pt-22 sm:pl-74 sm:pr-10 px-4">
+            <div className="flex justify-between mb-5">
+              <div className="mt-2">
+                <div className="relative">
+                            
+                  <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
 
-            <div className="flex justify-end mt-8 mb-4">
-              <div className="relative">
-                          
-                <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
-
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) =>{ 
-                    dispatch(setQuery(e.target.value));
-                    dispatch(setPage(1));
-                  }}
-                  placeholder="Rechercher"
-                  className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
-                />
-
-                {query && (
-                  <button
-                    onClick={() => {
-                      dispatch(setQuery(""));
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) =>{ 
+                      dispatch(setQuery(e.target.value));
                       dispatch(setPage(1));
                     }}
-                    className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                    placeholder="Rechercher"
+                    className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+                  />
+
+                  {query && (
+                    <button
+                      onClick={() => {
+                        dispatch(setQuery(""));
+                        dispatch(setPage(1));
+                      }}
+                      className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                    >
+                      <FiX size={18} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                  <button
+                      onClick={handleAdd}
+                      className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
+                      bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
                   >
-                    <FiX size={18} />
+                      Ajouter <span className="text-2xl font-bold">+</span>
                   </button>
-                )}
               </div>
             </div>
 
-            <div className="overflow-x-auto rounded-lg">
+            <div className="lg:block hidden overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -173,6 +173,69 @@ export default function Equipement() {
                     </tbody>
                   </table>
                 )}
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:hidden dark:text-white">
+              {items.map((equipement, index) => (
+                <div
+                  key={equipement.id}
+                  className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
+                >
+                  <div className="flex justify-between mb-2">
+                    <div className="text-2xl font-semibold">
+                      {equipement.nom}
+                    </div>
+                    <p>{equipement.numeroDeSerie}</p>
+                  </div>
+                  <p>
+                    <span className="font-medium">Marque : </span>
+                    {equipement.marque}
+                  </p>
+                  <p>
+                    <span className="font-medium">Etat : </span>
+                    {equipement.etatMateriel}
+                  </p>
+                  <p>
+                    <span className="font-medium">Obtention : </span>
+                    {equipement.obtention}
+                  </p>
+                  {equipement.fournisseur === "" ?(
+                    <p>
+                      <span className="font-medium">Donateur : </span>
+                      {equipement.donateur}
+                    </p> 
+                  ):(
+                    <p>
+                      <span className="font-medium">Fournisseur : </span>
+                      {equipement.fournisseur}
+                    </p> 
+                  )
+                    
+                  }
+                  <div className="flex justify-between items-center -mt-1"> 
+                    <p>
+                      <span className="font-medium">Prix : </span>
+                      {equipement.prix} ar
+                    </p>  
+
+                    <div className="">
+                      {equipement.disponibilite === "Emprunte"? (
+                        <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          Emprunté
+                        </p>
+                      ):equipement.disponibilite === "EnMaintenance"? (
+                        <p className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-lg font-semibold">
+                          En maintenance
+                        </p>
+                      ):(
+                        <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          Disponible
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Pagination */}

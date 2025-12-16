@@ -72,48 +72,50 @@ export default function Emprunt() {
     };
 
     return (
-        <div className="h-screen dark:bg-gray-900 pt-22 pl-74 pr-10">
-            <div className="flex justify-end">
-                <button
-                    onClick={handleAdd}
-                    className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                    bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
-                >
-                    Ajouter <span className="text-2xl font-bold">+</span>
-                </button>
-            </div>
+        <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
+            <div className="flex justify-between mb-5">
+              <div className="mt-2">
+                <div className="relative">
+                            
+                  <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
 
-            <div className="flex justify-end mt-8 mb-4">
-              <div className="relative">
-                          
-                <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
-
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) =>{ 
-                    dispatch(setQuery(e.target.value));
-                    dispatch(setPage(1));
-                  }}
-                  placeholder="Rechercher"
-                  className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
-                />
-
-                {query && (
-                  <button
-                    onClick={() => {
-                      dispatch(setQuery(""));
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) =>{ 
+                      dispatch(setQuery(e.target.value));
                       dispatch(setPage(1));
                     }}
-                    className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                    placeholder="Rechercher"
+                    className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
+                  />
+
+                  {query && (
+                    <button
+                      onClick={() => {
+                        dispatch(setQuery(""));
+                        dispatch(setPage(1));
+                      }}
+                      className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
+                    >
+                      <FiX size={18} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                  <button
+                      onClick={handleAdd}
+                      className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
+                      bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
                   >
-                    <FiX size={18} />
+                      Ajouter <span className="text-2xl font-bold">+</span>
                   </button>
-                )}
               </div>
             </div>
 
-            <div className="overflow-x-auto rounded-lg">
+            <div className="md:block hidden overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
                 ) : (
@@ -182,6 +184,66 @@ export default function Emprunt() {
                     </tbody>
                   </table>
                 )}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
+              {items.map((emprunt, index) => (
+                <div
+                  key={emprunt.id}
+                  className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
+                >
+                  <div className="flex justify-between">
+                    <p>
+                      <span className="font-medium">Nom: </span>
+                      {emprunt.utilisateur.nom}
+                    </p>
+                    <div className="-mb-4">
+                      {emprunt.equipement.numeroDeSerie}
+                    </div>
+                  </div>
+                  <p>
+                    <span className="font-medium">Prénom: </span>
+                    {emprunt.utilisateur.prenom}
+                  </p>
+                  <p>
+                    <span className="font-medium">Equipement: </span>
+                    {emprunt.equipement.nom}
+                  </p>
+                  <p>
+                    <span className="font-medium">Marque: </span>
+                    {emprunt.equipement.marque}
+                  </p>
+                  <p>
+                    <span className="font-medium">Date d’emprunt: </span>
+                    {new Date(emprunt.dateEmprunt).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <span className="font-medium">Date de retour prévu: </span>
+                    {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
+                  </p>
+                  <div className="flex justify-between">
+                    <p>
+                      <span className="font-medium">Date de retour effective: </span>
+                      {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
+                    </p>
+                    <div className="-mt-4">
+                      {emprunt.statut === "EnCours"? (
+                        <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          En cours
+                        </p>
+                      ):emprunt.statut === "EnRetard"?(
+                        <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          En retard
+                        </p>
+                      ):(
+                        <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          Retourné
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             
             {/* Pagination */}
