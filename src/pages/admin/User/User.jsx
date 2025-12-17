@@ -10,7 +10,7 @@ import { GrUpdate } from "react-icons/gr";
 
 export default function User() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.users);
+    const { items, loading, page, totalPages, query, limit: stateLimit } = useSelector((state) => state.users);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -130,7 +130,7 @@ export default function User() {
                 </button>
               </div>
             </div>
-
+            {/* Ordi */}
             <div className="md:block hidden overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
@@ -180,7 +180,7 @@ export default function User() {
                   </table>
                 )}
             </div>
-
+            {/* Mobile */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
               {items.map((user, index) => (
                 <div
@@ -192,7 +192,10 @@ export default function User() {
                       <span className="font-medium">Nom : </span>
                       {user.nom}
                     </p>
-                    <div className="relative" ref={openMenuUserId === user.id ? menuRef : null}>
+                    <div 
+                      className="relative" 
+                      ref={openMenuUserId === user.id ? menuRef : null}
+                    >
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();

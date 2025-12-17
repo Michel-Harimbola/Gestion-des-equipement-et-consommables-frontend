@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 export const fetchUtilisations = createAsyncThunk(
   "utilisationConsommable/fetchAll",
-  async ({ page = 1, limit = 11 }, thunkAPI) => {
+  async ({ page = 1, limit }, thunkAPI) => {
     try {
       return await UtilisationConsommableService.getAllUtilisations(page, limit);
     } catch (err) {
@@ -84,7 +84,7 @@ const utilisationConsommableSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""

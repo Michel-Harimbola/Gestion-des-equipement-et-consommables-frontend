@@ -3,7 +3,7 @@ import ConsommableSevice from "../../../services/admin/consommableService";
 import { toast } from "react-toastify";
 
 
-export const fetchConsommables = createAsyncThunk("consommable/fetchAll", async ({ page = 1, limit = 11 }, thunkAPI) => {
+export const fetchConsommables = createAsyncThunk("consommable/fetchAll", async ({ page = 1, limit }, thunkAPI) => {
   try {
     return await ConsommableSevice.getAll(page, limit);
   } catch (error) {
@@ -63,7 +63,7 @@ const consommableSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""

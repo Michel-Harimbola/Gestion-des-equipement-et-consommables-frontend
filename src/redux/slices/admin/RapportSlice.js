@@ -3,7 +3,7 @@ import rapportService from "../../../services/admin/rapportService";
 import { toast } from "react-toastify";
 
 
-export const fetchRapports = createAsyncThunk("rapport/fetchAll", async ({ page = 1, limit = 11 }, thunkAPI) => {
+export const fetchRapports = createAsyncThunk("rapport/fetchAll", async ({ page = 1, limit }, thunkAPI) => {
   try {
     return await rapportService.getAll(page, limit);
   } catch (error) {
@@ -30,7 +30,7 @@ const rapportSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
   },

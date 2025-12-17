@@ -3,7 +3,7 @@ import userService from "../../../services/admin/usersService";
 import { toast } from "react-toastify";
 
 
-export const fetchUsers = createAsyncThunk("user/fetchAll", async ({ page = 1, limit = 11 }, thunkAPI) => {
+export const fetchUsers = createAsyncThunk("user/fetchAll", async ({ page = 1, limit }, thunkAPI) => {
   try {
     return await userService.getAll(page, limit);
   } catch (error) {
@@ -74,7 +74,7 @@ const userSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""

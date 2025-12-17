@@ -1,21 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDemandes, fetchSearchDemandeEmprunt, setQuery, setPage, deleteDemande, updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { 
+  fetchDemandes, 
+  fetchSearchDemandeEmprunt, 
+  setQuery, 
+  setPage, 
+  deleteDemande, 
+  updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import DemandeForm from "./demandeForm";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { FiSearch, FiX } from "react-icons/fi";
-import { FiDelete } from "react-icons/fi";
+import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
 
 export default function Demande() {
   const dispatch = useDispatch();
-  const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.demandes);
+  const { items, loading, page, totalPages, query, limit: stateLimit } = useSelector((state) => state.demandes);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDemande, setSelectedDemande] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const delay = 400;
@@ -61,6 +69,23 @@ export default function Demande() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpenMenuId(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (isConfirmOpen || isModalOpen) {
+      setOpenMenuId(null);
+    }
+  }, [isConfirmOpen, isModalOpen]);
+
   return (
     <div className="h-screen dark:bg-gray-900 pt-24 lg:pl-74 lg:pr-10 px-4">
       <div className="mb-5">
@@ -92,6 +117,8 @@ export default function Demande() {
           )}
         </div>
       </div>
+
+      {/* Ordi */}
       <div className="md:block hidden overflow-x-auto rounded-lg">
         {loading ? (
           <p>Chargement...</p>
@@ -156,20 +183,64 @@ export default function Demande() {
           </table>
         )}
       </div>
-
+      
+      {/* Mobile */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
         {items.map((demande, index) => (
           <div
             key={demande.id}
             className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
           >
-            <div className="flex justify-between">
+            <div className="flex justify-between -mb-2">
               <p>
                 <span className="font-medium">Nom: </span>
                 {demande.utilisateur.nom}
               </p>
-              <div className="-mb-4">
-                {demande.equipement.numeroDeSerie}
+
+              <div className="flex gap-5">
+                <p>N° {demande.equipement.numeroDeSerie}</p>
+
+                <div 
+                  className="relative" 
+                  ref={openMenuId === demande.id ? menuRef : null}
+                >
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenMenuId(
+                        openMenuId === demande.id ? null : demande.id
+                      );
+                    }}
+                    className="-mt-2 -mr-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full p-2">
+                      <MoreVertical />  
+                  </button>
+
+                  {openMenuId === demande.id  && (
+                    <div className="absolute right-7 -top-1 bg-gray-50 dark:bg-gray-600 rounded-xl">
+                      <button
+                        onClick={() => {
+                          setOpenMenuId(null); 
+                          handleEdit(demande);
+                        }}
+                        className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
+                      >
+                        <GrUpdate />
+                        Modifier
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setOpenMenuId(null);
+                          setIsConfirmOpen(true);
+                        }}
+                        className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
+                      >
+                        <FiDelete />
+                        Supprimer
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <p>

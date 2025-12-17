@@ -3,7 +3,7 @@ import equipementService from "../../../services/admin/equipementService";
 import { toast } from "react-toastify";
 
 
-export const fetchEquipements = createAsyncThunk("equipement/fetchAll", async ({ page = 1, limit = 11 }, thunkAPI) => {
+export const fetchEquipements = createAsyncThunk("equipement/fetchAll", async ({ page = 1, limit }, thunkAPI) => {
   try {
     return await equipementService.getAll(page, limit);
   } catch (error) {
@@ -63,7 +63,7 @@ const equipementSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""

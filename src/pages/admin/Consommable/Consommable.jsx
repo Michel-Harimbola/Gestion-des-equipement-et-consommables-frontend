@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchConsommables, fetchSearchConsommable, setPage, setQuery, createConsommable, deleteConsommable, updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import ConsommableForm from "./consommableForm";
-import { FiSearch, FiX } from "react-icons/fi";
-import { FiDelete } from "react-icons/fi";
+import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
 
 export default function Consommables() {
     const dispatch = useDispatch();
-    const { items, loading, page, totalPages, query, limit: stateLimit = 11 } = useSelector((state) => state.consommables);
+    const { items, loading, page, totalPages, query, limit: stateLimit } = useSelector((state) => state.consommables);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedConsommable, setSelectedConsommable] = useState(null);
+    const [openMenuConsommableId, setOpenMenuConsommableId] = useState(null);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
+
+    const menuRef = useRef(null);
 
     useEffect(() => {
       const delay = 400;
@@ -68,10 +70,27 @@ export default function Consommables() {
       setIsModalOpen(false);
     };
 
+    useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+          setOpenMenuConsommableId(null);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+      if (isConfirmOpen || isModalOpen) {
+        setOpenMenuConsommableId(null);
+      }
+    }, [isConfirmOpen, isModalOpen]);
+
     return (
         <div className="h-screen dark:bg-gray-900 pt-22 sm:pl-74 sm:pr-10 px-4">
             <div className="flex justify-between mb-5">
-              <div className="sm:block hidden mt-2">
+              <div className="mt-2">
                 <div className="relative">
                             
                   <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
@@ -111,7 +130,8 @@ export default function Consommables() {
                   </button>
               </div>
             </div>
-
+            
+            {/* Ordi */}
             <div className="hidden md:block overflow-x-auto rounded-lg">
                 {loading ? (
                   <p>Chargement...</p>
@@ -151,15 +171,58 @@ export default function Consommables() {
                 )}
             </div>
 
+            {/* Mobile */}
             <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
               {items.map((consommable, index) => (
                 <div
                   key={consommable.id}
                   className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
                 >
-                  <div className="flex justify-between mb-2">
+                  <div className="flex justify-between">
                     <div className="text-2xl font-semibold">
                       {consommable.nom}
+                    </div>
+
+                    <div 
+                      className="relative" 
+                      ref={openMenuConsommableId === consommable.id ? menuRef : null}
+                    >
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenuConsommableId(
+                            openMenuConsommableId === consommable.id ? null : consommable.id
+                          );
+                        }}
+                        className="-mt-2 -mr-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full p-2">
+                          <MoreVertical />  
+                      </button>
+
+                      {openMenuConsommableId === consommable.id  && (
+                        <div className="absolute right-7 -top-1 bg-gray-50 dark:bg-gray-600 rounded-xl">
+                          <button
+                            onClick={() => {
+                              setOpenMenuConsommableId(null); 
+                              handleEdit(consommable);
+                            }}
+                            className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
+                          >
+                            <GrUpdate />
+                            Modifier
+                          </button>
+                          
+                          <button
+                            onClick={() => {
+                              setOpenMenuConsommableId(null);
+                              setIsConfirmOpen(true);
+                            }}
+                            className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
+                          >
+                            <FiDelete />
+                            Supprimer
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <p>

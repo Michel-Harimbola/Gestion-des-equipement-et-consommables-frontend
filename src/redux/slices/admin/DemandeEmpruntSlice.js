@@ -3,7 +3,7 @@ import demandeEmpruntService from "../../../services/admin/demandeEmpruntService
 import { toast } from "react-toastify";
 
 
-export const fetchDemandes = createAsyncThunk("demande/fetchAll", async ({ page = 1, limit = 11 }, thunkAPI) => {
+export const fetchDemandes = createAsyncThunk("demande/fetchAll", async ({ page = 1, limit }, thunkAPI) => {
   try {
     return await demandeEmpruntService.getAll(page, limit);
   } catch (error) {
@@ -92,7 +92,7 @@ const demandeEmpruntSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 11,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""
