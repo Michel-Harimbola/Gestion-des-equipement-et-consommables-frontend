@@ -68,8 +68,11 @@ export default function Rapport() {
               <thead className="bg-fuchsia text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">ID</th>
-                  <th className="py-3 px-4 text-left">Période</th>
-                  <th className="py-3 px-4 text-left">Utilisation équipements</th>
+                  <th className="py-3 px-4 text-left">Mois</th>
+                  <th className="py-3 px-4 text-left">Total emprunts</th>
+                  <th className="py-3 px-4 text-left">En cours</th>
+                  <th className="py-3 px-4 text-left">En retard</th>
+                  <th className="py-3 px-4 text-left">Retournés</th>
                   <th className="py-3 px-4 text-left">Consommation Totale</th>
                   <th className="py-3 px-4 text-left">Stock disponible</th>
                   <th className="py-3 px-4 text-left">Période</th>
@@ -81,26 +84,39 @@ export default function Rapport() {
                   const data = JSON.parse(rapport.contenu);
 
                   return (
-                    <tr 
-                      key={rapport.id} 
-                      className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 
-                        dark:odd:bg-gray-900 dark:text-white transition-colors"
+                    <tr
+                      key={rapport.id}
+                      className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 
+                      dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                     >
                       <td className="p-2">{index + 1}</td>
 
-                      <td className="p-2">{data.periode}</td>
-                      <td className="p-2">{data.utilisationEquipements}</td>
-                      <td className="p-2">{data.consommationTotale}</td>
-                      <td className="p-2">{data.stockDisponible}</td>
+                      <td className="p-2">
+                        {new Date(data.periode.debut).toLocaleDateString()} →{" "}
+                        {new Date(data.periode.fin).toLocaleDateString()}
+                      </td>
+
+                      <td className="p-2">{data.emprunts.total}</td>
+                      <td className="p-2">{data.emprunts.enCours}</td>
+                      <td className="p-2">{data.emprunts.enRetard}</td>
+                      <td className="p-2">{data.emprunts.retournes}</td>
+
+                      <td className="p-2">
+                        {data.consommation.quantiteTotaleUtilisee}
+                      </td>
+
+                      <td className="p-2">
+                        {data.stock.consommablesDisponibles}
+                      </td>
+
                       <td className="p-2">{rapport.periode}</td>
 
-                      <td className="p-2 space-x-8 flex">
-                        <div>
-                          <ExportPDF rapports={items} />
-                        </div>
+                      <td className="p-2 flex gap-4">
+                        <ExportPDF rapport={rapport} />
+
                         <button
                           onClick={() => handleDelete(rapport.id)}
-                          className="text-red-500 text-2xl hover:text-marine dark:hover:text-white"
+                          className="text-red-500 text-xl hover:text-red-700"
                         >
                           <FiDelete />
                         </button>
@@ -124,7 +140,7 @@ export default function Rapport() {
               className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"
             >
               <div className="flex justify-between -mb-2">
-                <p className="font-medium"><span>Période: </span>{data.periode}</p>
+                <p className="font-medium"><span>Période: </span></p>
                 
                 <div 
                   className="relative" 
@@ -169,10 +185,10 @@ export default function Rapport() {
                   )}
                 </div>
               </div>
-              <p className="font-medium"><span>Total emprunt: </span>{data.utilisationEquipements}</p>
+              {/* <p className="font-medium"><span>Total emprunt: </span>{data.utilisationEquipements}</p>
               <p className="font-medium">Consommation Totale: {data.consommationTotale}</p>
               <p className="font-medium">Stock disponible: {data.stockDisponible}</p>
-              <p className="font-medium">Période: {rapport.periode}</p>
+              <p className="font-medium">Période: {rapport.periode}</p> */}
             </div>
           );
         })}

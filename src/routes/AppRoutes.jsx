@@ -19,6 +19,7 @@ import User from "../pages/admin/User/User";
 import Emprunt from "../pages/admin/Emprunt/Emprunt";
 import Demande from "../pages/admin/Demandes/Demande";
 import UtilisationConsommable from "../pages/admin/UtilisationConsommable/UtilisationConsommable";
+import Notification from "../pages/admin/Notification/Notification";
 import Rapport from "../pages/admin/Rapport/Rapport";
 
 export default function AppRoutes() {
@@ -59,6 +60,7 @@ export default function AppRoutes() {
                     <Route path="/Emprunt" element={<Emprunt />} />
                     <Route path="/Demande" element={<Demande />} />
                     <Route path="/Utilisation" element={<UtilisationConsommable />} />
+                    <Route path="/Notification" element={<Notification />} />
                     <Route path="/Rapport" element={<Rapport />} />
                 </Route>
             </Routes>

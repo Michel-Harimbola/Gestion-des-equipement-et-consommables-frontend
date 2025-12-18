@@ -5,7 +5,8 @@ import {
   FaBoxOpen,
   FaTools,
   FaCogs,
-  FaListAlt
+  FaListAlt,
+  FaBell
 } from "react-icons/fa";
 import { LuClipboardList } from "react-icons/lu";
 
@@ -60,7 +61,13 @@ export const links = [
   {
     href: "/Utilisation",
     icon: FaCogs,
-    text: "UtilisationCons",
+    text: "Utilisation Consommable",
+    roles: ["admin"]
+  },
+  {
+    href: "/Notification",
+    icon: FaBell,
+    text: "Notification",
     roles: ["admin"]
   },
   {

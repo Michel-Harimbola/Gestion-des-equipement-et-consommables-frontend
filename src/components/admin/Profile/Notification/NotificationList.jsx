@@ -3,7 +3,7 @@ import { AlertOctagon, AlertTriangle } from "lucide-react";
 
 
 export default function NotificationList() {
-  const notifications = useSelector((state) => state.notifications.list);
+  const notifications = useSelector((state) => state.notificationsActif.list);
 
   return (
     <div>

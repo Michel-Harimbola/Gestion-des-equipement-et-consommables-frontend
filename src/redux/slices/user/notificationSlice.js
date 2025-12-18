@@ -41,8 +41,6 @@ const notificationSlice = createSlice({
         builder
             .addCase(fetchUserNotifications.fulfilled, (state, action) => {
                 state.list = action.payload;
-
-                state.hasUnread = action.payload.some(n => !n.vu);
             })
             .addCase(markAllNotificationsAsRead.fulfilled, (state) => {
                 state.list = state.list.map(n => ({ ...n, vu: true }));

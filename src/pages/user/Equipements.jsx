@@ -56,7 +56,7 @@ export default function Equipements() {
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50 relative">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-3">
+        <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-7">
           <div className="flex flex-wrap items-center justify-center gap-3">
             {["all", "Disponible", "Emprunte", "EnMaintenance"].map((val) => (
               <button

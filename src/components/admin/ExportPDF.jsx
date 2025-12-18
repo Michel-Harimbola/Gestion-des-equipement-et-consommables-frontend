@@ -1,82 +1,95 @@
 import { LucideDownload } from "lucide-react";
-import jsPDF from "jspdf"
+import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import YouthComputing from "../../assets/YouthComputing.png";
 
-export default function ExportPDF({ rapports }) {
+export default function ExportPDF({ rapport }) {
   const handleExportPDF = () => {
+    // Toujours travailler avec un tableau
+    const rapportsArray = Array.isArray(rapport) ? rapport : [rapport];
+
     const doc = new jsPDF();
 
-    const imgWidth = 20;
-    const imgHeight = 20;
-    const pageWidth = doc.internal.pageSize.getWidth();
+    rapportsArray.forEach((rapportItem, index) => {
+      const data = JSON.parse(rapportItem.contenu);
 
-    doc.addImage(
-      YouthComputing,
-      "PNG",
-      pageWidth - imgWidth - 10,
-      10,                        
-      imgWidth,
-      imgHeight
-    );
+      // Nouvelle page sauf pour la première
+      if (index > 0) doc.addPage();
 
-    // Title
-    doc.setFontSize(20);
-    doc.text("Rapports Mensuels", 14, 52);
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
 
-    const tableColumn = ["ID", "Période", "Utilisation équipements", "Consommation Totale", "Stock Disponible"];
-    const tableRows = [];
+      /* ---------- HEADER ---------- */
+      doc.addImage(
+        YouthComputing,
+        "PNG",
+        pageWidth - 30,
+        10,
+        20,
+        20
+      );
 
-    rapports.forEach((rapport, index) => {
-      const data = JSON.parse(rapport.contenu);
-      const row = [
-        index + 1,
-        data.periode,
-        data.utilisationEquipements,
-        data.consommationTotale,
-        data.stockDisponible
-      ];
-      tableRows.push(row);
+      doc.setFontSize(18);
+      doc.text("Rapport Mensuel", 14, 25);
+
+      const periodeLabel = `${new Date(
+        data.periode.debut
+      ).toLocaleDateString()} → ${new Date(
+        data.periode.fin
+      ).toLocaleDateString()}`;
+
+      doc.setFontSize(11);
+      doc.text(`Période : ${periodeLabel}`, 14, 35);
+
+      /* ---------- TABLE ---------- */
+      autoTable(doc, {
+        startY: 45,
+        head: [[
+          "Total emprunts",
+          "En cours",
+          "En retard",
+          "Retournés",
+          "Consommation",
+          "Stock dispo"
+        ]],
+        body: [[
+          data.emprunts.total,
+          data.emprunts.enCours,
+          data.emprunts.enRetard,
+          data.emprunts.retournes,
+          data.consommation.quantiteTotaleUtilisee,
+          data.stock.consommablesDisponibles,
+        ]],
+        styles: {
+          fontSize: 10,
+          halign: "center",
+        },
+        headStyles: {
+          fillColor: [241, 53, 68],
+          textColor: 255,
+        },
+        alternateRowStyles: {
+          fillColor: [245, 245, 245],
+        },
+      });
+
+      /* ---------- FOOTER ---------- */
+      doc.setFontSize(9);
+      doc.text(
+        `Généré le ${new Date().toLocaleDateString()}`,
+        14,
+        pageHeight - 10
+      );
     });
 
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-      startY: 60,
-      styles: {
-        fontSize: 10,
-        cellPadding: 4,
-      },
-
-      // Header color
-      headStyles: {
-        fillColor: [241, 53, 68],  
-        textColor: [255, 255, 255],
-        halign: "center",
-      },
-
-      // Lignes alternées
-      alternateRowStyles: {
-        fillColor: [250, 230, 233],
-      },
-
-      // Centrer ou aligner
-      columnStyles: {
-        0: { halign: "center" },
-        1: { halign: "center" },
-        2: { halign: "center" },
-        3: { halign: "center" },
-        4: { halign: "center" },
-      }
-    });
-
-    doc.save("rapports.pdf");
+    doc.save("rapport-mensuel.pdf");
   };
 
   return (
     <button
       onClick={handleExportPDF}
       className="p-1 rounded dark:text-white border border-gray-100 dark:border-gray-900 hover:text-fuchsia hover:border-fuchsia"
+      title="Exporter le rapport en PDF"
     >
       <LucideDownload />
     </button>

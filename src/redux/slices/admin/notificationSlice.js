@@ -11,7 +11,7 @@ export const fetchNotificationsActif = createAsyncThunk("notifications/fetchAllA
 );
 
 const notificationSlice = createSlice({
-name: "notifications",
+name: "notificationsActif",
 initialState: {
     list: [],
 },

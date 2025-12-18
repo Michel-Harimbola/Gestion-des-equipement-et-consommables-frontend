@@ -16,7 +16,7 @@ export default function DashboardLayout() {
           return newMode;
       });
   };
-  // Optionnel : applique la classe dark au <html> ou <body> directement
+  // applique la classe dark au <html> ou <body> directement
   useEffect(() => {
       if (darkMode) {
           document.documentElement.classList.add("dark");
@@ -27,13 +27,11 @@ export default function DashboardLayout() {
 
   return (
     <div className={`h-screen flex flex-col ${darkMode ? "dark" : ""}`}>
-      {/* Navbar fixe en haut */}
       <Navbar 
         toggleDarkMode={toggleDarkMode} 
         darkMode={darkMode}
       />
 
-      {/* Contenu principal sans scroll */}
       <main className="flex-1 bg-gray-50 dark:bg-gray-800 overflow-y-auto p-6">
         <Outlet />
       </main>

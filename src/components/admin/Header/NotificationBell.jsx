@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Bell } from "lucide-react";
 
 export default function NotificationBell() {
-  const notifications = useSelector((state) => state.notifications.list ?? []);
+  const notifications = useSelector((state) => state.notificationsActif.list ?? []);
 
   return (
     <div className="relative">

@@ -13,7 +13,8 @@ import demandeEmpruntsReducer from "../slices/admin/DemandeEmpruntSlice";
 import equipementsReducer from "../slices/admin/EquipementSlice";
 import consommableReducer from "../slices/admin/ConsommableSlice";
 import utilisationConsommableReducer from "../slices/admin/utilisationConsommableSlice";
-import notificationsReducer from "../slices/admin/notificationSlice";
+import notificationActifReducer from "../slices/admin/notificationSlice";
+import notificationsReducer from "../slices/admin/notificationsSlice";
 import dashboardReducer from "../slices/admin/dashboardSlice";
 import rapportReducer from "../slices/admin/RapportSlice";
 
@@ -33,6 +34,7 @@ export const store = configureStore({
         equipements: equipementsReducer,
         consommables: consommableReducer,
         utilisation: utilisationConsommableReducer,
+        notificationsActif: notificationActifReducer,
         notifications: notificationsReducer,
         dashboard: dashboardReducer,
         rapports: rapportReducer,
