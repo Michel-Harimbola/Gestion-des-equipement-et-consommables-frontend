@@ -106,7 +106,7 @@ export default function MesEmprunts() {
             <table className="w-full text-sm sm:text-base text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">#</th>
+                  <th className="py-3 px-4 text-left">Photo</th>
                   <th className="py-3 px-4 text-left">Équipements</th>
                   <th className="py-3 px-4 text-left">Marque</th>
                   <th className="py-3 px-4 text-left">N° série</th>
@@ -122,7 +122,17 @@ export default function MesEmprunts() {
                     key={emprunt.id}
                     className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-900 dark:odd:bg-gray-800 dark:text-white transition-colors"
                   >
-                    <td className="py-2 px-4 font-medium">{index + 1}</td>
+                    <td className="p-2">
+                      {emprunt.equipement.photo ? (
+                        <img
+                          src={`http://localhost:3000${emprunt.equipement.photo}`}
+                          alt={emprunt.equipement.nom}
+                          className="w-12 h-12 object-cover rounded-xl"
+                        />
+                      ) : (
+                        <span>Aucune photo</span>
+                      )}
+                    </td>
                     <td className="py-2 px-4">{emprunt.equipement.nom}</td>
                     <td className="py-2 px-4">{emprunt.equipement.marque}</td>
                     <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>

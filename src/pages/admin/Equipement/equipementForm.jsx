@@ -12,6 +12,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
     fournisseur: "",
     donateur: "",
     prix: "",
+    photo: null,
   });
 
   useEffect(() => {
@@ -36,8 +37,13 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
-    onSubmit(form);
+    const formData = new FormData();
+
+    Object.keys(form).forEach((key) => {
+      formData.append(key, form[key]);
+    });
+
+    onSubmit(formData);
   };
 
   return (
@@ -153,6 +159,16 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
                   dark:text-white focus:ring-fuchsia transition duration-150"
                 required
               /> 
+              <input 
+                type="file" 
+                accept="image/*"
+                className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
+                  dark:text-white focus:ring-fuchsia transition duration-150"
+                required
+                onChange={(e) => 
+                  setForm({ ...form, photo: e.target.files[0] })
+                }
+              />
             </div>
           </div>
           <div className="flex justify-end gap-3 pt-2">

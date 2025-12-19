@@ -145,7 +145,7 @@ export default function Equipement() {
             <table className="min-w-full text-lg text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">ID</th>
+                  <th className="py-3 px-4 text-left">Photo</th>
                   <th className="py-3 px-4 text-left">Nom</th>
                   <th className="py-3 px-4 text-left">Numéro de série</th>
                   <th className="py-3 px-4 text-left">Marque</th>
@@ -162,9 +162,19 @@ export default function Equipement() {
                 {items.map((equipement, index) => (
                   <tr 
                       key={equipement.id} 
-                      className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                      className=" even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                   >
-                      <td className="py-2 px-4 font-medium">{index + 1}</td>
+                      <td className="p-2">
+                        {equipement.photo ? (
+                          <img
+                            src={`http://localhost:3000${equipement.photo}`}
+                            alt={equipement.nom}
+                            className="w-12 h-12 object-cover rounded-xl"
+                          />
+                        ) : (
+                          <span>Aucune photo</span>
+                        )}
+                      </td>
                       <td className="py-2 px-4">{equipement.nom}</td>
                       <td className="py-2 px-4">{equipement.numeroDeSerie}</td>
                       <td className="py-2 px-4">{equipement.marque}</td>
@@ -188,7 +198,7 @@ export default function Equipement() {
                       <td className="py-2 px-4">{equipement.fournisseur}</td>
                       <td className="py-2 px-4">{equipement.donateur}</td>
                       <td className="py-2 px-4">{equipement.prix}</td>
-                      <td className="p-2 space-x-8 flex">
+                      <td className="py-4  space-x-8 flex">
                           <button onClick={() => handleEdit(equipement)} className="text-xl hover:text-white">
                               <GrUpdate />
                           </button>

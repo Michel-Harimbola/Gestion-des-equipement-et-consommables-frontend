@@ -79,37 +79,31 @@ export default function Consommable() {
           <GlobalLoader />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mx-15 lg:mx-0 mb-13 mt-10">
-              {items.length > 0 ? (
-                items.map((UC) => (
-                  <div 
-                    key={UC.id}
-                    className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
-                  >
-                    <div>
-                        <h1 className="font-semibold text-lg text-center">Nom de la consommable:</h1>
-                        <h1 className="text-xl font-semibold text-center">{UC.nom}</h1>
-                    </div>
-                    
-                    <div className="flex flex-row justify-center items-center space-x-2">
-                      <p>Disponible: {UC.quantiteDisponible}</p>
-                    </div>
-                    
-                    <button 
-                      onClick={() => handleUtilisationConsommableClick(UC.id)}
-                      disabled={ UC.quantiteDisponible == 0 }
-                      className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${UC.quantiteDisponible == 0 ? 
-                            "bg-gray-400 dark:bg-gray-500" 
-                            : "bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"}
-                      `}>
-                      UTILISISER
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-500 text-center col-span-full">
-                  Aucun équipement trouvé pour ce filtre.
-                </p>
-              )}
+            {items.map((UC) => (
+              <div 
+                key={UC.id}
+                className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
+              >
+                <div>
+                    <h1 className="font-semibold text-lg text-center">Nom de la consommable:</h1>
+                    <h1 className="text-xl font-semibold text-center">{UC.nom}</h1>
+                </div>
+                
+                <div className="flex flex-row justify-center items-center space-x-2">
+                  <p>Disponible: {UC.quantiteDisponible}</p>
+                </div>
+                
+                <button 
+                  onClick={() => handleUtilisationConsommableClick(UC.id)}
+                  disabled={ UC.quantiteDisponible == 0 }
+                  className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${UC.quantiteDisponible == 0 ? 
+                        "bg-gray-400 dark:bg-gray-500" 
+                        : "bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"}
+                  `}>
+                  UTILISISER
+                </button>
+              </div>
+            ))}
           </div>
         )}
 

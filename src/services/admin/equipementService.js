@@ -11,7 +11,15 @@ const EquipementSevice = {
     },
 
     create: async (data) => {
-        const res = await axiosInstance.post("/equipement/create", data);
+        const res = await axiosInstance.post(
+            "/equipement/create",
+            data,
+            {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            }
+        );
         return res.data;
     },
 
