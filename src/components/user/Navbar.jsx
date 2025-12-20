@@ -21,8 +21,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [showNotif, setShowNotif] = useState(false);
 
     const {list: notifications, hasUnread} = useSelector(state => state.notification);
-    const { user } = useSelector(state => state.auth);
-    const role = user?.role; 
+    const { role } = useSelector(state => state.auth.currentUser);
     
     const handleLogout = () => {
       dispatch(logout());

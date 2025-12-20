@@ -133,74 +133,82 @@ export default function Emprunt() {
 
         {/* Ordi */}
         <div className="md:block hidden overflow-x-auto rounded-lg">
-            {loading ? (
-              <p>Chargement...</p>
-            ) : (
-              <table className="min-w-full text-lg text-gray-700">
-                <thead className="bg-fuchsia text-white">
-                  <tr>
-                    <th className="py-3 px-4 text-left">ID</th>
-                    <th className="py-3 px-4 text-left">Nom</th>
-                    <th className="py-3 px-4 text-left">Pénom</th>
-                    <th className="py-3 px-4 text-left">Équipements</th>
-                    <th className="py-3 px-4 text-left">Marque</th>
-                    <th className="py-3 px-4 text-left">N° série</th>
-                    <th className="py-3 px-4 text-left">Statut</th>
-                    <th className="py-3 px-4 text-left">Date d’emprunt</th>
-                    <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                    <th className="py-3 px-4 text-left">Date de retour effective</th>
-                    <th className="py-3 px-4 text-left">Actions</th>
+          {loading ? (
+            <p>Chargement...</p>
+          ) : (
+            <table className="min-w-full text-lg text-gray-700">
+              <thead className="bg-fuchsia text-white">
+                <tr>
+                  <th className="py-3 px-4 text-left">Photo</th>
+                  <th className="py-3 px-4 text-left">Pénom</th>
+                  <th className="py-3 px-4 text-left">Équipements</th>
+                  <th className="py-3 px-4 text-left">Marque</th>
+                  <th className="py-3 px-4 text-left">N° série</th>
+                  <th className="py-3 px-4 text-left">Statut</th>
+                  <th className="py-3 px-4 text-left">Date d’emprunt</th>
+                  <th className="py-3 px-4 text-left">Date de retour prévu</th>
+                  <th className="py-3 px-4 text-left">Date de retour effective</th>
+                  <th className="py-3 px-4 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((emprunt, index) => (
+                  <tr 
+                      key={emprunt.id} 
+                      className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                  >
+                    <td className="p-2">
+                      {emprunt.equipement.photo ? (
+                        <img
+                          src={`http://localhost:3000${emprunt.equipement.photo}`}
+                          alt={emprunt.equipement.nom}
+                          className="w-18 h-10 object-cover rounded-lg"
+                        />
+                      ):(
+                        <span>Aucune photo</span>
+                      )}
+                    </td>
+                    <td className="py-2 px-4 font-medium">{emprunt.utilisateur.prenom}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.nom}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.marque}</td>
+                    <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
+                    <td className="py-2 px-4 -ml-4 flex">
+                      {emprunt.statut === "EnCours"? (
+                        <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          En cours
+                        </p>
+                      ):emprunt.statut === "EnRetard"?(
+                        <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          En retard
+                        </p>
+                      ):(
+                        <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
+                          Retourné
+                        </p>
+                      )}
+                    </td>
+                    <td className="py-2 px-4">
+                      {new Date(emprunt.dateEmprunt).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">
+                      {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-4">
+                      {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
+                    </td>
+                    <td className="p-4 space-x-8 flex">
+                      <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">
+                          <GrUpdate />
+                      </button>
+                      <button  onClick={() => handleDelete(emprunt.id)} className="text-red-500 text-2xl hover:text-white">
+                          <FiDelete />
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {items.map((emprunt, index) => (
-                    <tr 
-                        key={emprunt.id} 
-                        className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
-                    >
-                        <td className="py-2 px-4 font-medium">{index + 1}</td>
-                        <td className="py-2 px-4 font-medium">{emprunt.utilisateur.nom}</td>
-                        <td className="py-2 px-4 font-medium">{emprunt.utilisateur.prenom}</td>
-                        <td className="py-2 px-4">{emprunt.equipement.nom}</td>
-                        <td className="py-2 px-4">{emprunt.equipement.marque}</td>
-                        <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
-                        <td className="py-2 px-4 -ml-4 flex">
-                            {emprunt.statut === "EnCours"? (
-                              <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                En cours
-                              </p>
-                            ):emprunt.statut === "EnRetard"?(
-                              <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                En retard
-                              </p>
-                            ):(
-                              <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                Retourné
-                              </p>
-                            )}
-                        </td>
-                        <td className="py-2 px-4">
-                          {new Date(emprunt.dateEmprunt).toLocaleDateString()}
-                        </td>
-                        <td className="py-2 px-4">
-                          {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
-                        </td>
-                        <td className="py-2 px-4">
-                          {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
-                        </td>
-                        <td className="p-2 space-x-8 flex">
-                            <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">
-                                <GrUpdate />
-                            </button>
-                            <button  onClick={() => handleDelete(emprunt.id)} className="text-red-500 text-2xl hover:text-white">
-                                <FiDelete />
-                            </button>
-                        </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* Mobile */}

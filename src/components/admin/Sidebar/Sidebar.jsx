@@ -5,8 +5,7 @@ import LinkItem from "./LinkItem";
 
 
 export default function Sidebar({ isSidebarOpen }) {
-    const { user } = useSelector(state => state.auth);
-    const role = user?.role;
+    const { role } = useSelector(state => state.auth.currentUser);
 
     return (
         <aside 

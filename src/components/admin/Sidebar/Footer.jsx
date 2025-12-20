@@ -3,20 +3,12 @@ import { FaUserCircle } from "react-icons/fa"
 import { logout } from "../../../redux/slices/auth/authSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { getUser } from "../../../redux/slices/admin/UserSlice"
-import { useEffect } from "react"
 
 
 export default function Footer() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { currentUser } = useSelector((state) => state.users); 
-
-    useEffect(() => {
-        if(!currentUser) {
-            dispatch(getUser(0))
-        }
-    }, [dispatch, currentUser]);
+    const { currentUser } = useSelector((state) => state.auth); 
 
     const toggleLogout = () => {
         dispatch(logout());
@@ -33,7 +25,7 @@ export default function Footer() {
             <div className="flex flex-row items-center gap-2">
                 <div className="text-sm font-semibold">
                     <div className="text-end">
-                        {currentUser == "admin" ? (
+                        {currentUser?.role == "admin" ? (
                             <p>Admin</p>
                         ) : (
                             <p>Régisseur</p>
@@ -42,7 +34,15 @@ export default function Footer() {
                     </div>
                     <p className="text-end">{currentUser?.prenom}</p>
                 </div>
-                <FaUserCircle className="w-12 h-12"/>
+                {currentUser?.photo ? (
+                    <img
+                        src={`http://localhost:3000${currentUser.photo}`}
+                        alt={currentUser.nom}
+                        className="w-14 h-14 object-cover rounded-full"
+                    />
+                ):(
+                    <FaUserCircle className="w-12 h-12"/>
+                )}
             </div>
         </div>
     )

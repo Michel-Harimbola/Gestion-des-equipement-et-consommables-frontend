@@ -169,7 +169,7 @@ export default function Equipement() {
                           <img
                             src={`http://localhost:3000${equipement.photo}`}
                             alt={equipement.nom}
-                            className="w-12 h-12 object-cover rounded-xl"
+                            className="w-18 h-10 object-cover rounded-xl"
                           />
                         ) : (
                           <span>Aucune photo</span>

@@ -10,8 +10,4 @@ export const authService = {
     const res = await axiosInstance.post("/auth/register", data);
     return res.data;
   },
-
-  logout() {
-    localStorage.removeItem("token");
-  },
 };

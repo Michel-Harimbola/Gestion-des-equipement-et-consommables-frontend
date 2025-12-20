@@ -126,12 +126,11 @@ export default function Demande() {
           <table className="min-w-full text-lg text-gray-700">
             <thead className="bg-fuchsia text-white">
               <tr>
-                <th className="py-3 px-4 text-left">ID</th>
-                <th className="py-3 px-4 text-left">Nom</th>
+                <th className="py-3 px-4 text-left">Photo</th>
                 <th className="py-3 px-4 text-left">Prénom</th>
+                <th className="py-3 px-4 text-left">N° série</th>
                 <th className="py-3 px-4 text-left">Équipements</th>
                 <th className="py-3 px-4 text-left">Marque</th>
-                <th className="py-3 px-4 text-left">N° série</th>
                 <th className="py-3 px-4 text-left">Statut</th>
                 <th className="py-3 px-4 text-left">Date de demande</th>
                 <th className="py-3 px-4 text-left">Date de retour prévu</th>
@@ -145,12 +144,21 @@ export default function Demande() {
                     key={demande.id} 
                     className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                 >
-                    <td className="py-2 px-4 font-medium">{index + 1}</td>
-                    <td className="py-2 px-4 font-medium">{demande.utilisateur.nom}</td>
+                    <td className="p-2">
+                      {demande.equipement.photo ? (
+                        <img
+                          src={`http://localhost:3000${demande.equipement.photo}`}
+                          alt={demande.equipement.nom}
+                          className="w-18 h-10 object-cover rounded-xl"
+                        />
+                      ) : (
+                        <span>Aucune photo</span>
+                      )}
+                    </td>
                     <td className="py-2 px-4 font-medium">{demande.utilisateur.prenom}</td>
+                    <td className="py-2 px-4">{demande.equipement.numeroDeSerie}</td>
                     <td className="py-2 px-4">{demande.equipement.nom}</td>
                     <td className="py-2 px-4">{demande.equipement.marque}</td>
-                    <td className="py-2 px-4">{demande.equipement.numeroDeSerie}</td>
                     <td className="py-2 px-4 -ml-4 flex">
                       {demande.statut === "refuser"? (
                         <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
@@ -169,7 +177,7 @@ export default function Demande() {
                       {new Date(demande.dateRetourPrevu).toLocaleDateString()}
                     </td>
                       <td className="py-2 px-4">{demande.type}</td>
-                    <td className="p-2 space-x-8 flex">
+                    <td className="p-4 space-x-8 flex">
                       <button onClick={() => handleEdit(demande)} className="text-xl hover:text-white">
                           <GrUpdate />
                       </button>

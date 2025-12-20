@@ -107,12 +107,12 @@ export default function MesEmprunts() {
               <thead className="bg-fuchsia text-white">
                 <tr>
                   <th className="py-3 px-4 text-left">Photo</th>
+                  <th className="py-3 px-4 text-left">N° série</th>
                   <th className="py-3 px-4 text-left">Équipements</th>
                   <th className="py-3 px-4 text-left">Marque</th>
-                  <th className="py-3 px-4 text-left">N° série</th>
                   <th className="py-3 px-4 text-left">Date d’emprunt</th>
                   <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                  <th className="py-3 text-left">Date de retour effective</th>
+                  <th className="py-3 px-4 text-left">Date de retour effective</th>
                   <th className="py-3 px-4 text-left">Statut</th>
                 </tr>
               </thead>
@@ -127,15 +127,15 @@ export default function MesEmprunts() {
                         <img
                           src={`http://localhost:3000${emprunt.equipement.photo}`}
                           alt={emprunt.equipement.nom}
-                          className="w-12 h-12 object-cover rounded-xl"
+                          className="w-18 h-10 object-cover rounded-xl"
                         />
-                      ) : (
+                      ):(
                         <span>Aucune photo</span>
                       )}
                     </td>
+                    <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
                     <td className="py-2 px-4">{emprunt.equipement.nom}</td>
                     <td className="py-2 px-4">{emprunt.equipement.marque}</td>
-                    <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
                     <td className="py-2 px-4">
                       {new Date(emprunt.dateEmprunt).toLocaleDateString()}
                     </td>

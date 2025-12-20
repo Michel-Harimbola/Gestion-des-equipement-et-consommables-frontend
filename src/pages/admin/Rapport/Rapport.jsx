@@ -67,7 +67,6 @@ export default function Rapport() {
             <table className="min-w-full text-lg text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">ID</th>
                   <th className="py-3 px-4 text-left">Mois</th>
                   <th className="py-3 px-4 text-left">Total emprunts</th>
                   <th className="py-3 px-4 text-left">En cours</th>
@@ -89,8 +88,6 @@ export default function Rapport() {
                       className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 
                       dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                     >
-                      <td className="p-2">{index + 1}</td>
-
                       <td className="p-2">
                         {new Date(data.periode.debut).toLocaleDateString()} →{" "}
                         {new Date(data.periode.fin).toLocaleDateString()}

@@ -10,6 +10,7 @@ export default function getUserFromToken() {
       id: decoded.id,
       role: decoded.role,
       email: decoded.email || "", 
+      photo: decoded.photo || "",
       token
     };
   } catch (error) {

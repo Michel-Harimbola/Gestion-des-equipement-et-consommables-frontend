@@ -23,7 +23,7 @@ export default function DemandeEmprunt() {
                     <div  
                       key={demande.id}
                       className="flex flex-col space-y-1 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none 
-                        shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] p-5 rounded-2xl">
+                        shadow-[0_0_15px_1px_rgba(0,0,0,0.1)] p-5 rounded-2xl">
                       <div className="flex justify-between text-lg font-semibold mr-1">
                         <h1 className="text-2xl font-semibold">{demande.equipement.marque}</h1>
                         <p>N° {demande.equipement.numeroDeSerie}</p>

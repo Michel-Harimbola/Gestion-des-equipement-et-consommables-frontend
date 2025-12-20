@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "../../../services/auth/authService.js";
-import getUserFromToken from "../../../utils/getUserFromToken.js";
 import { toast } from "react-toastify";
 
 
@@ -10,6 +9,7 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await authService.login(credentials);
       localStorage.setItem("token", res.token);
+      localStorage.setItem("currentUser", JSON.stringify(res));
       toast.success("Connexion réussie !");
       return res;
     } catch (error) {
@@ -33,31 +33,34 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+const savedUser = localStorage.getItem("currentUser");
+const parsedUser = savedUser ? JSON.parse(savedUser) : null;
+
 const authSlice = createSlice({
-    name: "auth",
-    initialState: { 
-      user: getUserFromToken(), 
-      loading: false 
-    },
-    reducers: { 
-        logout: (state) => { 
-            authService.logout();
-            state.user = null; 
-            toast.info("Déconnexion réussie !");
-        } 
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(loginUser.pending, (state) => { state.loading = true; })
-            .addCase(loginUser.fulfilled, (state, action) => {
-                state.loading = false;
-                state.user = action.payload; 
-            })
-            .addCase(loginUser.rejected, (state) => { state.loading = false; })
-            .addCase(registerUser.pending, (state) => { state.loading = true; })
-            .addCase(registerUser.fulfilled, (state) => { state.loading = false; })
-            .addCase(registerUser.rejected, (state) => { state.loading = false})
-    },
+  name: "auth",
+  initialState: { 
+    currentUser: parsedUser,
+    loading: false 
+  },
+  reducers: { 
+    logout: (state) => { 
+      localStorage.removeItem("token");
+      state.user = null; 
+      toast.info("Déconnexion réussie !");
+    } 
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => { state.loading = true; })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload; 
+      })
+      .addCase(loginUser.rejected, (state) => { state.loading = false; })
+      .addCase(registerUser.pending, (state) => { state.loading = true; })
+      .addCase(registerUser.fulfilled, (state) => { state.loading = false; })
+      .addCase(registerUser.rejected, (state) => { state.loading = false})
+  },
 });
 
 export const { logout } = authSlice.actions;

@@ -138,7 +138,7 @@ export default function User() {
                   <table className="min-w-full text-lg text-gray-700">
                     <thead className="bg-fuchsia text-white">
                       <tr>
-                        <th className="py-3 px-4 text-left">ID</th>
+                        <th className="py-3 px-4 text-left">Photo</th>
                         <th className="py-3 px-4 text-left">Nom</th>
                         <th className="py-3 px-4 text-left">Prénom</th>
                         <th className="py-3 px-4 text-left">Email</th>
@@ -153,7 +153,17 @@ export default function User() {
                             className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 
                               dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
-                          <td className="p-2">{index + 1}</td>
+                          <td className="p-2">
+                            {user.photo ? (
+                              <img
+                                src={`http://localhost:3000${user.photo}`}
+                                alt={user.nom}
+                                className="w-12 h-12 object-cover rounded-full"
+                              />
+                            ) : (
+                              <span>Aucune photo</span>
+                            )}
+                          </td>
                           <td className="p-2">{user.nom}</td>
                           <td className="p-2">{user.prenom}</td>
                           <td className="p-2">{user.email}</td>
@@ -166,7 +176,7 @@ export default function User() {
                               <p>{user.role}</p>
                             )}
                           </td>
-                          <td className="p-2 space-x-8 flex">
+                          <td className="p-4 space-x-8 flex">
                             <button onClick={() => handleEdit(user)} className="text-xl hover:text-white">
                                <GrUpdate />
                             </button>

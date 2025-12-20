@@ -32,7 +32,7 @@ export default function DashboardLayout() {
         darkMode={darkMode}
       />
 
-      <main className="flex-1 bg-gray-50 dark:bg-gray-800 overflow-y-auto p-6">
+      <main className="flex-1 bg-gray-0 dark:bg-gray-800 overflow-y-auto p-6">
         <Outlet />
       </main>
     </div>

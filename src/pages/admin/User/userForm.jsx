@@ -11,6 +11,8 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
     role: "personnelInterne",
   });
 
+  const [photo, setPhoto] = useState(null);
+
   useEffect(() => {
     if (initialData) {
       setForm({
@@ -28,7 +30,24 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
+
+    if (initialData) {
+      const formData = new FormData();
+
+      Object.keys(form).forEach((key) => {
+        if (form[key] !== "") {
+          formData.append(key, form[key]);
+        }
+      });
+
+      if (photo) {
+        formData.append("photo", photo);
+      }
+
+      onSubmit(formData);
+    } else {
+      onSubmit(form);
+    }
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -75,6 +94,16 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
             required
           /> 
+
+          {initialData && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white
+                dark:bg-gray-600 dark:text-white"
+            />
+          )}
 
           {!initialData && (
             <>

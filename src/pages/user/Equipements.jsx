@@ -120,54 +120,63 @@ export default function Equipements() {
                 filteredItems.map((eq) => (
                   <div 
                     key={eq.id}
-                    className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
+                    className="flex flex-col px-4 py-3 space-y-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[350px] rounded-3xl"
                   >
-                    <div >
-                        <h1 className="text-xl font-semibold text-center">{eq.nom}: </h1>
-                        <p className="font-semibold text-lg text-center">{eq.marque}</p>
-                        {role === "client" && (
-                          <p className="font-semibold text-lg text-center">Prix: {eq.prix} ar</p>
-                        )}
-                        <p className="font-semibold text-lg text-center">N° {eq.numeroDeSerie}</p>
-                        <div className="font-semibold text-lg text-center">
-                          {eq.etatMateriel == "BonEtat" ? (
-                            <p>Bon état</p>
-                          ) : eq.etatMateriel == "EtatMoyen" ? (
-                            <p>Etat moyen</p>
-                          ) : eq.etatMateriel == "MauvaisEtat" ? (  
-                            <p>Mauvais état</p>
-                          ) : eq.etatMateriel == "HorsUsage" ? (
-                            <p>Hors usage</p>
-                          ) : eq.etatMateriel == "EnReparation" ? (
-                            <p>En réparation</p>
+                    <div>
+                        <div className="flex items-center justify-center ">
+                          {eq.photo ? (
+                            <img
+                              src={`http://localhost:3000${eq.photo}`}
+                              alt={eq.nom}
+                              className="w-55 h-40 object-cover rounded-3xl"
+                            />
                           ) : (
-                            <p>Neuf</p>
+                            <span>Aucune photo</span>
                           )}
                         </div>
+                        
+                        <div className="flex flex-col">
+                          <p className="font-bold text-xl">{eq.marque}</p>
+                          {role === "client" && (
+                            <p className="font-semibold text-lg">Prix: {eq.prix} ar</p>
+                          )}
+                          <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">N° {eq.numeroDeSerie}</p>
+                          <div className="flex justify-between items-center">
+                            <div className="font-semibold text-sm text-gray-700 dark:text-gray-200">
+                              {eq.etatMateriel == "BonEtat" ? (
+                                <p>Bon état</p>
+                              ) : eq.etatMateriel == "EtatMoyen" ? (
+                                <p>Etat moyen</p>
+                              ) : eq.etatMateriel == "MauvaisEtat" ? (  
+                                <p>Mauvais état</p>
+                              ) : eq.etatMateriel == "HorsUsage" ? (
+                                <p>Hors usage</p>
+                              ) : eq.etatMateriel == "EnReparation" ? (
+                                <p>En réparation</p>
+                              ) : (
+                                <p>Neuf</p>
+                              )}
+                            </div>
+                            
+                            <div className="text-gray-700 flex justify-end dark:text-white font-semibold">
+                              {eq.disponibilite == "Disponible"? (
+                                <p className="bg-green-100 dark:bg-green-500 px-3 rounded-md">Disponible</p>
+                              ): eq.disponibilite == "EnMaintenance" ? (
+                                <p className="bg-blue-100 dark:bg-blue-500 px-3 rounded-md">En maintenance</p>
+                              ):(
+                                <p className="bg-red-100 dark:bg-red-500 px-3 rounded-md">Emprunté</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                     </div>
-                    
-                    <div className="flex flex-row justify-center items-center space-x-2">
-                      <div 
-                          className={`w-4 h-4 rounded-full ${eq.disponibilite !== "Disponible"? "bg-red-600" : "bg-green-500"}`}
-                      >
-                      </div>
-                      <div className="text-gray-600 dark:text-gray-200 font-normal">
-                        {eq.disponibilite == "Disponible"? (
-                          <p>Disponible</p>
-                        ): eq.disponibilite == "EnMaintenance" ? (
-                          <p>En maintenance</p>
-                        ):(
-                          <p>Emprunté</p>
-                        )}
-                      </div>
-                    </div>
-                    
+
                     <button 
                       onClick={() => handleEmprunterClick(eq.id)}
                       disabled={ eq.disponibilite !== "Disponible" }
-                      className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${eq.disponibilite !== "Disponible"? 
+                      className={`text-white text-xl font-bold border border-transparent rounded-xl w-full px-4 py-2 ${eq.disponibilite !== "Disponible"? 
                             "bg-gray-400 dark:bg-gray-500" 
-                            : "bg-fuchsia border-3 hover:border-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
+                            : "bg-fuchsia border-3 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
                       `}>
                       Emprunter
                     </button>

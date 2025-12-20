@@ -14,6 +14,7 @@ export const fetchUsers = createAsyncThunk("user/fetchAll", async ({ page = 1, l
 export const getUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
     const res = await userService.getById();
+    console.log(res)
     return res;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data);
@@ -64,13 +65,11 @@ export const deleteUser = createAsyncThunk("user/delete", async (id, thunkAPI) =
   }
 });
 
-const savedUser = localStorage.getItem("currentUser");
 
 const userSlice = createSlice({
   name: "users",
   initialState: {
     items: [],
-    currentUser: savedUser ? JSON.parse(savedUser) : null,
     loading: false,
     error: null,
     page: 1,
@@ -125,14 +124,18 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = false;
         state.currentUser = action.payload;
-        localStorage.setItem("currentUser", JSON.stringify(action.payload));
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const index = state.items.findIndex((u) => u.id === action.payload.id);
-        if (index !== -1) state.items[index] = action.payload;
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+        if (state.currentUser?.id === action.payload.id) {
+          state.currentUser = action.payload;
+        }
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.items = state.items.filter((u) => u.id !== action.payload);
