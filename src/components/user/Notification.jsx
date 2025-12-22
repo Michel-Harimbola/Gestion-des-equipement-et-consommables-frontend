@@ -22,8 +22,8 @@ export default function Notification({ notifications, onClose }) {
           {notifications.map((notif) => (           
             <li 
               key={notif.id} 
-              className={`p-3 rounded-lg flex gap-3 items-center hover:bg-gray-200 dark:hover:bg-gray-600
-              ${notif.vu ? "bg-gray-100 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900"}`}
+              className={`p-3 rounded-lg flex gap-3 items-center hover:bg-gray-100 dark:hover:bg-gray-600
+              ${notif.vu ? "bg-gray-50 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900"}`}
             >
               {notif.type == "AlerteStock" ? (
                   <AlertOctagon className="w-8 h-8 text-red-500" />

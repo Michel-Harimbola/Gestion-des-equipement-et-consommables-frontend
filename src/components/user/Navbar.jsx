@@ -4,12 +4,13 @@ import { logout } from "../../redux/slices/auth/authSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
+import Setting from "./Setting";
 import socket from "../../configs/socket";
 import { fetchUserNotifications, addNotification, markAllNotificationsAsRead } from "../../redux/slices/user/notificationSlice";
 import { navItems } from "../../constants/index";
 import { X, Menu, Bell } from 'lucide-react';
-import { FaSun, FaMoon } from "react-icons/fa";
-import YouthComputing from "../../assets/YouthComputing.svg";
+import { FiChevronDown } from "react-icons/fi";
+import YouthComputing from "../../assets/YouthComputing.png";
 
 
 export default function Navbar({ darkMode, toggleDarkMode }) {
@@ -19,9 +20,11 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [isActive, setIsActive] = useState(0);
     const [isOpen, setIsOpen] = useState(false)
     const [showNotif, setShowNotif] = useState(false);
+    const [isOpenSetting, setIsOpenSetting] = useState(false);
 
     const {list: notifications, hasUnread} = useSelector(state => state.notification);
-    const { role } = useSelector(state => state.auth.currentUser);
+    const { role, photo, nom, prenom } = useSelector(state => state.auth.currentUser);
+    
     
     const handleLogout = () => {
       dispatch(logout());
@@ -30,6 +33,10 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
     const toggleNavbar = () => {
         setIsOpen(!isOpen);
+    };
+
+    const toggleSetting = () => {
+        setIsOpenSetting(!isOpenSetting);
     };
 
     useEffect(() => {
@@ -57,8 +64,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
                 <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
-                    <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia dark:bg-marine rounded-full" />
-                    YouthBorrow
+                    <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
+                    YouthComputing
                 </Link>
             </div>
 
@@ -110,8 +117,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                 {/* Logo and close icon Inside Toggle Menu */}
                 <div className="w-full md:hidden flex items-center justify-between px-4">
                     <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
-                        <img src={YouthComputing} alt="Logo" className="h-8 w-8 bg-fuchsia dark:bg-marine rounded-full" />
-                        YouthBorrow
+                        <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
+                        YouthComputing
                     </Link>
                     <div className="md:hidden flex justify-end py-6">
                         <button
@@ -149,13 +156,6 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
                     {/* Buttons */}
                     <div className="flex flex-col md:flex-row items-center gap-4">
-                        <button 
-                            onClick={toggleDarkMode}
-                            className="hover:bg-gray-200 dark:bg-slate-50 dark:text-slate-700 rounded-full p-2 -mr-2 cursor-pointer" 
-                        >
-                            {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
-                        </button>
-                        
                         <div className="relative hidden md:block">
                             <button
                                 onClick={() => {
@@ -165,7 +165,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                         dispatch(markAllNotificationsAsRead());
                                     }
                                 }}
-                                className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
+                                className="w-fit p-3 rounded-full bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
                             >
                                 <Bell size={24} />
                                 {hasUnread && (
@@ -184,12 +184,37 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                             )}
                         </div>
 
-                        <button 
-                            onClick={handleLogout}
-                            className="w-fit px-6 py-2 rounded-lg text-base text-neutral-50 bg-red-500 hover:bg-red-400 
-                                transition-colors duration-200 cursor-pointer">
-                            Déconnecter
-                        </button>
+                        {/* Setting */}
+                        <div className="relative">
+                            <button 
+                                onClick={toggleSetting}
+                                className="flex flex-col hover:opacity-80 cursor-pointer"
+                            >
+                                {photo ? (
+                                    <img 
+                                        src={`http://localhost:3000${photo}`} 
+                                        alt={photo}
+                                        className="w-[46px] h-[46px] -mb-4 rounded-full" 
+                                    />
+                                ):(
+                                    <span>Aucune photo</span>
+                                )}
+                                <div className="flex justify-end">
+                                    < FiChevronDown className="size-[17px] bg-gray-200 dark:bg-gray-600 rounded-full" />
+                                </div>
+                            </button>
+
+                            {isOpenSetting && (
+                                <Setting 
+                                    darkMode={darkMode}
+                                    toggleDarkMode={toggleDarkMode}
+                                    handleLogout={handleLogout}
+                                    photo={photo}
+                                    nom={nom}
+                                    prenom={prenom}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
