@@ -4,11 +4,13 @@ import { fetchEnCours } from "../../../redux/slices/user/EnCoursSlice"
 import { CreateDemandeRetour, fetchUserDemandes } from "../../../redux/slices/user/demandeEmpruntSlice"; 
 import DemandeEmprunt from "./DemandeEmprunt";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
+import { useTranslation } from "react-i18next";
 
 
 export default function UserDashboard() {
     const dispatch = useDispatch();
     const { items, loading } = useSelector((state) => state.enCours);
+    const { t } = useTranslation();
 
     useEffect(() => {
       dispatch(fetchEnCours());
@@ -24,11 +26,11 @@ export default function UserDashboard() {
   return (
     <div className="mt-18 ml-4 dark:text-gray-50 lg:grid lg:grid-cols-3 md:grid-cols-1 gap-20">
       <div className=" col-span-2">
-        <h1 className="text-3xl font-semibold lg:flex text-center">Vos emprunts en cours</h1> 
+        <h1 className="text-3xl font-semibold lg:flex text-center">{t("currentLoans")}</h1> 
         { loading? (
           <GlobalLoader />
         ) : items.length === 0 ? (
-          <p className="text-gray-600 dark:text-gray-100 mt-16">Aucun emprunt en cours.</p>
+          <p className="text-gray-600 dark:text-gray-100 mt-16">{t("noCurrentLoan")}</p>
         ) :(
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mr-10 mt-10 overflow-auto">
             {items.map((emprunt) => (
@@ -56,23 +58,23 @@ export default function UserDashboard() {
                   </div>
                   <div className="flex space-x-2 mr-1 ">
                         {emprunt.equipement.etatMateriel == "BonEtat" ? (
-                          <p>Bon état</p>
+                          <p>{t("goodCondition")}</p>
                         ) : emprunt.equipement.etatMateriel == "EtatMoyen" ? (
-                          <p>Etat moyen</p>
+                          <p>{t("averageCondition")}</p>
                         ) : emprunt.equipement.etatMateriel == "MauvaisEtat" ? (  
-                          <p>Mauvais état</p>
+                          <p>{t("badCondition")}</p>
                         ) : emprunt.equipement.etatMateriel == "HorsUsage" ? (
-                          <p>Hors usage</p>
+                          <p>{t("outOfService")}</p>
                         ) : emprunt.equipement.etatMateriel == "EnReparation" ? (
-                          <p>En réparation</p>
+                          <p>{t("underRepair")}</p>
                         ) : (
-                          <p>Neuf</p>
+                          <p>{t("newCondition")}</p>
                         )}
                   </div>
                 </div>
 
-                <p>Date d'emprunt : <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
-                <p>Date de retour prévue: <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
+                <p>{t("borrowDate")} <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
+                <p>{t("expectedReturnDate")} <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
         
                 <div className="flex flex-row justify-between items-center -mt-3">
                   <div className="flex flex-row items-center space-x-2 mt-2">
@@ -82,11 +84,11 @@ export default function UserDashboard() {
                     </div>
                     <div className="text-center text-gray-600 dark:text-gray-200 font-normal">
                       { emprunt.statut == "EnCours" ? (
-                        <p>En cours</p>
+                        <p>{t("inProgress")}</p>
                       ):emprunt.statut == "EnRetard"? (
-                        <p>En retard</p>
+                        <p>{t("late")}</p>
                       ):(
-                        <p>En attente</p>
+                        <p>{t("pending")}</p>
                       )}
                     </div>
                   </div>
@@ -94,7 +96,7 @@ export default function UserDashboard() {
                     onClick={() => handleRetour(emprunt.equipement.id, emprunt.id)}
                     className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white cursor-pointer
                       bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
-                    Retourner
+                    {t("return")}
                   </button>
                 </div>
               </div>

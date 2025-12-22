@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { createDemandeEmprunt } from "../../redux/slices/user/demandeEmpruntSlice";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
+import { useTranslation } from "react-i18next";
 
 export default function Emprunter({ selectedEquipementId, onClose }) {
   const [form, setForm] = useState({
@@ -12,6 +13,8 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
 
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.equipement);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchEquipements());
@@ -42,7 +45,7 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
       <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white w-[500px]">
         <h1 className="text-3xl -ml-1 font-bold lg:flex text-center">
-          Contrat de location
+          {t("rentalContract")}
         </h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-12">
@@ -55,7 +58,7 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
                 required
             >
               {equipementsDisponibles.length === 0 ? (
-                <option value="">Aucun équipement disponible</option>
+                <option value="">{t("noAvailableEquipment")}</option>
                 ) : (
                   equipementsDisponibles.map((eq) => (
                     <option key={eq.id} value={eq.id}>
@@ -94,14 +97,14 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
                 className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 shadow-md"
               >
-                Annuler
+                {t("cancel")}
               </button>
               <button 
                 type="submit"
                 className="text-white font-bold border border-transparent rounded-lg px-4 py-2 bg-fuchsia hover:bg-red-600 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"
               >
-                Envoyer
+                {t("send")}
               </button>
             </div>
         

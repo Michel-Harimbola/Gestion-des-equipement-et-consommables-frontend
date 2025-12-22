@@ -4,6 +4,7 @@ import { registerUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from 'lucide-react';
 import { FaSun, FaMoon } from "react-icons/fa";
+import { t } from 'i18next';
 
 const Register = () => {
   const [form, setForm] = useState({ nom: "", prenom: "", email: "", motdepasse: "", role: "" });
@@ -33,22 +34,20 @@ const Register = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
-  // dark mode
+
   const [darkMode, setDarkMode] = useState(() => {
-      // Vérifie si une préférence est déjà enregistrée
       const savedTheme = localStorage.getItem("darkMode");
-      return savedTheme === "true"; // renvoie true ou false
+      return savedTheme === "true"; 
   });
 
   const toggleDarkMode = () => {
       setDarkMode((prev) => {
           const newMode = !prev;
-          localStorage.setItem("darkMode", newMode); // on sauvegarde le choix
+          localStorage.setItem("darkMode", newMode); 
           return newMode;
       });
   };
-  // Optionnel : applique la classe dark au <html> ou <body> directement
+  
   useEffect(() => {
       if (darkMode) {
           document.documentElement.classList.add("dark");
@@ -67,7 +66,7 @@ const Register = () => {
       <div className='grid w-full h-screen place-items-center md:bg-gray-100 dark:bg-gray-900'>
         <div className="flex w-full max-w-6xl bg-white dark:bg-gray-900 md:dark:bg-gray-800 md:shadow-[0_0_40px_3px_rgba(0,0,0,0.2)] rounded-xl overflow-hidden">
           <div className='w-full md:w-1/2 px-20 pt-16 pb-10 flex flex-col justify-center'>
-              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-10 text-center'>S'inscrire</h2>
+              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-10 text-center'>{t("signup")}</h2>
     
               <form 
               onSubmit={handleSubmit}
@@ -80,7 +79,7 @@ const Register = () => {
                       value={form.nom}
                       onChange={handleChange}
                       type="text"
-                      placeholder="Votre nom"
+                      placeholder={t("yourName")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm  shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                       required
@@ -91,7 +90,7 @@ const Register = () => {
                       value={form.prenom}
                       onChange={handleChange}
                       type="text"
-                      placeholder="Votre prénom"
+                      placeholder={t("yourFirstName")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                       required
@@ -102,7 +101,7 @@ const Register = () => {
                       value={form.email}
                       onChange={handleChange}
                       type="email"
-                      placeholder="Votre email"
+                      placeholder={t("yourEmail")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                       required
@@ -114,7 +113,7 @@ const Register = () => {
                       value={form.motdepasse}
                       onChange={handleChange}
                       type={ showPassword ? "text" : "password" }
-                      placeholder="votre mot de passe"
+                      placeholder={t("yourPassword")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                       required
@@ -139,7 +138,7 @@ const Register = () => {
                       value={confirm}
                       onChange={(e) => setConfirm(e.target.value)}
                       type={ showPassword ? "text" : "password" }
-                      placeholder="Confirmer votre mot de passe"
+                      placeholder={t("confirmPassword")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                     />
@@ -167,11 +166,11 @@ const Register = () => {
                     className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] appearance-none bg-white dark:bg-gray-600
                       dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer "
                   >
-                    <option value="" disabled>Choisir un rôle</option>
-                    <option value="client">client</option>
-                    <option value="partenaire">Partenaire</option>
-                    <option value="personnelInterne">Personnel interne</option>
-                    <option value="regisseurEquipementInterne">Régisseur des équipement interne</option>
+                    <option value="" disabled>{t("chooseRole")}</option>
+                    <option value="client">{t("client")}</option>
+                    <option value="partenaire">{t("partner")}</option>
+                    <option value="personnelInterne">{t("internalStaff")}</option>
+                    <option value="regisseurEquipementInterne">{t("equipmentManager")}</option>
                   </select>
                 </div>
                     
@@ -181,16 +180,16 @@ const Register = () => {
                   className="flex space-x-2 px-4 py-3 border border-transparent text-sm font-medium rounded-lg text-white 
                    bg-fuchsia hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"
                   >
-                    <span>INSCRIVEZ</span>
+                    <span>{t("register")}</span>
                   </button>
                 </div>
                     
                 <p className='flex justify-center items-center dark:text-gray-50'>
-                  Vous avez déjà un compte? 
+                  {t("alreadyAccount")}
                   <span  
                   onClick={() => navigate("/login")}
                   className='text-fuchsia hover:text-fuchsia cursor-pointer'>
-                    se Connecter
+                    {t("signIn")}
                   </span> 
                 </p>
               </form>
@@ -204,18 +203,18 @@ const Register = () => {
                     
             <div className="z-10">
               <h3 className="text-3xl font-bold mb-4">
-                BIENVENU!
+                {t("welcome")}!
               </h3>
               <p className="text-lg mb-8">
-                Entrez votre détails et commencez la journée avec nous
+                {t("welcomeDesc")}
               </p>
               <button
                 onClick={() => navigate("/login")}
                 type="button"
                 className="px-8 py-3 border-2 border-white text-white font-medium rounded-full 
-                           hover:bg-white hover:text-fuchsia transition duration-300 backdrop-blur-sm cursor-pointer"
+                           hover:bg-white hover:text-fuchsia transition duration-300 backdrop-blur-sm cursor-pointer uppercase"
               >
-                SE CONNECTER
+                {t("login")}
               </button>
             </div>
           </div>

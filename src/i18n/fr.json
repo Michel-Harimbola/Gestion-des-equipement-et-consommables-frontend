@@ -1,0 +1,123 @@
+{
+  "noPhoto": "Aucune photo",
+  "appearance": "Apparence",
+  "appearanceDesc": "Ajustez l'apparence pour réduire les reflets et reposer vos yeux",
+  "buttonsAndText": "Boutons et texte affiché dans ce navigateur",
+
+  "notifications": "Notifications",
+  "noNotification": "Aucune notification",
+
+  "dashboard": "Dashboard",
+  "users": "Utilisateurs",
+  "loans": "Emprunts",
+  "consumables": "Consommables",
+  "equipments": "Équipements",
+  "requests": "Demandes",
+  "consumableUsage": "Utilisation Consommable",
+  "notification": "Notification",
+  "report": "Rapport",
+  "history": "Historique",
+  "loansAndRequests": "Emprunts & Demandes",
+
+
+  "allConsumables": "Tous les consommables",
+  "noConsumableFound": "Aucun consommable trouvé",
+  "consumableName": "Nom du consommable :",
+  "available": "Disponible",
+  "use": "Utiliser",
+
+  "yourRequests": "Vos demandes",
+  "noPendingRequest": "Aucune demande en attente.",
+  "borrowDate": "Date d'emprunt :",
+  "expectedReturnDate": "Date de retour prévu :",
+
+  "goodCondition": "Bon état",
+  "averageCondition": "État moyen",
+  "badCondition": "Mauvais état",
+  "outOfService": "Hors usage",
+  "underRepair": "En réparation",
+  "newCondition": "Neuf",
+  "equipmentCondition": "État matériel :",
+
+  "pendingReturn": "Retour en attente",
+  "pendingBorrow": "Emprunt en attente",
+  "cancel": "Annuler",
+
+  "currentLoans": "Vos emprunts en cours",
+  "noCurrentLoan": "Aucun emprunt en cours.",
+  "inProgress": "En cours",
+  "late": "En retard",
+  "pending": "En attente",
+  "return": "Retourner",
+
+  "availableStatus": "Disponible",
+  "maintenance": "En maintenance",
+  "borrowed": "Emprunté",
+  "borrow": "Emprunter",
+
+  "allEquipements": "Tous les équipements",
+  "noEquipmentForFilter": "Aucun équipement trouvé pour ce filtre.",
+  "actualReturnDate": "Date de retour effective",
+  "status": "Statut",
+  "photo": "Photo",
+
+  "actualReturn": "Retour effectif :",
+  "expectedReturn": "Retour prévu :",
+  "rentalContract": "Contrat de location",
+
+  "noAvailableEquipment": "Aucun équipement disponible",
+  "send": "Envoyer",
+
+  "borrowingConditions": "Conditions d’emprunt",
+  "name": "Nom:",
+  "equipmentNameDesc": "Nom et description de l’équipement",
+  "serialNumber": "Numéro de série:",
+  "brand": "Marque:",
+  "usage": "Usage:",
+  "state": "État:",
+
+  "serialHelp": "Veuillez insérer le numéro de série attribué à l’équipement.",
+  "brandHelp": "Marque ou modèle de l’équipement.",
+  "usageHelp": "Insérer la raison et le nom de la personne qui utilisera l’équipement en dehors du bureau.",
+
+  "conditionHelp": "Neuf, bon état, état moyen, mauvais état, hors usage, en réparation.",
+  "borrowingRule": "On n’emprunte que les équipements en bon état, avec un contrat de location.",
+  "acceptConditions": "J’ai lu et j’accepte les conditions.",
+
+  "next": "Suivant",
+
+  "login": "Se connecter",
+  "emailPlaceholder": "Entrer votre email ici",
+  "passwordPlaceholder": "Entrer votre mot de passe ici",
+  "connection": "CONNEXION",
+
+  "noAccount": "Vous n'avez pas de compte ?",
+  "signup": "S'inscrire",
+
+  "welcome": "BIENVENU !",
+  "welcomeDesc": "Entrez vos détails et commencez la journée avec nous",
+
+  "yourName": "Votre nom",
+  "yourFirstName": "Votre prénom",
+  "yourEmail": "Votre email",
+  "yourPassword": "Votre mot de passe",
+  "confirmPassword": "confirmez votre mot de passe",
+
+  "chooseRole": "Choisir un rôle",
+  "client": "Client",
+  "partner": "Partenaire",
+  "internalStaff": "Personnel interne",
+  "equipmentManager": "Régisseur des équipements internes",
+
+  "register": "INSCRIVEZ",
+  "alreadyAccount": "Vous avez déjà un compte ?",
+  "signIn": "Se connecter",
+
+  "profile": "Profil", 
+  "display": "Affichage", 
+  "language": "Langue", 
+  "logout": "Déconnecter", 
+  "darkMode": "Mode sombre", 
+  "enable": "Activer", 
+  "disable": "Désactiver"
+}

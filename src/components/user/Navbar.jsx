@@ -8,6 +8,7 @@ import Setting from "./Setting";
 import socket from "../../configs/socket";
 import { fetchUserNotifications, addNotification, markAllNotificationsAsRead } from "../../redux/slices/user/notificationSlice";
 import { navItems } from "../../constants/index";
+import { useTranslation } from "react-i18next";
 import { X, Menu, Bell } from 'lucide-react';
 import { FiChevronDown } from "react-icons/fi";
 import YouthComputing from "../../assets/YouthComputing.png";
@@ -22,9 +23,10 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [showNotif, setShowNotif] = useState(false);
     const [isOpenSetting, setIsOpenSetting] = useState(false);
 
-    const {list: notifications, hasUnread} = useSelector(state => state.notification);
+    const { list: notifications, hasUnread } = useSelector(state => state.notification);
     const { role, photo, nom, prenom } = useSelector(state => state.auth.currentUser);
-    
+
+    const { t } = useTranslation();
     
     const handleLogout = () => {
       dispatch(logout());
@@ -148,7 +150,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                         }}
                                         className={`ease-in-out border-fuchsia ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}
                                     >
-                                        {item.name}
+                                        {t(item.name)}
                                     </Link>
                                 </li>
                         ))}

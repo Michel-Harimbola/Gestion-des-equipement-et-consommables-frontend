@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { UserCircle, LogOutIcon, LanguagesIcon, MoonIcon, ArrowLeft } from 'lucide-react';
 import { FiChevronRight } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
+import { Check } from "lucide-react";
 
 export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo, nom, prenom }) {
     const [activePage, setActivePage] = useState("main");
+    const { t, i18n } = useTranslation();
+
+    const changeLang = (lang) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem("lang", lang);
+    };
+
 
     return (
         <div className="absolute flex flex-col gap-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-[300px] right-0 top-14 rounded-xl p-4">
@@ -16,7 +25,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             className="w-14 h-14 rounded-full" 
                         />
                     ):(
-                        <span>Aucune photo</span>
+                        <span>{t("noPhoto")}</span>
                     )}
                 </div>
                 <div>
@@ -36,7 +45,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             className="flex gap-4 px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg"
                         >
                             < UserCircle />
-                            <p>Profile</p>
+                            <p>{t("profile")}</p>
                         </button>
                         <button
                             onClick={() => setActivePage("apparence")}
@@ -44,7 +53,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                         >
                             <div className="flex gap-4">
                                 < MoonIcon />
-                                <p>Apparence</p>
+                                <p>{t("appearance")}</p>
                             </div>
                             <FiChevronRight className="size-6" />
                         </button>
@@ -54,7 +63,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                         >
                             <div className="flex gap-4">
                                 < LanguagesIcon />
-                                <p>Langue</p>
+                                <p>{t("language")}</p>
                             </div>
                             <FiChevronRight className="size-6" />
                         </button>
@@ -65,7 +74,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             className="flex gap-4 w-full mt-2 justify-center bg-fuchsia hover:bg-red-600 text-white rounded-lg py-3 cursor-pointer"
                         >
                             < LogOutIcon />
-                            <p>DECONNECTER</p>
+                            <p>{t("logout")}</p>
                         </button>
                     </div>
                 </div>
@@ -75,7 +84,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                     absolute inset-0 transition-transform duration-300
                     ${activePage === "apparence" ? "translate-x-0" : "translate-x-full"}
                 `}>
-                    <div className=" font-semibold flex flex-col gap-3">
+                    <div className=" font-semibold flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                             <button 
                                 onClick={() => setActivePage("main")}
@@ -83,7 +92,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             >
                                 <ArrowLeft />   
                             </button>
-                            <h1 className="text-xl">Apparence</h1>
+                            <h1 className="text-xl">{t("appearance")}</h1>
                         </div>
 
                         <div className="flex items-center gap-2">
@@ -91,32 +100,44 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                                 < MoonIcon />
                             </div>
                             <div>
-                                <h2 className="text-lg">Mode sombre</h2>
-                                <p className="text-sm text-gray-700 dark:text-gray-200 font-light">Ajustez l'apparence pour réduire les reflets et reposer vos yeux</p>
+                                <h2 className="text-lg">{t("darkMode")}</h2>
+                                <p className="text-sm text-gray-700 dark:text-gray-200 font-light">{t("appearanceDesc")}</p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-2 ml-10">
-                            <label className="flex items-center gap-2 cursor-pointer">
+                        <div className="flex flex-col gap-3 ml-12 mt-2">
+                            <label className="flex items-center gap-3 cursor-pointer">
                                 <input
                                     type="radio"
-                                    name="status"
+                                    name="theme"
                                     value="active"
                                     checked={darkMode == true}
                                     onChange={toggleDarkMode}
+                                    className="sr-only"
                                 />
-                                Activer
+                                <div>
+                                    {darkMode && (
+                                        <Check className="size-6 text-gray-500 dark:text-gray-300" />
+                                    )}
+                                </div>
+                                <span className={`${darkMode ? "ml-0" : "ml-6"}`}>{t("enable")}</span>
                             </label>
 
-                            <label className="flex items-center gap-2 cursor-pointer">
+                            <label className="flex items-center gap-3 cursor-pointer">
                                 <input
                                     type="radio"
-                                    name="status"
+                                    name="theme"
                                     value="inactive"
                                     checked={darkMode == false}
                                     onChange={toggleDarkMode}
+                                    className="sr-only"
                                 />
-                                Désactiver
+                                <div>
+                                    {!darkMode && (
+                                        <Check className="size-6 text-gray-500 dark:text-gray-300" />
+                                    )}
+                                </div>
+                                <span className={`${!darkMode ? "ml-0" : "ml-6"}`}>{t("disable")}</span>
                             </label>
                         </div>
                     </div>
@@ -127,7 +148,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                     absolute inset-0 transition-transform duration-300
                     ${activePage === "langue" ? "translate-x-0" : "translate-x-full"}
                 `}>
-                    <div className=" font-semibold flex flex-col gap-3">
+                    <div className=" font-semibold flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                             <button 
                                 onClick={() => setActivePage("main")}
@@ -135,7 +156,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             >
                                 <ArrowLeft />   
                             </button>
-                            <h1 className="text-xl">Langue</h1>
+                            <h1 className="text-xl">{t("language")}</h1>
                         </div>
 
                         <div className="flex items-center gap-2">
@@ -143,32 +164,46 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                                 < LanguagesIcon />
                             </div>
                             <div>
-                                <h2 className="text-lg">Langue</h2>
-                                <p className="text-sm text-gray-700 dark:text-gray-200 font-light">Ajustez l'apparence pour réduire les reflets et reposer vos yeux</p>
+                                <h2 className="text-lg">{t("language")}</h2>
+                                <p className="text-sm text-gray-700 dark:text-gray-200 font-light">{t("buttonsAndText")}</p>
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-2 ml-10">
+                        <div className="flex flex-col gap-3 ml-10 mt-2">
                             <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="radio"
-                                    name="status"
+                                    name="language"
                                     value="active"
-                                    // checked={darkMode}
-                                    // onChange={toggleDarkMode}
+                                    checked={i18n.language === "fr"}
+                                    onChange={() => changeLang("fr")}
+                                    className="sr-only"
                                 />
-                                Français (France)
+                                <div className="">
+                                    {i18n.language === "fr" && (
+                                        <Check className="size-6 text-gray-500 dark:text-gray-300" />
+                                    )}
+                                </div>
+
+                                <span className={`${i18n.language === "fr" ? "ml-0" : "ml-6"}`}>Français (FR)</span>
                             </label>
 
                             <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="radio"
-                                    name="status"
+                                    name="language"
                                     value="inactive"
-                                    // checked={!darkMode}
-                                    // onChange={toggleDarkMode}
+                                    checked={i18n.language === "en"}
+                                    onChange={() => changeLang("en")}
+                                    className="sr-only"
                                 />
-                                English (US)
+                                <div className="">
+                                    {i18n.language === "en" && (
+                                        <Check className="size-6 text-gray-500 dark:text-gray-300" />
+                                    )}
+                                </div>
+
+                                <span className={`${i18n.language === "en" ? "ml-0" : "ml-6"}`}>English (US)</span>
                             </label>
                         </div>
                     </div>

@@ -81,22 +81,22 @@ export const links = [
 export const navItems = [
   { 
     id: 1, 
-    name: "Emprunts & Demandes", 
+    name: "loansAndRequests", 
     path: "/UserDashboard", 
     roles: ["personnelInterne", "client", "partenaire"] 
   },
   { id: 2, 
-    name: "Equipements", 
+    name: "equipments", 
     path: "/userDashboard/Equipements", 
     roles: ["personnelInterne", "client", "partenaire"] 
   },
   { id: 3, 
-    name: "Consommables", 
+    name: "consumables", 
     path: "/userDashboard/Consommable", 
     roles: ["personnelInterne"] 
   },
   { id: 4, 
-    name: "Historique", 
+    name: "history", 
     path: "/userDashboard/MesEmprunts", 
     roles: ["personnelInterne", "client", "partenaire"] },
 ];

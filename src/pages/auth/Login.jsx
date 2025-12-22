@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
+import { useTranslation } from 'react-i18next';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { LogIn as LogInIcon, Lock as LockIcon, Mail as MailIcon, Eye, EyeOff } from 'lucide-react';
 
@@ -34,21 +35,22 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
-  // dark mode
+  
   const [darkMode, setDarkMode] = useState(() => {
-      // Vérifie si une préférence est déjà enregistrée
       const savedTheme = localStorage.getItem("darkMode");
-      return savedTheme === "true"; // renvoie true ou false
+      return savedTheme === "true"; 
   });
 
   const toggleDarkMode = () => {
       setDarkMode((prev) => {
           const newMode = !prev;
-          localStorage.setItem("darkMode", newMode); // on sauvegarde le choix
+          localStorage.setItem("darkMode", newMode); 
           return newMode;
       });
   };
-  // Optionnel : applique la classe dark au <html> ou <body> directement
+  
+  const { t } = useTranslation();
+
   useEffect(() => {
       if (darkMode) {
           document.documentElement.classList.add("dark");
@@ -62,7 +64,7 @@ export default function Login() {
       <div className='grid w-full h-screen place-items-center md:bg-gray-100 dark:bg-gray-900'>
         <div className="flex w-full max-w-6xl bg-white dark:bg-gray-900 md:dark:bg-gray-800 md:shadow-[0_0_40px_3px_rgba(0,0,0,0.2)] rounded-xl overflow-hidden">
           <div className='w-full md:w-1/2 px-20 pt-40 pb-28 flex flex-col justify-center'>
-              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-14 -mt-10 text-center'>Se connecter</h2>
+              <h2 className='text-3xl font-medium text-gray-800 dark:text-gray-100 mb-14 -mt-10 text-center'>{t("login")}</h2>
 
               <form onSubmit={handleSubmit} className='space-y-10'>
 
@@ -77,7 +79,7 @@ export default function Login() {
                       value={form.email}
                       onChange={handleChange}
                       type="text"
-                      placeholder="Entrer votre email ici"
+                      placeholder={t("emailPlaceholder")}
                       className="w-full pl-16 pr-4 py-4 border-l-5 border-fuchsia rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:ring-fuchsia transition duration-150"
                       required
@@ -94,7 +96,7 @@ export default function Login() {
                       value={form.motdepasse}
                       onChange={handleChange}
                       type={ showPassword ? "text" : "password" }
-                      placeholder="Entrer votre mot de passe ici"
+                      placeholder={t("passwordPlaceholder")}
                       className="w-full pl-16 pr-4 py-4 border-l-5 border-fuchsia rounded-sm shadow-[0_0_14px_3px_rgba(0,0,0,0.2)] focus:outline-none focus:ring-2 dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:ring-fuchsia transition duration-150"
                       required
@@ -121,16 +123,16 @@ export default function Login() {
                    bg-fuchsia hover:bg-red-600 dark:hover:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"
                   >
                     <LogInIcon className="w-5 h-5" />
-                    <span>CONNEXTION</span>
+                    <span>{t("connection")}</span>
                   </button>
                 </div>
 
                 <p className='flex justify-center items-center dark:text-gray-50'>
-                  Vous n'avez pas de compte?
+                  {t("noAccount")}
                   <span 
                    onClick={() => navigate("/register")}
                    className='text-fuchsia hover:text-fuchsia cursor-pointer'>
-                    S'inscrire
+                    {t("signup")}
                   </span> 
                 </p>
               </form>
@@ -144,18 +146,18 @@ export default function Login() {
                     
             <div className="z-10">
               <h3 className="text-3xl font-bold mb-4">
-                BIENVENU!
+                {t("welcome")}
               </h3>
               <p className="text-lg mb-8 ">
-                Entrez votre détails et commencez la journée avec nous
+                {t("welcomeDesc")}
               </p>
               <button
                 onClick={() => navigate("/register")}
                 type="button"
                 className="px-8 py-3 border-2 border-white text-white font-medium rounded-full 
-                           hover:bg-white hover:text-fuchsia transition duration-300 backdrop-blur-sm cursor-pointer"
+                           hover:bg-white hover:text-fuchsia transition duration-300 backdrop-blur-sm cursor-pointer uppercase"
               >
-                S'INSCRIRE
+                {t("signup")}
               </button>
             </div>
           </div>

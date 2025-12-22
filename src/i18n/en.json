@@ -1,0 +1,122 @@
+{
+  "noPhoto": "No photo",
+  "appearance": "Appearance",
+  "appearanceDesc": "Adjust appearance to reduce glare and rest your eyes",
+  "buttonsAndText": "Buttons and text displayed in this browser",
+
+  "notifications": "Notifications",
+  "noNotification": "No notifications",
+
+  "dashboard": "Dashboard",
+  "users": "Users",
+  "loans": "Loans",
+  "consumables": "Consumables",
+  "equipments": "Equipments",
+  "requests": "Requests",
+  "consumableUsage": "Consumable Usage",
+  "notification": "Notification",
+  "report": "Report",
+  "history": "History",
+  "loansAndRequests": "Loans & Resquests",
+
+  "allConsumables": "All consumables",
+  "noConsumableFound": "No consumable found",
+  "consumableName": "Consumable name:",
+  "available": "Available",
+  "use": "Use",
+
+  "yourRequests": "Your requests",
+  "noPendingRequest": "No pending request.",
+  "borrowDate": "Borrow date:",
+  "expectedReturnDate": "Expected return date:",
+
+  "goodCondition": "Good condition",
+  "averageCondition": "Average condition",
+  "badCondition": "Bad condition",
+  "outOfService": "Out of service",
+  "underRepair": "Under repair",
+  "newCondition": "New",
+  "equipmentCondition": "Equipment condition:",
+
+  "pendingReturn": "Pending return",
+  "pendingBorrow": "Pending borrow",
+  "cancel": "Cancel",
+
+  "currentLoans": "Your current loans",
+  "noCurrentLoan": "No current loan.",
+  "inProgress": "In progress",
+  "late": "Late",
+  "pending": "Pending",
+  "return": "Return",
+
+  "availableStatus": "Available",
+  "maintenance": "Under maintenance",
+  "borrowed": "Borrowed",
+  "borrow": "Borrow",
+
+  "allEquipements": "All equipements",
+  "noEquipmentForFilter": "No equipment found for this filter.",
+  "actualReturnDate": "Actual return date",
+  "status": "Status",
+  "photo": "Photo",
+
+  "actualReturn": "Actual return:",
+  "expectedReturn": "Expected return:",
+  "rentalContract": "Rental contract",
+
+  "noAvailableEquipment": "No available equipment",
+  "send": "Send",
+
+  "borrowingConditions": "Borrowing conditions",
+  "name": "Name:",
+  "equipmentNameDesc": "Equipment name and description",
+  "serialNumber": "Serial number",
+  "brand": "Brand",
+  "usage": "Usage",
+  "state": "State",
+
+  "serialHelp": "Please insert the serial number assigned to the equipment.",
+  "brandHelp": "Equipment brand or model.",
+  "usageHelp": "Insert the reason and the name of the person who will use the equipment outside the office.",
+
+  "conditionHelp": "New, good condition, average condition, bad condition, out of service, under repair.",
+  "borrowingRule": "Only equipment in good condition can be borrowed, with a rental contract.",
+  "acceptConditions": "I have read and accept the conditions.",
+
+  "next": "Next",
+
+  "login": "Log in",
+  "emailPlaceholder": "Enter your email here",
+  "passwordPlaceholder": "Enter your password here",
+  "connection": "LOGIN",
+
+  "noAccount": "Don't have an account?",
+  "signup": "Sign up",
+
+  "welcome": "WELCOME!",
+  "welcomeDesc": "Enter your details and start the day with us",
+
+  "yourName": "Your name",
+  "yourFirstName": "Your first name",
+  "yourEmail": "Your email",
+  "yourPassword": "Your password",
+  "confirmPassword": "confirm your password",
+
+  "chooseRole": "Choose a role",
+  "client": "Client",
+  "partner": "Partner",
+  "internalStaff": "Internal staff",
+  "equipmentManager": "Internal equipment manager",
+
+  "register": "REGISTER",
+  "alreadyAccount": "Already have an account?",
+  "signIn": "Sign in",
+
+  "profile": "Profile", 
+  "display": "Display", 
+  "language": "Language", 
+  "logout": "Logout", 
+  "darkMode": "Dark mode", 
+  "enable": "Enable", 
+  "disable": "Disable"
+}

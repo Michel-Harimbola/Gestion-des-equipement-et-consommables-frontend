@@ -5,6 +5,7 @@ import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 import UtilisationConsommable from "./UtilisationConsommable";
+import { useTranslation } from "react-i18next";
 
 
 export default function Consommable() {
@@ -14,6 +15,8 @@ export default function Consommable() {
   
   const [showPopup, setShowPopup] = useState(false);
   const [selectedUtilisationId, setSelectedUtilisationId] = useState(null);
+ 
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -43,7 +46,7 @@ export default function Consommable() {
 
   return (
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
-        <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les consommables</h1>
+        <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">{t("allConsumables")}</h1>
 
         <div className="flex lg:justify-end justify-center mb-8 mt-10">
           <div className="relative">
@@ -57,7 +60,7 @@ export default function Consommable() {
                 dispatch(setQuery(e.target.value));
                 dispatch(setPage(1));
               }}
-              placeholder="Rechercher"
+              placeholder="Rechercher..."
               className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
             />
 
@@ -80,7 +83,7 @@ export default function Consommable() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mx-15 lg:mx-0 mb-13 mt-10">
             {items.length > 0 && items.length === 0 ? (
-              <p className="text-center col-span-full">Aucun consommable trouvé</p>
+              <p className="text-center col-span-full">{t("noConsumableFound")}</p>
             ) : (
               items.map((consommable) => (
                 <div 
@@ -88,12 +91,12 @@ export default function Consommable() {
                   className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
                 >
                   <div>
-                      <h1 className="font-semibold text-lg text-center">Nom de la consommable:</h1>
+                      <h1 className="font-semibold text-lg text-center">{t("consumableName")}</h1>
                       <h1 className="text-xl font-semibold text-center">{consommable.nom}</h1>
                   </div>
                   
                   <div className="flex flex-row justify-center items-center space-x-2">
-                    <p>Disponible: {consommable.quantiteDisponible}</p>
+                    <p>{t("available")} {consommable.quantiteDisponible}</p>
                   </div>
                   
                   <button 
@@ -103,7 +106,7 @@ export default function Consommable() {
                           "bg-gray-400 dark:bg-gray-500" 
                           : "bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"}
                     `}>
-                    UTILISISER
+                    {t("use")}
                   </button>
                 </div>
               ))

@@ -1,13 +1,15 @@
 import { X } from "lucide-react";
 import { AlertOctagon, AlertTriangle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 
 export default function Notification({ notifications, onClose }) {
+  const { t } = useTranslation();
   return (
     <div className="absolute right-4 top-16 w-[450px] bg-white dark:bg-gray-800 shadow-xl rounded-xl p-4 border border-gray-300 dark:border-gray-600 z-50">
 
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-lg font-semibold dark:text-white">Notifications</h2>
+        <h2 className="text-lg font-semibold dark:text-white">{t("notifications")}</h2>
         <button onClick={onClose} className="text-gray-600 dark:text-gray-300 cursor-pointer">
           <X size={20} />
         </button>
@@ -15,7 +17,7 @@ export default function Notification({ notifications, onClose }) {
 
       {notifications.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400 text-sm text-center py-4">
-          Aucune notification
+          {t("noNotification")}
         </p>
       ):(
         <ul className="flex flex-col gap-2 max-h-64 overflow-y-auto">

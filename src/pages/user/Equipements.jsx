@@ -6,6 +6,7 @@ import Emprunter from "./Emprunter";
 import ContratInfo from "./ContratInfo"; 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 
 export default function Equipements() {
@@ -19,6 +20,8 @@ export default function Equipements() {
   const [selectedEquipementId, setSelectedEquipementId] = useState(null);
   const [showContrat, setShowContrat] = useState(false);
   const [showEmprunter, setShowEmprunter] = useState(false);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -54,7 +57,7 @@ export default function Equipements() {
 
   return (
     <div className="mt-24 ml-2 mr-6 dark:text-gray-50 relative">
-        <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">Tous les équipements</h1>
+        <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">{t("allEquipements")}</h1>
 
         <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-7">
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -144,27 +147,27 @@ export default function Equipements() {
                           <div className="flex justify-between items-center">
                             <div className="font-semibold text-sm text-gray-700 dark:text-gray-200">
                               {eq.etatMateriel == "BonEtat" ? (
-                                <p>Bon état</p>
+                                <p>{t("goodCondition")}</p>
                               ) : eq.etatMateriel == "EtatMoyen" ? (
-                                <p>Etat moyen</p>
+                                <p>{t("averageCondition")}</p>
                               ) : eq.etatMateriel == "MauvaisEtat" ? (  
-                                <p>Mauvais état</p>
+                                <p>{t("badCondition")}</p>
                               ) : eq.etatMateriel == "HorsUsage" ? (
-                                <p>Hors usage</p>
+                                <p>{t("outOfService")}</p>
                               ) : eq.etatMateriel == "EnReparation" ? (
-                                <p>En réparation</p>
+                                <p>{t("underRepair")}</p>
                               ) : (
-                                <p>Neuf</p>
+                                <p>{t("newCondition")}</p>
                               )}
                             </div>
                             
                             <div className="text-gray-700 flex justify-end dark:text-white font-semibold">
                               {eq.disponibilite == "Disponible"? (
-                                <p className="bg-green-100 dark:bg-green-500 px-3 rounded-md">Disponible</p>
+                                <p className="bg-green-100 dark:bg-green-500 px-3 rounded-md">{t("availableStatus")}</p>
                               ): eq.disponibilite == "EnMaintenance" ? (
-                                <p className="bg-blue-100 dark:bg-blue-500 px-3 rounded-md">En maintenance</p>
+                                <p className="bg-blue-100 dark:bg-blue-500 px-3 rounded-md">{t("maintenance")}</p>
                               ):(
-                                <p className="bg-red-100 dark:bg-red-500 px-3 rounded-md">Emprunté</p>
+                                <p className="bg-red-100 dark:bg-red-500 px-3 rounded-md">{t("borrowed")}</p>
                               )}
                             </div>
                           </div>
@@ -178,13 +181,13 @@ export default function Equipements() {
                             "bg-gray-400 dark:bg-gray-500" 
                             : "bg-fuchsia border-3 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
                       `}>
-                      Emprunter
+                      {t("borrow")}
                     </button>
                   </div>
                 ))
               ) : (
                 <p className="text-gray-500 text-center col-span-full">
-                  Aucun équipement trouvé pour ce filtre.
+                  {t("noEquipmentForFilter")}
                 </p>
               )}
           </div>

@@ -1,23 +1,25 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 
 export default function ContratInfo({ onClose, onNext }) {
   const [accepted, setAccepted] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-[500px] dark:text-gray-100">
 
-        <h1 className="text-3xl font-bold text-center mb-6">Conditions d’emprunt</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">{t("borrowingConditions")}</h1>
 
         <div className="space-y-4 text-lg leading-relaxed">
-          <p><strong>Nom :</strong> Nom et description de l’équipement.</p>
-          <p><strong>Numéro de série :</strong> Veuillez insérer le numéro de série attribué à l’équipement.</p>
-          <p><strong>Marque :</strong> Marque ou modèle de l’équipement.</p>
-          <p><strong>Usage :</strong> Insérer la raison et le nom de celui/celle qui va utiliser l’équipement en dehors du bureau.</p>
-          <p><strong>État :</strong> Neuf, bon état, état moyen, mauvais état, hors usage, en réparation.</p>
+          <p><strong>{t("name")}</strong> {t("equipmentNameDesc")}</p>
+          <p><strong>{t("serialNumber")}</strong> {t("serialHelp")}</p>
+          <p><strong>{t("brand")}</strong> {t("brandHelp")}</p>
+          <p><strong>{t("usage")}</strong> {t("usageHelp")}</p>
+          <p><strong>{t("state")}</strong> {t("conditionHelp")}</p>
           <p className="text-red-600 dark:text-red-400">
-            ⚠️ On n’emprunte que les équipements en bon état, avec un contrat de location.
+            ⚠️ {t("borrowingRule")}
           </p>
         </div>
 
@@ -29,7 +31,7 @@ export default function ContratInfo({ onClose, onNext }) {
             onChange={() => setAccepted(!accepted)}
             className="w-5 h-5"
           />
-          <label htmlFor="accept" className="text-lg">J’ai lu et j’accepte les conditions.</label>
+          <label htmlFor="accept" className="text-lg">{t("acceptConditions")}</label>
         </div>
 
         <div className="flex justify-end mt-8 gap-3">
@@ -37,7 +39,7 @@ export default function ContratInfo({ onClose, onNext }) {
             onClick={onClose}
             className="px-4 py-2 bg-gray-400 dark:bg-gray-600 rounded-lg text-white hover:bg-gray-500"
           >
-            Annuler
+            {t("cancel")}
           </button>
 
           <button
@@ -48,7 +50,7 @@ export default function ContratInfo({ onClose, onNext }) {
                 : "bg-red-300 cursor-not-allowed"
               } px-4 py-2 rounded-lg text-white font-bold`}
           >
-            Suivant
+            {t("next")}
           </button>
         </div>
 
