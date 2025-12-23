@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/slices/auth/authSlice"
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,8 @@ import YouthComputing from "../../assets/YouthComputing.png";
 export default function Navbar({ darkMode, toggleDarkMode }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const notifRef = useRef(null);
+    const settingRef = useRef(null);
     
     const [isActive, setIsActive] = useState(0);
     const [isOpen, setIsOpen] = useState(false)
@@ -42,25 +44,40 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     };
 
     useEffect(() => {
-            dispatch(fetchUserNotifications());
-            socket.on("notif_retard", (notification) => {
-                dispatch(addNotification(notification));
-            });
+        dispatch(fetchUserNotifications());
+        socket.on("notif_retard", (notification) => {
+            dispatch(addNotification(notification));
+        });
 
-            socket.on("notif_demande", (notification) => {
-                dispatch(addNotification(notification));
-            });
+        socket.on("notif_demande", (notification) => {
+            dispatch(addNotification(notification));
+        });
+
+        return () => {
+            socket.off("notif_retard");
+            socket.off("notif_demande");
+        }
+    }, [dispatch]);
     
-            return () => {
-                socket.off("notif_retard");
-                socket.off("notif_demande");
-            }
-        }, [dispatch]);
+    useEffect(() => {
+      const handleClickOutside = (e) => {
+        if (notifRef.current && !notifRef.current.contains(e.target)) {
+          setShowNotif(false);
+        }
+
+        if (settingRef.current && !settingRef.current.contains(e.target)) {
+          setIsOpenSetting(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <div
             id="navbar"
-            className="w-full h-16 backdrop-blur-sm border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
+            className="w-full h-16 bg-white border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
             md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 bg-transparent dark:bg-gray-800 shadow-md" 
         >
             {/* Logo */}
@@ -158,7 +175,10 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
                     {/* Buttons */}
                     <div className="flex flex-col md:flex-row items-center gap-4">
-                        <div className="relative hidden md:block">
+                        <div 
+                            ref={notifRef} 
+                            className="relative hidden md:block"
+                        >
                             <button
                                 onClick={() => {
                                     setShowNotif(!showNotif);
@@ -167,7 +187,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                         dispatch(markAllNotificationsAsRead());
                                     }
                                 }}
-                                className="w-fit p-3 rounded-full bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
+                                className="w-fit p-3 rounded-full bg-gray-50 dark:bg-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 relative cursor-pointer"
                             >
                                 <Bell size={24} />
                                 {hasUnread && (
@@ -187,7 +207,10 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                         </div>
 
                         {/* Setting */}
-                        <div className="relative">
+                        <div 
+                            ref={settingRef} 
+                            className="relative"
+                        >
                             <button 
                                 onClick={toggleSetting}
                                 className="flex flex-col hover:opacity-80 cursor-pointer"
@@ -214,6 +237,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     photo={photo}
                                     nom={nom}
                                     prenom={prenom}
+                                    setIsOpenSetting={setIsOpenSetting}
                                 />
                             )}
                         </div>

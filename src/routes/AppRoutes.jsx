@@ -10,6 +10,7 @@ import UserDashboard from "../pages/user/Emprunt_et_Demandes/UserDashboard";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Consommable from "../pages/user/consommable/consommable";
+import Profil from "../pages/user/Profil";
 
 import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
 import Unauthorized from "../pages/Unauthorized";
@@ -43,6 +44,7 @@ export default function AppRoutes() {
                   <Route path="/userDashboard/Equipements" element={ <Equipements /> } />
                   <Route path="/userDashboard/MesEmprunts" element={ <MesEmprunts /> } />
                   <Route path="/userDashboard/Consommable" element={ <Consommable /> } />
+                  <Route path="/userDashboard/Profil" element={ <Profil /> } />
                 </Route>
                 
                 {/* Routes admin */}

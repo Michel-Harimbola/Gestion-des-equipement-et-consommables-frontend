@@ -4,19 +4,18 @@ import { Outlet } from "react-router-dom";
 
 export default function DashboardLayout() {
   const [darkMode, setDarkMode] = useState(() => {
-      // Vérifie si une préférence est déjà enregistrée
       const savedTheme = localStorage.getItem("darkMode");
-      return savedTheme === "true"; // renvoie true ou false
+      return savedTheme === "true"; 
   });
 
   const toggleDarkMode = () => {
       setDarkMode((prev) => {
           const newMode = !prev;
-          localStorage.setItem("darkMode", newMode); // on sauvegarde le choix
+          localStorage.setItem("darkMode", newMode); 
           return newMode;
       });
   };
-  // applique la classe dark au <html> ou <body> directement
+  
   useEffect(() => {
       if (darkMode) {
           document.documentElement.classList.add("dark");
@@ -32,7 +31,7 @@ export default function DashboardLayout() {
         darkMode={darkMode}
       />
 
-      <main className="flex-1 bg-gray-0 dark:bg-gray-800 overflow-y-auto p-6">
+      <main className="flex-1 dark:bg-gray-800 overflow-hidden">
         <Outlet />
       </main>
     </div>

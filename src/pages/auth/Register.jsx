@@ -170,7 +170,6 @@ const Register = () => {
                     <option value="client">{t("client")}</option>
                     <option value="partenaire">{t("partner")}</option>
                     <option value="personnelInterne">{t("internalStaff")}</option>
-                    <option value="regisseurEquipementInterne">{t("equipmentManager")}</option>
                   </select>
                 </div>
                     

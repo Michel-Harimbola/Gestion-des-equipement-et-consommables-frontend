@@ -47,7 +47,14 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       state.user = null; 
       toast.info("Déconnexion réussie !");
-    } 
+    }, 
+
+    updateCurrentUser: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        ...action.payload
+      };
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -63,5 +70,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, updateCurrentUser } = authSlice.actions;
 export default authSlice.reducer;

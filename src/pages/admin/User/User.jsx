@@ -236,7 +236,8 @@ export default function User() {
                               setOpenMenuUserId(null);
                               setIsConfirmOpen(true);
                             }}
-                            className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
+                            className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 
+                              active:bg-red-50 rounded-xl"
                           >
                             <FiDelete />
                             Supprimer

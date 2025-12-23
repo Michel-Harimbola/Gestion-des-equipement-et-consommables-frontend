@@ -1,12 +1,12 @@
 import { X } from "lucide-react";
-import { AlertOctagon, AlertTriangle } from "lucide-react";
+import { AlertOctagon, AlertTriangle, CheckCircle2Icon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 
 export default function Notification({ notifications, onClose }) {
   const { t } = useTranslation();
   return (
-    <div className="absolute right-4 top-16 w-[450px] bg-white dark:bg-gray-800 shadow-xl rounded-xl p-4 border border-gray-300 dark:border-gray-600 z-50">
+    <div className="absolute right-4 top-14 w-[450px] bg-white dark:bg-gray-800 shadow-xl rounded-xl p-4 border border-gray-300 dark:border-gray-600 z-50">
 
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold dark:text-white">{t("notifications")}</h2>
@@ -27,11 +27,15 @@ export default function Notification({ notifications, onClose }) {
               className={`p-3 rounded-lg flex gap-3 items-center hover:bg-gray-100 dark:hover:bg-gray-600
               ${notif.vu ? "bg-gray-50 dark:bg-gray-700" : "bg-blue-100 dark:bg-blue-900"}`}
             >
-              {notif.type == "AlerteStock" ? (
-                  <AlertOctagon className="w-8 h-8 text-red-500" />
+              <div>
+                {notif.type == "RappelRetour" ? (
+                  <AlertTriangle className="size-7 text-yellow-400" />
+                ):notif.type == "Acceptation" ? (
+                  <CheckCircle2Icon className="size-7 text-green-400" />
                 ):(
-                  <AlertTriangle className="w-8 h-8 text-yellow-400" />
-              )}
+                  <AlertOctagon className="size-7 text-red-500" />
+                )}
+              </div>
               <div>
                 <p className="text-sm dark:text-white">{notif.message}</p>
                 <span className="text-xs text-gray-500 dark:text-gray-300">

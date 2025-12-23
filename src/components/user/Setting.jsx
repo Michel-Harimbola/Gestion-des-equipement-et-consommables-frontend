@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { UserCircle, LogOutIcon, LanguagesIcon, MoonIcon, ArrowLeft } from 'lucide-react';
 import { FiChevronRight } from "react-icons/fi";
-import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";
 
-export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo, nom, prenom }) {
+export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo, nom, prenom , setIsOpenSetting}) {
     const [activePage, setActivePage] = useState("main");
+    const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 
     const changeLang = (lang) => {
@@ -16,7 +18,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
 
     return (
         <div className="absolute flex flex-col gap-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-[300px] right-0 top-14 rounded-xl p-4">
-            <div className="flex gap-3 border-b-2 pb-4 border-b-gray-300 dark:border-b-gray-600">
+            <div className="flex gap-3 border-b pb-4 border-b-gray-200 dark:border-b-gray-700">
                 <div>
                     {photo ? (
                         <img 
@@ -42,6 +44,10 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                 `}>
                     <div className="flex flex-col font-semibold text-gray-600 dark:text-gray-100">
                         <button
+                            onClick={() => {
+                                navigate("/userDashboard/Profil");
+                                setIsOpenSetting(null);
+                            }}
                             className="flex gap-4 px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg"
                         >
                             < UserCircle />
