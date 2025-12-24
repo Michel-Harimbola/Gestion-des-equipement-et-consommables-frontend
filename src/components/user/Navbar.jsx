@@ -78,7 +78,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         <div
             id="navbar"
             className="w-full h-16 bg-white border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
-            md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 bg-transparent dark:bg-gray-800 shadow-md" 
+            md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 dark:bg-gray-800 shadow-md" 
         >
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
@@ -219,7 +219,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     <img 
                                         src={`http://localhost:3000${photo}`} 
                                         alt={photo}
-                                        className="w-[46px] h-[46px] -mb-4 rounded-full" 
+                                        className="w-[46px] h-[46px] -mb-4 object-cover rounded-full" 
                                     />
                                 ):(
                                     <span>Aucune photo</span>

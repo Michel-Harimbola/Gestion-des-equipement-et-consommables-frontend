@@ -24,7 +24,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                         <img 
                             src={`http://localhost:3000${photo}`} 
                             alt={photo}
-                            className="w-14 h-14 rounded-full" 
+                            className="w-14 h-14 object-cover rounded-full" 
                         />
                     ):(
                         <span>{t("noPhoto")}</span>
@@ -36,7 +36,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                 </div>
             </div>
             
-            <div className="relative overflow-hidden w-[267px] h-[200px]">
+            <div className="relative overflow-hidden w-[267px] h-[203px]">
                 {/* Main */}
                 <div className={`
                     absolute inset-0 transition-transform duration-300
@@ -48,7 +48,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                                 navigate("/userDashboard/Profil");
                                 setIsOpenSetting(null);
                             }}
-                            className="flex gap-4 px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg"
+                            className="flex gap-4 px-2 py-3 border border-transparent hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg focus:scale-90"
                         >
                             < UserCircle />
                             <p>{t("profile")}</p>
@@ -74,10 +74,13 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                             <FiChevronRight className="size-6" />
                         </button>
                     </div>
-                    <div>
+                    <div className="px-2 mt-2">
                         <button 
                             onClick={handleLogout}
-                            className="flex gap-4 w-full mt-2 justify-center bg-fuchsia hover:bg-red-600 text-white rounded-lg py-3 cursor-pointer"
+                            className="
+                                flex justify-center space-x-2 py-2 border border-transparent text-lg font-medium rounded-lg text-white cursor-pointer w-full
+                                bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md
+                            "
                         >
                             < LogOutIcon />
                             <p>{t("logout")}</p>

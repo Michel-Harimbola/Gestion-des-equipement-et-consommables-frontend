@@ -33,6 +33,19 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async ({ id, oldPassword, newPassword }, thunkAPI) => {
+    try {
+      const res = await authService.changePassword(id, {oldPassword, newPassword});
+      toast.success("Mot de passe modifié avec succès");
+      return res;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Erreur");
+    }
+  }
+);
+
 const savedUser = localStorage.getItem("currentUser");
 const parsedUser = savedUser ? JSON.parse(savedUser) : null;
 
@@ -40,7 +53,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { 
     currentUser: parsedUser,
-    loading: false 
+    loading: false,
+    error: null,
   },
   reducers: { 
     logout: (state) => { 
@@ -67,6 +81,15 @@ const authSlice = createSlice({
       .addCase(registerUser.pending, (state) => { state.loading = true; })
       .addCase(registerUser.fulfilled, (state) => { state.loading = false; })
       .addCase(registerUser.rejected, (state) => { state.loading = false})
+      .addCase(changePassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changePassword.fulfilled, (state) => { state.loading = false; })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

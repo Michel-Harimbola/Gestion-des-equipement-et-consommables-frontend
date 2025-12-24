@@ -10,4 +10,9 @@ export const authService = {
     const res = await axiosInstance.post("/auth/register", data);
     return res.data;
   },
+
+  async changePassword(id, data) {
+    const res = await axiosInstance.patch(`/auth/${id}/changePassword`,data);
+    return res.data;
+  }
 };

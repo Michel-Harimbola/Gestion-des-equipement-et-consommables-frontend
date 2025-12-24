@@ -45,7 +45,7 @@ export default function Consommable() {
   };
 
   return (
-    <div className="mt-24 ml-2 mr-6 dark:text-gray-50">
+    <div className="mt-24 px-4 sm:px-8 dark:text-gray-50">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">{t("allConsumables")}</h1>
 
         <div className="flex lg:justify-end justify-center mb-8 mt-10">

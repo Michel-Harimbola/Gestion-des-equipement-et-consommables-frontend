@@ -1,30 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEnCours } from "../../../redux/slices/user/EnCoursSlice"
 import { CreateDemandeRetour, fetchUserDemandes } from "../../../redux/slices/user/demandeEmpruntSlice"; 
 import DemandeEmprunt from "./DemandeEmprunt";
+import EtatMaterielForm from "./EtatMaterielForm";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { useTranslation } from "react-i18next";
 
 
 export default function UserDashboard() {
-    const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.enCours);
-    const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { items, loading } = useSelector((state) => state.enCours);
+  const { t } = useTranslation();
 
-    useEffect(() => {
-      dispatch(fetchEnCours());
-      dispatch(fetchUserDemandes());
-    }, [dispatch]);
+  const [showEtatForm, setShowEtatForm] = useState(false);
+  const [selectedEmprunt, setSelectedEmprunt] = useState(null);
 
-  const handleRetour = async (equipementId,empruntId) => {
-    await dispatch(CreateDemandeRetour({ equipementId, empruntId }));
+  const handleRetourClick = (emprunt) => {
+    setSelectedEmprunt(emprunt);
+    setShowEtatForm(true);
+  };
+
+  useEffect(() => {
     dispatch(fetchEnCours());
-    dispatch(fetchUserDemandes());  
-  };    
+    dispatch(fetchUserDemandes());
+  }, [dispatch]);
+
+  const handleSubmitRetour = async ({ etatMateriel }) => {
+    await dispatch(
+      CreateDemandeRetour({
+        equipementId: selectedEmprunt.equipement.id,
+        empruntId: selectedEmprunt.id,
+        etatMateriel,
+      })
+    );
+
+    setShowEtatForm(false);
+    setSelectedEmprunt(null);
+
+    dispatch(fetchEnCours());
+    dispatch(fetchUserDemandes());
+  };
 
   return (
-    <div className="mt-18 ml-4 dark:text-gray-50 lg:grid lg:grid-cols-3 md:grid-cols-1 gap-20">
+    <div className="mt-24 px-4 sm:px-8 dark:text-gray-50 lg:grid lg:grid-cols-3 md:grid-cols-1 gap-20">
       <div className=" col-span-2">
         <h1 className="text-3xl font-semibold lg:flex text-center">{t("currentLoans")}</h1> 
         { loading? (
@@ -93,7 +112,7 @@ export default function UserDashboard() {
                     </div>
                   </div>
                   <button 
-                    onClick={() => handleRetour(emprunt.equipement.id, emprunt.id)}
+                    onClick={() => handleRetourClick(emprunt)}
                     className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white cursor-pointer
                       bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
                     {t("return")}
@@ -104,6 +123,14 @@ export default function UserDashboard() {
           </div>
         )}
       </div>
+
+      {showEtatForm && (
+        <EtatMaterielForm
+          onSubmit={handleSubmitRetour}
+          onClose={() => setShowEtatForm(false)}
+        />
+      )}
+
       <DemandeEmprunt />   
     </div>
   );

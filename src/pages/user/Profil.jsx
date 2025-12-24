@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updatePersonalInformation } from "../../redux/slices/user/userSlice";
-import { logout } from "../../redux/slices/auth/authSlice";
+import { logout, changePassword } from "../../redux/slices/auth/authSlice";
 import { updateCurrentUser } from "../../redux/slices/auth/authSlice";
 import { LogOutIcon, EditIcon, CheckCheckIcon, X } from "lucide-react";
 
@@ -20,6 +20,12 @@ export default function Profil() {
     email
   });
 
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -27,25 +33,49 @@ export default function Profil() {
     });
   };
 
-  const handleUpdate = async (e) => {
-  e.preventDefault();
+  const handlePasswordChange = (e) => {
+    setPasswordData({
+      ...passwordData,
+      [e.target.id]: e.target.value,
+    });
+  };
 
-  try {
-    const resultAction = await dispatch(
-      updatePersonalInformation({
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    try {
+      const resultAction = await dispatch(
+        updatePersonalInformation({
+          id,
+          data: formData
+        })
+      );
+
+      if (updatePersonalInformation.fulfilled.match(resultAction)) {
+        dispatch(updateCurrentUser(resultAction.payload));
+        setIsEditPI(false);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+
+    if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+      alert("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    dispatch(
+      changePassword({
         id,
-        data: formData
+        oldPassword: passwordData.oldPassword,
+        newPassword: passwordData.newPassword,
       })
     );
-
-    if (updatePersonalInformation.fulfilled.match(resultAction)) {
-      dispatch(updateCurrentUser(resultAction.payload));
-      setIsEditPI(false);
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
 
   const toggleEdit = () => {
     setIsEditPI(!isEditPI);
@@ -67,12 +97,12 @@ export default function Profil() {
       <div className="flex gap-10 ">
 
         {/* Pofil */}
-        <div className="flex flex-col justify-between bg-white dark:bg-gray-800 p-10 rounded-4xl">
+        <div className="flex flex-col justify-between bg-white dark:bg-gray-800 p-10 border border-gray-300 rounded-4xl">
           <div className="flex flex-col items-center">
             <img 
               src={`http://localhost:3000${photo}`} 
               alt={photo} 
-              className="size-55 rounded-full"
+              className="size-55 object-cover rounded-full"
             />
             <h1 className="text-2xl font-semibold mt-4">{nom}</h1>
             <h2 className="text-xl font-normal">{prenom}</h2>
@@ -82,7 +112,10 @@ export default function Profil() {
           <div>
               <button 
                 onClick={() => Logout()}
-                className="flex gap-4 w-full justify-center bg-fuchsia hover:bg-red-600 text-white rounded-xl py-2 cursor-pointer"
+                className="
+                  flex justify-center space-x-2 py-2 border border-transparent text-lg font-medium rounded-lg text-white cursor-pointer w-full
+                  bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md
+                "
               >
                 < LogOutIcon />
                 <span className="text-lg font-bold">Log Out</span>
@@ -90,7 +123,7 @@ export default function Profil() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-4xl">
+        <div className="bg-white dark:bg-gray-800 border border-gray-300 rounded-4xl">
           <div className="flex flex-col gap-15 p-15 pb-40">
 
             {/* Information personnel */}
@@ -227,7 +260,10 @@ export default function Profil() {
             </form>
 
             {/* Mot de passe */}
-            <form className="flex flex-col gap-10">
+            <form 
+              onSubmit={handleUpdatePassword}
+              className="flex flex-col gap-10"
+            >
               <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-semibold">Password</h1>
 
@@ -244,10 +280,12 @@ export default function Profil() {
 
               <div className="flex relative">
                 <input 
-                  required
+                  required 
                   id="oldPassword"
                   type="password" 
                   placeholder="Password"
+                  value={passwordData.oldPassword}
+                  onChange={handlePasswordChange}
                   className="
                     peer px-4 py-2 w-xl text-lg outline-none border-2 border-gray-400 dark:border-gray-300 rounded-2xl hover:border-gray-600 
                     dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
@@ -277,6 +315,8 @@ export default function Profil() {
                     id="newPassword"
                     type="password" 
                     placeholder="Password"
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordChange}
                     className="
                       peer px-4 py-2 w-xl text-lg outline-none border-2 border-gray-400 dark:border-gray-300 rounded-2xl hover:border-gray-600 
                       dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
@@ -305,6 +345,8 @@ export default function Profil() {
                     id="confirmNewPassword"
                     type="password" 
                     placeholder="Password"
+                    value={passwordData.confirmNewPassword}
+                    onChange={handlePasswordChange}
                     className="
                       peer px-4 py-2 w-xl text-lg outline-none border-2 border-gray-400 dark:border-gray-300 rounded-2xl hover:border-gray-600 
                       dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
@@ -331,6 +373,7 @@ export default function Profil() {
               {isEditPassword && (
                 <div className="flex gap-4">
                   <button
+                    type="submit"
                     className="flex gap-2 items-center bg-fuchsia hover:bg-red-600 text-white pr-4 p-2 rounded-lg cursor-pointer"
                   >
                     <CheckCheckIcon className="size-6" />
