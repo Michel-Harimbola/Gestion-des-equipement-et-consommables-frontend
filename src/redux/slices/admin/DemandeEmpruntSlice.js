@@ -52,9 +52,9 @@ export const approuverEmprunt = createAsyncThunk("demande/approuver", async (id,
   }
 });
 
-export const refuserEmprunt = createAsyncThunk("demande/refuser", async (id, thunkAPI) => {
+export const refuserEmprunt = createAsyncThunk("demande/refuser", async ({ id, motif }, thunkAPI) => {
   try {
-    const res = await demandeEmpruntService.refuser(id);
+    const res = await demandeEmpruntService.refuser(id, motif);
     toast.success("Demande refuser !");
     return res;
   } catch (error) {

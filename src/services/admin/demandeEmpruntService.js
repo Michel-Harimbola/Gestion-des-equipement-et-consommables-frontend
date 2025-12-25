@@ -26,8 +26,8 @@ const demandeEmpruntService = {
         return res.data;
     },
 
-    refuser: async (id) => {
-        const res = await axiosInstance.put(`/demande/${id}/refuser`);
+    refuser: async (id, motif) => {
+        const res = await axiosInstance.put(`/demande/${id}/refuser`, { motif });
         return res.data;
     },
 

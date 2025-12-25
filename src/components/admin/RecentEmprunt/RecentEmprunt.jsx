@@ -8,7 +8,7 @@ import { FiChevronDown } from "react-icons/fi";
 
 
 
-export default function Event() {
+export default function RecentEmprunt() {
     const dispatch = useDispatch();
     const { recent, loading } = useSelector((state) => state.emprunts);
 

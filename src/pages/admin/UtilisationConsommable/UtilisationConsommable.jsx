@@ -146,9 +146,9 @@ export default function Utilisationutilisation() {
               <table className="min-w-full text-lg text-gray-700">
                 <thead className="bg-fuchsia text-white">
                   <tr>
-                    <th className="py-3 px-4 text-left">ID</th>
+                    <th className="py-3 px-4 text-left">Photo</th>
                     <th className="py-3 px-4 text-left">Utilisateur</th>
-                    <th className="py-3 px-4 text-left">utilisation</th>
+                    <th className="py-3 px-4 text-left">Consommable</th>
                     <th className="py-3 px-4 text-left">Date d'Utilisation</th>
                     <th className="py-3 px-4 text-left">Quantité</th>
                     <th className="py-3 px-4 text-left">Description</th>

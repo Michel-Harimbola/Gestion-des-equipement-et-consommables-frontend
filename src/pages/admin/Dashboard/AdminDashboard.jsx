@@ -3,7 +3,7 @@ import Content from "../../../ui/Content";
 import Profile from "../../../components/admin/Profile/Profile";
 import Stats from "../../../components/admin/Stats/Stats";
 import DemandeEmprunt from "../../../components/admin/DemandeEmprunt/DemandeEmprunt";
-import Team from "../../../components/admin/Team/Team";
+import RecentEmprunt from "../../../components/admin/RecentEmprunt/RecentEmprunt";
 
 
 function AdminDashboard({ darkMode }) {
@@ -13,7 +13,7 @@ function AdminDashboard({ darkMode }) {
             <Stats darkMode={darkMode}/>
             <div className="flex flex-col gap-3 lg:flex-row">
                 <DemandeEmprunt />
-                <Team />
+                <RecentEmprunt />
             </div>
         </Content>
         <Profile darkMode={darkMode}/>

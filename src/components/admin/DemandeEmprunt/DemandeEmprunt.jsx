@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDemandesEnAttente, setPage, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
 import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
+import MotifForm from "./MotifForm";
 import Title from "../../../ui/Title";
 import GlobalLoader from "../../shared/GlobalLoader";
 import { LuCheck, LuX } from "react-icons/lu";
@@ -14,6 +15,9 @@ export default function DemandeEmprunt() {
     const { items, loading, page, totalPages } = useSelector((state) => state.demandes);
 
     const [openDetails, setOpenDetails] = useState({});
+    const [showMotif, setShowMotif] = useState(false);
+    const [selectedDemande, setSelectedDemande] = useState(null);
+
 
     useEffect(() => {
         dispatch(fetchDemandesEnAttente({ page, limit: 3 }));
@@ -85,7 +89,10 @@ export default function DemandeEmprunt() {
                                                 <LuCheck className="w-7 h-7 text-green-500 dark:text-green-400"/>
                                             </button>
                                             <button 
-                                                onClick={() => dispatch(refuserEmprunt(demande.id))}
+                                                onClick={() => {
+                                                    setSelectedDemande(demande.id);
+                                                    setShowMotif(true);
+                                                }}
                                                 className="bg-slate-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                                             >
                                                 <LuX className="w-7 h-7 text-red-500 dark:text-red-400"/>
@@ -119,6 +126,22 @@ export default function DemandeEmprunt() {
                     </button>
                 </div>
             )}
+
+            {showMotif && (
+                <MotifForm
+                    onClose={() => setShowMotif(false)}
+                    onSubmit={async (motif) => {
+                        try {
+                            await dispatch(refuserEmprunt({ id: selectedDemande, motif })).unwrap();
+                            dispatch(fetchDemandesEnAttente({ page, limit: 3 }));
+                            setShowMotif(false);
+                        } catch (err) {
+                            console.error("Erreur lors du refus :", err);
+                        }
+                    }}
+                />
+            )}
+
         </div>
     )
 }

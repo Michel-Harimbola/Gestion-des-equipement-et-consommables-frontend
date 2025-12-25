@@ -12,17 +12,15 @@ export default function Notification() {
     useEffect(() => {
         dispatch(fetchNotificationsActif());
 
-        // Écouter les notifications temps réel
         socket.on("stock_alert", (notification) => {
             dispatch(addNotification(notification));
         });
 
-        // Nettoyer l'écouteur à la fermeture du composant
         return () => socket.off("stock_alert");
     }, [dispatch]);
 
     return (
-        <div className="flex lg:h-[400px] gap-4 flex-col bg-white rounded-lg px-3 py-5 dark:bg-gray-700">
+        <div className="flex lg:h-[340px] gap-4 flex-col bg-white rounded-lg px-3 py-5 dark:bg-gray-700">
             <Title>Notifications</Title>
             <div className="overflow-auto">
                 <NotificationList />

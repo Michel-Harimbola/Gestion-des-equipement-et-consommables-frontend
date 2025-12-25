@@ -139,7 +139,7 @@ export default function Consommables() {
                   <table className="min-w-full text-lg text-gray-700">
                     <thead className="bg-fuchsia text-white">
                       <tr>
-                        <th className="py-3 px-4 text-left">ID</th>
+                        <th className="py-3 px-4 text-left">Photo</th>
                         <th className="py-3 px-4 text-left">Nom</th>
                         <th className="py-3 px-4 text-left">Quantité</th>
                         <th className="py-3 px-4 text-left">Seuil Critique</th>

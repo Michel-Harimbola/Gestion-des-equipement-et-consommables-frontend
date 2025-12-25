@@ -25,7 +25,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [showNotif, setShowNotif] = useState(false);
     const [isOpenSetting, setIsOpenSetting] = useState(false);
 
-    const { list: notifications, hasUnread } = useSelector(state => state.notification);
+    const { list: notifications, unreadCount } = useSelector(state => state.notification);
     const { role, photo, nom, prenom } = useSelector(state => state.auth.currentUser);
 
     const { t } = useTranslation();
@@ -77,12 +77,14 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     return (
         <div
             id="navbar"
-            className="w-full h-16 bg-white border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
-            md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 dark:bg-gray-800 shadow-md" 
+            className="
+                w-full h-16 bg-white border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
+                md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 dark:bg-gray-800 shadow-md
+            " 
         >
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
-                <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                <Link to="/userDashboard/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
                     <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
                     YouthComputing
                 </Link>
@@ -92,18 +94,22 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             <div className="md:hidden flex gap-4">
                 <div className="relative">
                     <button
-                        onClick={() => {
-                            setShowNotif(!showNotif);
-
-                            if (!showNotif) {
-                                dispatch(markAllNotificationsAsRead());
-                            }
-                        }}
+                        onClick={() => setShowNotif(!showNotif)}
                         className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
                     >
                         <Bell size={24} />
-                        {hasUnread && (
-                            <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full" />
+                        {unreadCount > 0 && (
+                            <span className="
+                                absolute -top-1 -right-1 
+                                min-w-[20px] h-[20px] 
+                                px-1
+                                flex items-center justify-center
+                                text-xs font-bold text-white
+                                bg-red-500 
+                                rounded-full
+                            ">
+                                {unreadCount > 9 ? "9+" : unreadCount}
+                            </span>
                         )}
                     </button>
 
@@ -128,14 +134,16 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
             {/* Navbar items and buttons */}
             <div 
-                className={`fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto bg-sky-50 dark:bg-gray-800 dark:border-gray-600 border-l 
+                className={`
+                    fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto bg-sky-50 dark:bg-gray-800 dark:border-gray-600 border-l 
                     md:border-none border-neutral-300 md:bg-transparent shadow-lg md:shadow-none transition-transform 
-                    duration-300 ease-in-out transform flex-1 ${isOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 z-60`}
+                    duration-300 ease-in-out transform flex-1 ${isOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0 z-60
+                `}
             >
 
                 {/* Logo and close icon Inside Toggle Menu */}
                 <div className="w-full md:hidden flex items-center justify-between px-4">
-                    <Link to="/UserDashboard" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                    <Link to="/userDashboard/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
                         <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
                         YouthComputing
                     </Link>
@@ -180,18 +188,22 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                             className="relative hidden md:block"
                         >
                             <button
-                                onClick={() => {
-                                    setShowNotif(!showNotif);
-
-                                    if (!showNotif) {
-                                        dispatch(markAllNotificationsAsRead());
-                                    }
-                                }}
+                                onClick={() => setShowNotif(!showNotif)}
                                 className="w-fit p-3 rounded-full bg-gray-50 dark:bg-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 relative cursor-pointer"
                             >
                                 <Bell size={24} />
-                                {hasUnread && (
-                                  <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full" />
+                                {unreadCount > 0 && (
+                                    <span className="
+                                        absolute -top-1 -right-1 
+                                        min-w-[20px] h-[20px] 
+                                        px-1
+                                        flex items-center justify-center
+                                        text-xs font-bold text-white
+                                        bg-red-500 
+                                        rounded-full
+                                    ">
+                                        {unreadCount > 9 ? "9+" : unreadCount}
+                                    </span>
                                 )}
                             </button>
 

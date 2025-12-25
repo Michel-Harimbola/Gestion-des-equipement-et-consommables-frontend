@@ -29,22 +29,27 @@ const notificationSlice = createSlice({
     name: "notification",
     initialState: {
         list: [],
-        hasUnread: false, 
+        unreadCount: 0,
     },
     reducers: {
         addNotification: (state, action) => {
             state.list.unshift(action.payload);
-            state.hasUnread = true;
+            state.unreadCount += 1;
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUserNotifications.fulfilled, (state, action) => {
-                state.list = action.payload;
+                const notifications = Array.isArray(action.payload)
+                ? action.payload
+                : action.payload.notifications || [];
+
+                state.list = notifications;
+                state.unreadCount = notifications.filter(n => !n.vu).length;
             })
             .addCase(markAllNotificationsAsRead.fulfilled, (state) => {
                 state.list = state.list.map(n => ({ ...n, vu: true }));
-                state.hasUnread = false;
+                state.unreadCount = 0;
             });
     }
 });

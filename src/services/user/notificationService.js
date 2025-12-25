@@ -7,7 +7,7 @@ const notificationService = {
     },
 
     markAllAsRead: async () => {
-        const res = await axiosInstance.patch("/notification/read-all");
+        const res = await axiosInstance.patch("/notification/readAll");
         return res.data;
     }
 };

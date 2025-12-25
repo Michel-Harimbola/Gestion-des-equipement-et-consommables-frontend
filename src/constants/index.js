@@ -33,7 +33,7 @@ export const links = [
       color: "bg-gray-100 text-gray-800",
       darkColor: "dark:bg-gray-700 dark:text-gray-300",
     },
-    roles: ["admin"]
+    roles: ["admin", "regisseurEquipementInterne"]
   },
   {
     href: "/Consommable",
@@ -62,7 +62,7 @@ export const links = [
     href: "/Utilisation",
     icon: FaCogs,
     text: "Utilisation Consommable",
-    roles: ["admin"]
+    roles: ["admin", "regisseurEquipementInterne"]
   },
   {
     href: "/Notification",
@@ -79,21 +79,21 @@ export const links = [
 ];
 
 export const navItems = [
-  { 
-    id: 1, 
-    name: "loansAndRequests", 
-    path: "/UserDashboard", 
-    roles: ["personnelInterne", "client", "partenaire"] 
-  },
-  { id: 2, 
+  { id: 1, 
     name: "equipments", 
     path: "/userDashboard/Equipements", 
     roles: ["personnelInterne", "client", "partenaire"] 
   },
-  { id: 3, 
+  { id: 2, 
     name: "consumables", 
     path: "/userDashboard/Consommable", 
     roles: ["personnelInterne"] 
+  },
+  { 
+    id: 3, 
+    name: "loansAndRequests", 
+    path: "/UserDashboard", 
+    roles: ["personnelInterne", "client", "partenaire"] 
   },
   { id: 4, 
     name: "history", 

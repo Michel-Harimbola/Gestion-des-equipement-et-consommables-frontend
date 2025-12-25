@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 
 export default function AdminDashboardLayout() {
     const [darkMode, setDarkMode] = useState(() => {
-        // Vérifie si une préférence est déjà enregistrée
         const savedTheme = localStorage.getItem("darkMode");
         return savedTheme === "true"; 
     });
@@ -15,7 +14,7 @@ export default function AdminDashboardLayout() {
     const toggleDarkMode = () => {
         setDarkMode((prev) => {
             const newMode = !prev;
-            localStorage.setItem("darkMode", newMode); // on sauvegarde le choix
+            localStorage.setItem("darkMode", newMode);
             return newMode;
         });
     };
@@ -24,7 +23,6 @@ export default function AdminDashboardLayout() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    // applique la classe dark au <html> ou <body> directement
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add("dark");
