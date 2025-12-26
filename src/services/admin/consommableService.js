@@ -12,7 +12,15 @@ const ConsommableSevice = {
     },
 
     create: async (data) => {
-        const res = await axiosInstance.post("/consommable/create", data);
+        const res = await axiosInstance.post(
+            "/consommable/create", 
+            data,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
         return res.data;
     },
 

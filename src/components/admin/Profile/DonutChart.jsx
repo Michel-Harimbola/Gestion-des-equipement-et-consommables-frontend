@@ -2,12 +2,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipementsStatus } from "../../../redux/slices/admin/dashboardSlice";
 import Chart from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
 
 export default function DonutChart({ darkMode }) {
   const dispatch = useDispatch();
 
   const { equipementsStatus } = useSelector((state) => state.dashboard);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
       dispatch(fetchEquipementsStatus());
@@ -24,7 +27,7 @@ export default function DonutChart({ darkMode }) {
         type: "donut",
         height: 350,
       },
-      labels: ["Disponibles", "Empruntés", "En maintenance"],
+      labels: [t("availables"), t("borrowed1"), t("maintenance")],
       colors: ["#33FF57", "#FF5733", "#3357FF"],
       legend: {
         position: "bottom",

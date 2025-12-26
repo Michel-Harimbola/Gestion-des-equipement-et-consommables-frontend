@@ -9,6 +9,7 @@ import {
   updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
+import { useTranslation } from "react-i18next";
 import DemandeForm from "./demandeForm";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
@@ -24,6 +25,8 @@ export default function Demande() {
   const [deleteId, setDeleteId] = useState(null);
 
   const menuRef = useRef(null);
+    
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;

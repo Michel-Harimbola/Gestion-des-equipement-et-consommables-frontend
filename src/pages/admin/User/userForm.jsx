@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 
 export default function UserForm({ onSubmit, onClose, initialData = null }) {
+  const { t } = useTranslation();
+
   const [form, setForm] = useState({
     nom: "",
     prenom: "",
@@ -60,7 +63,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
     <div className="fixed inset-0 backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
       <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 w-full md:max-w-md max-w-sm shadow-lg">
         <h2 className="text-2xl font-semibold mb-5 dark:text-white">
-          {initialData ? "Modifier l'utilisateur" : "Ajouter un utilisateur"}
+          {initialData ? t("editUser") : t("addUser")}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -69,7 +72,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             value={form.nom}
             onChange={handleChange}
             type="text"
-            placeholder="Votre nom"
+            placeholder={t("lastName")}
             className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white dark:bg-gray-600 dark:placeholder-gray-400
               dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
             required
@@ -79,7 +82,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             value={form.prenom}
             onChange={handleChange}
             type="text"
-            placeholder="Votre prénom"
+            placeholder={t("firstName")}
             className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white dark:bg-gray-600 dark:placeholder-gray-400
               dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
             required
@@ -89,7 +92,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
             value={form.email}
             onChange={handleChange}
             type="email"
-            placeholder="Votre email"
+            placeholder={t("emailAddress")}
             className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white dark:bg-gray-600 dark:placeholder-gray-400
               dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
             required
@@ -113,7 +116,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
                   value={form.motdepasse}
                   onChange={handleChange}
                   type={ showPassword ? "text" : "password" }
-                  placeholder="votre mot de passe"
+                  placeholder={t("password")}
                   className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white dark:bg-gray-600 dark:placeholder-gray-400
                     dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                   required
@@ -133,7 +136,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               <div className="relative">
                 <input
                   type={ showPassword ? "text" : "password" }
-                  placeholder="Confirmer votre mot de passe"
+                  placeholder={t("confirmYourPassword")}
                   className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white dark:bg-gray-600 dark:placeholder-gray-400
                     dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                 />
@@ -160,11 +163,11 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm appearance-none bg-white dark:bg-gray-600 dark:placeholder-white
                   dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer"
             >
-              <option value="" disabled>Choisir un rôle</option>
-                    <option value="client">client</option>
-                    <option value="partenaire">Partenaire</option>
-                    <option value="personnelInterne">Personnel interne</option>
-                    <option value="regisseurEquipementInterne">Régisseur des équipement interne</option>
+              <option value="" disabled>{t("chooseRole")}</option>
+                    <option value="client">{t("client")}</option>
+                    <option value="partenaire">{t("partner")}</option>
+                    <option value="personnelInterne">{t("internalStaff")}</option>
+                    <option value="regisseurEquipementInterne">{t("equipmentManager")}</option>
             </select>
           </div>
 
@@ -175,14 +178,14 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                     bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 shadow-md"
             >
-              Annuler
+              {t("cancel")}
             </button>
             <button
               type="submit"
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                     bg-fuchsia hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md"
             >
-              {initialData ? "Mettre à jour" : "Créer"}
+              {initialData ? t("update") : t("create")}
             </button>
           </div>
         </form>

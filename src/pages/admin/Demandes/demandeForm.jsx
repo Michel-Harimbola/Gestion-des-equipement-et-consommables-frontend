@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { fetchEquipements } from "../../../redux/slices/admin/EquipementSlice";
 
 
 export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
+  const { t } = useTranslation();
+
   const [form, setForm] = useState({
     dateRetourPrevu: "",
     equipementId: "",
@@ -101,7 +104,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
               className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                     bg-fuchsia hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md"
             >
-              {initialData ? "Mettre à jour" : "Créer"}
+              {initialData ? t("update") : t("create")}
             </button>
           </div>
         </form>

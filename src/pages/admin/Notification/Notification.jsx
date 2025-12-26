@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchNotfications, deleteNotfication, setPage } from "../../../redux/slices/admin/notificationsSlice";
 import { FiChevronLeft, FiChevronRight, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
+import { useTranslation } from "react-i18next";
 import { MoreVertical } from "lucide-react";
 
 
@@ -15,6 +16,8 @@ export default function Notification() {
     const [deleteId, setDeleteId] = useState(null);
 
     const menuRef = useRef(null);
+    
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchNotfications({ page, limit: 13 }));

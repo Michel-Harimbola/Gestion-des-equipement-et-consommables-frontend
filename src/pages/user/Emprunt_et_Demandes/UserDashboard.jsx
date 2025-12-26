@@ -5,13 +5,12 @@ import { CreateDemandeRetour, fetchUserDemandes } from "../../../redux/slices/us
 import DemandeEmprunt from "./DemandeEmprunt";
 import EtatMaterielForm from "./EtatMaterielForm";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
   const { items, loading } = useSelector((state) => state.enCours);
-  const { t } = useTranslation();
 
   const [showEtatForm, setShowEtatForm] = useState(false);
   const [selectedEmprunt, setSelectedEmprunt] = useState(null);
@@ -92,8 +91,8 @@ export default function UserDashboard() {
                   </div>
                 </div>
 
-                <p>{t("borrowDate")} <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
-                <p>{t("expectedReturnDate")} <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
+                <p>{t("borrowDate")} : <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
+                <p>{t("expectedReturnDate")} : <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
         
                 <div className="flex flex-row justify-between items-center -mt-3">
                   <div className="flex flex-row items-center space-x-2 mt-2">

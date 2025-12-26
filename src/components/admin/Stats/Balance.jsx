@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmpruntsParMois } from "../../../redux/slices/admin/dashboardSlice";
+import { useTranslation } from "react-i18next";
 import { FiSend } from "react-icons/fi"
 import Title from "../../../ui/Title";
 import Chart from "react-apexcharts";
@@ -9,6 +10,8 @@ import Chart from "react-apexcharts";
 export default function Balance({ darkMode }) {
   const dispatch = useDispatch();
   const { months, emprunts, loadingEmprunts } = useSelector((state) => state.dashboard);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchEmpruntsParMois());
@@ -96,14 +99,14 @@ export default function Balance({ darkMode }) {
   return (
     <div className="bg-white p-5 rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1">
         <div className="flex justify-between items-center">
-            <Title>Emprunts par mois</Title>
+            <Title>{t("loansPerMonth")}</Title>
             <FiSend className="bg-gray-500 p-2 rounded-full text-gray-300 w-8 h-8"/>
         </div>
         <div>
             <h1 className="font-bold text-2xl">
-                {loadingEmprunts ? "..." : totalEmprunts} <span className="font-medium text-xl">emprunts</span>
+                {loadingEmprunts ? "..." : totalEmprunts} <span className="font-medium text-xl">{t("loans")}</span>
             </h1>
-            <span>Total sur l'année</span>
+            <span>{t("yearTotal")}</span>
         </div>
         <div className="px-6">
         <Chart 

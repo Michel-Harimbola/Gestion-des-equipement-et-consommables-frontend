@@ -6,7 +6,7 @@ import Emprunter from "./Emprunter";
 import ContratInfo from "./ContratInfo"; 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 
 export default function Equipements() {
@@ -21,7 +21,7 @@ export default function Equipements() {
   const [showContrat, setShowContrat] = useState(false);
   const [showEmprunter, setShowEmprunter] = useState(false);
 
-  const { t } = useTranslation();
+
 
   useEffect(() => {
     const delay = 400;
@@ -75,12 +75,12 @@ export default function Equipements() {
                 }`}
               >
                 { val === "all" 
-                ? "Tous"
+                ? t("all")
                 : val === "Emprunte"
-                ? "Emprunté"
+                ? t("borrowed")
                 : val === "EnMaintenance"
-                ? "En maintenance"
-                : val
+                ? t("maintenance")
+                : t("availableStatus")
                 }
               </button>
             ))}
@@ -97,7 +97,7 @@ export default function Equipements() {
                 dispatch(setQuery(e.target.value));
                 dispatch(setPage(1));
               }}
-              placeholder="Rechercher"
+              placeholder={t("research")}
               className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
             />
 
@@ -134,14 +134,14 @@ export default function Equipements() {
                               className="w-55 h-40 object-cover rounded-3xl"
                             />
                           ) : (
-                            <span>Aucune photo</span>
+                            <span>{t("noPhoto")}</span>
                           )}
                         </div>
                         
                         <div className="flex flex-col">
                           <p className="font-bold text-xl">{eq.marque}</p>
                           {role === "client" && (
-                            <p className="font-semibold text-lg">Prix: {eq.prix} ar</p>
+                            <p className="font-semibold text-lg">{t("price")}: {eq.prix} ar</p>
                           )}
                           <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">N° {eq.numeroDeSerie}</p>
                           <div className="flex justify-between items-center">

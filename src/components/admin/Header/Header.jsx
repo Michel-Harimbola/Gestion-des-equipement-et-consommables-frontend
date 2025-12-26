@@ -19,7 +19,7 @@ export default function Header({ darkMode, toggleDarkMode, toggleSidebar }) {
                         <a href="#" className="flex ms-2 md:me-24 gap-2">
                             <img src={YouthComputing} alt="Logo" className="w-8 h-8 rounded-full"/>
                             <span className="self-center text-marine dark:text-fuchsia text-xl font-semibold sm:text-2xl whitespace-nowrap">
-                                YouthStock
+                                YouthComputing
                             </span>
                         </a>
                     </div>

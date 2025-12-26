@@ -4,6 +4,7 @@ import { fetchRapports, deleteRapport, setPage } from "../../../redux/slices/adm
 import { FiChevronLeft, FiChevronRight, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import ExportPDF from "../../../components/admin/ExportPDF";
+import { useTranslation } from "react-i18next";
 import { MoreVertical } from "lucide-react";
 
 
@@ -16,6 +17,8 @@ export default function Rapport() {
     const [deleteId, setDeleteId] = useState(null);
 
     const menuRef = useRef(null);
+    
+    const { t } = useTranslation();
 
     useEffect(() => {
       dispatch(fetchRapports({ page, limit: 12 }));

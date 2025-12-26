@@ -5,6 +5,7 @@ import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
 import MotifForm from "./MotifForm";
 import Title from "../../../ui/Title";
 import GlobalLoader from "../../shared/GlobalLoader";
+import { useTranslation } from "react-i18next";
 import { LuCheck, LuX } from "react-icons/lu";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiChevronDown, FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -18,6 +19,7 @@ export default function DemandeEmprunt() {
     const [showMotif, setShowMotif] = useState(false);
     const [selectedDemande, setSelectedDemande] = useState(null);
 
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchDemandesEnAttente({ page, limit: 3 }));
@@ -37,7 +39,7 @@ export default function DemandeEmprunt() {
 
     return (
         <div className="bg-white p-3 lg:h-[550px] rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-4">
-            <Title>Demandes d'emprunts</Title>
+            <Title>{t("loanRequests")}</Title>
             { loading ? (
                 <GlobalLoader />
             ) : (
@@ -53,18 +55,18 @@ export default function DemandeEmprunt() {
                                         </div>
                                         <div>
                                             <h1 className="text-lg font-semibold dark:text-white">{demande.utilisateur.prenom}</h1>
-                                            <p><span className="font-semibold">Nom: </span>{demande.equipement.nom}</p>
+                                            <p><span className="font-semibold">{t("name")}: </span>{demande.equipement.nom}</p>
 
                                             {openDetails[demande.id] && (
                                                 <>
-                                                    <p><span className="font-semibold">Date de retour prévue: </span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</p>
-                                                    <p><span className="font-semibold">Marque: </span>{demande.equipement.marque}</p>
-                                                    <p><span className="font-semibold">Numéro de série: </span>{demande.equipement.numeroDeSerie}</p>
-                                                    <p><span className="font-semibold">Usage: </span>{demande.usage}</p>
+                                                    <p><span className="font-semibold">{t("expectedReturnDate")}: </span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</p>
+                                                    <p><span className="font-semibold">{t("brand")}: </span>{demande.equipement.marque}</p>
+                                                    <p><span className="font-semibold">{t("serialNumber")}: </span>{demande.equipement.numeroDeSerie}</p>
+                                                    <p><span className="font-semibold">{t("usage")}: </span>{demande.usage}</p>
                                                 </>
                                             )}
 
-                                            <p><span className="font-semibold">Type: </span>{demande.type}</p>
+                                            <p><span className="font-semibold">{t("type")}: </span>{demande.type}</p>
                                         </div>
                                     </div>
 

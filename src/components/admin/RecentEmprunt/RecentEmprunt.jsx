@@ -5,12 +5,15 @@ import GlobalLoader from "../../shared/GlobalLoader";
 import Title from "../../../ui/Title";
 import { FaRegEnvelope } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 
 
 export default function RecentEmprunt() {
     const dispatch = useDispatch();
     const { recent, loading } = useSelector((state) => state.emprunts);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchRecentEmprunts());
@@ -23,7 +26,7 @@ export default function RecentEmprunt() {
 
     return (
         <div className="bg-white p-5 rounded-2xl dark:bg-gray-700 dark:text-gray-300 flex-1 flex flex-col gap-5">
-            <Title>Les emprunts le plus récent</Title>
+            <Title>{t("recentLoans")}</Title>
             {loading? (
                 <GlobalLoader />
             ): (
@@ -46,13 +49,12 @@ export default function RecentEmprunt() {
                                         </div>
                                         <div>
                                             <h1 className="text-lg font-semibold dark:text-white">{emprunt.utilisateur.prenom}</h1>
-                                            <p>{emprunt.equipement.nom}</p>
-                                            <p><span className="font-semibold">Marque: </span>{emprunt.equipement.marque}</p>
+                                            <p><span className="font-semibold">{t("brand")}: </span>{emprunt.equipement.marque}</p>
+                                            <p><span className="font-semibold">{t("expectedReturnDate")}: </span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</p>
                                             {openDetails[emprunt.id] && (
                                                 <>
-                                                    <p><span className="font-semibold">Date de retour prévue: </span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</p>
-                                                    <p><span className="font-semibold">Numéro de série: </span>{emprunt.equipement.numeroDeSerie}</p>
-                                                    <p><span className="font-semibold">Usage: </span>{emprunt.usage}</p>
+                                                    <p><span className="font-semibold">{t("serialNumber")}: </span>{emprunt.equipement.numeroDeSerie}</p>
+                                                    <p><span className="font-semibold">{t("usage")}: </span>{emprunt.usage}</p>
                                                 </>
                                             )}
                                         </div>

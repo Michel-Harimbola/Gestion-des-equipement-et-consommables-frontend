@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import Setting from "./Setting";
+import Historique from "./Historique";
 import socket from "../../configs/socket";
 import { fetchUserNotifications, addNotification, markAllNotificationsAsRead } from "../../redux/slices/user/notificationSlice";
 import { navItems } from "../../constants/index";
@@ -24,6 +25,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const [isOpen, setIsOpen] = useState(false)
     const [showNotif, setShowNotif] = useState(false);
     const [isOpenSetting, setIsOpenSetting] = useState(false);
+    const [isHistoriqueOpen, setIsHistoriqueOpen] = useState(false);
 
     const { list: notifications, unreadCount } = useSelector(state => state.notification);
     const { role, photo, nom, prenom } = useSelector(state => state.auth.currentUser);
@@ -166,17 +168,45 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                         {navItems
                             .filter(item => item.roles.includes(role))
                             .map((item) => (
-                                <li key={item.id}>
-                                    <Link 
-                                        to={item.path} 
-                                        onClick={() => {
-                                            setIsActive(item.id);
-                                            setIsOpen(false);                                
-                                        }}
-                                        className={`ease-in-out border-fuchsia ${isActive == item.id ? "text-fuchsia hover:text-red-600  lg:border-b-4 pb-5" : "hover:text-fuchsia"}`}
-                                    >
-                                        {t(item.name)}
-                                    </Link>
+                                <li
+                                    key={item.id}
+                                    onMouseEnter={() => item.name === "history" && setIsHistoriqueOpen(true)}
+                                    onMouseLeave={() => item.name === "history" && setIsHistoriqueOpen(false)}
+                                    className="relative"
+                                >
+                                    {item.name === "history" ? (
+                                        <span
+                                            onClick={() => setIsHistoriqueOpen(true)}
+                                            className="hover:text-fuchsia cursor-pointer"
+                                        >
+                                            {t(item.name)}
+                                        </span>
+                                    ) : (
+                                        <Link
+                                            to={item.path}
+                                            onClick={() => {
+                                                setIsActive(item.id);
+                                                setIsOpen(false);
+                                            }}
+                                            className={`ease-in-out border-fuchsia ${
+                                                isActive === item.id
+                                                    ? "text-fuchsia hover:text-red-600 lg:border-b-4 pb-5"
+                                                    : "hover:text-fuchsia"
+                                            }`}
+                                        >
+                                            {t(item.name)}
+                                        </Link>
+                                    )}
+
+                                    {/* Historique dropdown */}
+                                    {item.name === "history" && isHistoriqueOpen && (
+                                        <div className="absolute top-full left-0 z-50">
+                                            <Historique
+                                                path1={item.path1}
+                                                path2={item.path2}
+                                            />
+                                        </div>
+                                    )}
                                 </li>
                         ))}
                     </ul>
@@ -234,7 +264,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                         className="w-[46px] h-[46px] -mb-4 object-cover rounded-full" 
                                     />
                                 ):(
-                                    <span>Aucune photo</span>
+                                    <span>{t("noPhoto")}</span>
                                 )}
                                 <div className="flex justify-end">
                                     < FiChevronDown className="size-[17px] bg-gray-200 dark:bg-gray-600 rounded-full" />

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 
 export default function ContratInfo({ onClose, onNext }) {
   const [accepted, setAccepted] = useState(false);
-  const { t } = useTranslation();
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">

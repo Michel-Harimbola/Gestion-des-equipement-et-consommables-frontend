@@ -1,9 +1,12 @@
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
 export default function LinkItem({ href, icon: Icon, text, badge }) {
     const location = useLocation();
     const isActive = location.pathname === href;
+    const { t } = useTranslation();
+    
     return (
         <li>
             <a
@@ -16,7 +19,7 @@ export default function LinkItem({ href, icon: Icon, text, badge }) {
                 `}
             >
                 <Icon className="mr-3" />
-                <span className="flex-1 me-3 text-lg">{text}</span>
+                <span className="flex-1 me-3 text-lg">{t(text)}</span>
                 {badge && (
                     <span
                         className={`inline-flex items-center justify-center px-2 ms-3 font-medium rounded-full ${badge.color} ${badge.darkColor}`}

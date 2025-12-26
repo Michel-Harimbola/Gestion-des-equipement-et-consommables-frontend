@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserEmprunts, searchUserEmprunts, setPage, setQuery } from "../../redux/slices/user/empruntSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
+import { t } from "i18next";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 
@@ -40,7 +41,7 @@ export default function MesEmprunts() {
 
   return (
     <div className="mt-24 px-4 sm:px-8 dark:text-white">
-      <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">Mes emprunts</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">{t("myLoans")}</h1>
 
       <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-3">
         <div className="flex flex-wrap justify-center lg:justify-start gap-3">
@@ -55,12 +56,12 @@ export default function MesEmprunts() {
               }`}
             >
               { val === "all" 
-              ? "Tous" 
+              ? t("all")
               : val === "EnCours"
-              ? "En cours"
+              ? t("inProgress")
               : val === "EnRetard" 
-              ?"En ratard"
-              : "Retourné"
+              ? t("late")
+              : t("return")
               }
             </button>
           ))}
@@ -77,7 +78,7 @@ export default function MesEmprunts() {
               dispatch(setQuery(e.target.value));
               dispatch(setPage(1));
             }}
-            placeholder="Rechercher"
+            placeholder={t("research")}
             className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
           />
 
@@ -106,14 +107,14 @@ export default function MesEmprunts() {
             <table className="w-full text-sm sm:text-base text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">Photo</th>
-                  <th className="py-3 px-4 text-left">N° série</th>
-                  <th className="py-3 px-4 text-left">Équipements</th>
-                  <th className="py-3 px-4 text-left">Marque</th>
-                  <th className="py-3 px-4 text-left">Date d’emprunt</th>
-                  <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                  <th className="py-3 px-4 text-left">Date de retour effective</th>
-                  <th className="py-3 px-4 text-left">Statut</th>
+                  <th className="py-3 px-4 text-left">{t("photo")}</th>
+                  <th className="py-3 px-4 text-left">N° </th>
+                  <th className="py-3 px-4 text-left">{t("equipments")}</th>
+                  <th className="py-3 px-4 text-left">{t("brand")}</th>
+                  <th className="py-3 px-4 text-left">{t("borrowDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("expectedReturnDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("actualReturnDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,10 +128,10 @@ export default function MesEmprunts() {
                         <img
                           src={`http://localhost:3000${emprunt.equipement.photo}`}
                           alt={emprunt.equipement.nom}
-                          className="w-18 h-10 object-cover rounded-xl"
+                          className="w-18 h-12 object-cover rounded-xl"
                         />
                       ):(
-                        <span>Aucune photo</span>
+                        <span>{t("noPhoto")}</span>
                       )}
                     </td>
                     <td className="py-2 px-4">{emprunt.equipement.numeroDeSerie}</td>
@@ -150,15 +151,15 @@ export default function MesEmprunts() {
                     <td className="py-2 px-4 flex">
                                 {emprunt.statut === "EnCours"? (
                                   <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                    En cours
+                                    {t("inProgress")}
                                   </p>
                                 ):emprunt.statut === "EnRetard"?(
                                   <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                    En retard
+                                    {t("late")}
                                   </p>
                                 ):(
                                   <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
-                                    Retourné
+                                    {t("return")}
                                   </p>
                                 )}
                             </td>
@@ -181,15 +182,15 @@ export default function MesEmprunts() {
                   </div>
                 </div>
                 <p>
-                  <span className="font-medium">Date d’emprunt : </span>
+                  <span className="font-medium">{t("borrowDate")} : </span>
                   {new Date(emprunt.dateEmprunt).toLocaleDateString()}
                 </p>
                 <p>
-                  <span className="font-medium">Retour prévu : </span>
+                  <span className="font-medium">{t("expectedReturn")} : </span>
                   {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
                 </p>
                 <p>
-                  <span className="font-medium">Retour effectif : </span>
+                  <span className="font-medium">{t("actualReturn")} : </span>
                   {emprunt.dateRetourEffective == null
                     ? "Pas encore"
                     : new Date(emprunt.dateRetourEffective).toLocaleDateString()}

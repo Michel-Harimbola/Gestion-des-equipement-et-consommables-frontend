@@ -24,7 +24,7 @@ export default function Login() {
       if (decoded.role === "admin" || decoded.role === "regisseurEquipementInterne") {
         navigate("/adminDashboard");
       } else {
-        navigate("/userDashboard");
+        navigate("/userDashboard/Equipements");
       }
     }
   };

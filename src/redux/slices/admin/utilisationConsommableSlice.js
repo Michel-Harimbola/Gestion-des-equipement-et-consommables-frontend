@@ -15,11 +15,33 @@ export const fetchUtilisations = createAsyncThunk(
   }
 );
 
+export const fetchUserUtilisation = createAsyncThunk(
+  "utilisationConsommable/fetchUserUtilisation",
+  async ({ page = 1, limit }, thunkAPI) => {
+    try {
+      return await UtilisationConsommableService.getUserUtilisation(page, limit);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
 export const fetchSearchUtilisation = createAsyncThunk(
     "utilisationConsommable/search",
     async ({ q, page, limit }, { rejectWithValue }) => {
         try {
             return await UtilisationConsommableService.searchUtilisation(q, page, limit);
+        } catch (err) {
+            return rejectWithValue(err.response?.data);
+        }
+    }
+);
+
+export const fetchSearchUserUtilisation = createAsyncThunk(
+    "utilisationConsommable/searchUserUtilisation",
+    async ({ q, page, limit }, { rejectWithValue }) => {
+        try {
+            return await UtilisationConsommableService.searchUserUtilisation(q, page, limit);
         } catch (err) {
             return rejectWithValue(err.response?.data);
         }
@@ -84,7 +106,7 @@ const utilisationConsommableSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 12,
+    limit: 10,
     total: 0,
     totalPages: 0,
     query: ""
@@ -114,6 +136,21 @@ const utilisationConsommableSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(fetchUserUtilisation.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserUtilisation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.UseCons;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchUserUtilisation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(fetchSearchUtilisation.pending, (state) => {
         state.loading = true;
       })
@@ -126,6 +163,21 @@ const utilisationConsommableSlice = createSlice({
         state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
       })
       .addCase(fetchSearchUtilisation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchSearchUserUtilisation.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSearchUserUtilisation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.UseCons;
+        state.total = action.payload.total;
+        state.limit = action.payload.limit;
+        state.page = action.payload.page;
+        state.totalPages = Math.ceil(action.payload.total / action.payload.limit);
+      })
+      .addCase(fetchSearchUserUtilisation.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { createDemandeEmprunt } from "../../redux/slices/user/demandeEmpruntSlice";
 import { fetchEquipements } from "../../redux/slices/user/equipementSlice";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export default function Emprunter({ selectedEquipementId, onClose }) {
   const [form, setForm] = useState({
@@ -13,8 +13,6 @@ export default function Emprunter({ selectedEquipementId, onClose }) {
 
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.equipement);
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchEquipements());

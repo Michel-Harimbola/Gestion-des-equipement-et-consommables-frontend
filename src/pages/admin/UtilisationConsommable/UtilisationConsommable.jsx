@@ -11,6 +11,7 @@ import {
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete  } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import UtilisationutilisationForm from "./UtilisationConsommableForm";
+import { useTranslation } from "react-i18next";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
@@ -25,6 +26,8 @@ export default function Utilisationutilisation() {
   const [deleteId, setDeleteId] = useState(null);
 
   const menuRef = useRef(null);
+  
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -162,7 +165,17 @@ export default function Utilisationutilisation() {
                         className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900
                           dark:text-white transition-colors"
                     >
-                      <td className="py-2 px-4 font-medium">{index + 1}</td>
+                      <td className="p-2">
+                        {utilisation.consommable.photo ? (
+                          <img
+                            src={`http://localhost:3000${utilisation.consommable.photo}`}
+                            alt={utilisation.consommable.nom}
+                            className="w-13 object-cover rounded-xl"
+                          />
+                        ) : (
+                          <span>{t("noPhoto")}</span>
+                        )}
+                      </td>
                       <td className="py-2 px-4">{utilisation.utilisateur?.nom || "_"}</td>
                       <td className="py-2 px-4">{utilisation.consommable?.nom || "_"}</td>
                       <td className="py-2 px-4">

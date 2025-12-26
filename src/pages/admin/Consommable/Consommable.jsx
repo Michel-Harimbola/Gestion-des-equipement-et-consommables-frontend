@@ -4,6 +4,7 @@ import { fetchConsommables, fetchSearchConsommable, setPage, setQuery, createCon
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import ConsommableForm from "./consommableForm";
+import { useTranslation } from "react-i18next";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
@@ -18,6 +19,8 @@ export default function Consommables() {
     const [deleteId, setDeleteId] = useState(null);
 
     const menuRef = useRef(null);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
       const delay = 400;
@@ -126,7 +129,7 @@ export default function Consommables() {
                       className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                       bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
                   >
-                      Ajouter <span className="text-2xl font-bold">+</span>
+                      {t("add")} <span className="text-2xl font-bold">+</span>
                   </button>
               </div>
             </div>
@@ -139,11 +142,12 @@ export default function Consommables() {
                   <table className="min-w-full text-lg text-gray-700">
                     <thead className="bg-fuchsia text-white">
                       <tr>
-                        <th className="py-3 px-4 text-left">Photo</th>
-                        <th className="py-3 px-4 text-left">Nom</th>
-                        <th className="py-3 px-4 text-left">Quantité</th>
-                        <th className="py-3 px-4 text-left">Seuil Critique</th>
-                        <th className="py-3 px-4 text-left">Actions</th>
+                        <th className="py-3 px-4 text-left">{t("photo")}</th>
+                        <th className="py-3 px-4 text-left">{t("name")}</th>
+                        <th className="py-3 px-4 text-left">{t("brand")}</th>
+                        <th className="py-3 px-4 text-left">{t("quantity")}</th>
+                        <th className="py-3 px-4 text-left">{t("criticalThreshold")}</th>
+                        <th className="py-3 px-4 text-left">{t("actions")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -152,8 +156,19 @@ export default function Consommables() {
                           key={consommable.id} 
                           className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                         >
-                            <td className="py-2 px-4 font-medium">{index + 1}</td>
+                            <td className="p-2">
+                              {consommable.photo ? (
+                                <img
+                                  src={`http://localhost:3000${consommable.photo}`}
+                                  alt={consommable.nom}
+                                  className="w-16 object-cover rounded-xl"
+                                />
+                              ) : (
+                                <span>{t("noPhoto")}</span>
+                              )}
+                            </td>
                             <td className="py-2 px-4">{consommable.nom}</td>
+                            <td className="py-2 px-4">{consommable.marque}</td>
                             <td className="py-2 px-4">{consommable.quantiteDisponible}</td>
                             <td className="py-2 px-4">{consommable.seuilCritique}</td>
                             <td className="p-2 space-x-8 flex">
@@ -208,7 +223,7 @@ export default function Consommables() {
                             className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                           >
                             <GrUpdate />
-                            Modifier
+                            {t("edit")}
                           </button>
                           
                           <button
@@ -219,18 +234,18 @@ export default function Consommables() {
                             className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                           >
                             <FiDelete />
-                            Supprimer
+                            {t("delete")}
                           </button>
                         </div>
                       )}
                     </div>
                   </div>
                   <p>
-                    <span className="font-medium">Quantité : </span>
+                    <span className="font-medium">{t("quantity")} : </span>
                     {consommable.quantiteDisponible}
                   </p>
                   <p>
-                    <span className="font-medium">Seuil critque : </span>
+                    <span className="font-medium">{t("criticalThreshold")} : </span>
                     {consommable.seuilCritique}
                   </p>
                 </div>

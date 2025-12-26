@@ -11,8 +11,18 @@ const UtilisationConsommableService = {
     return res.data;
   },
 
+  async getUserUtilisation(page = 1, limit = 11) {
+    const res = await axiosInstance.get(`/utilisation/userUtilisation?page=${page}&limit=${limit}`);
+    return res.data;
+  },
+
   searchUtilisation: async (q, page = 1, limit = 11) => {
     const res = await axiosInstance.get("/utilisation/search", { params: { q, page, limit } });
+    return res.data;
+  },
+
+  searchUserUtilisation: async (q, page = 1, limit = 11) => {
+    const res = await axiosInstance.get("/utilisation/searchUserUtilisation", { params: { q, page, limit } });
     return res.data;
   },
 

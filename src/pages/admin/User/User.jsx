@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, fetchSearchUser, setQuery, setPage, createUser, deleteUser, updateUser } from "../../../redux/slices/admin/UserSlice";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import UserForm from "./userForm";
+import { useTranslation } from "react-i18next";
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
@@ -18,6 +19,8 @@ export default function User() {
     const [deleteId, setDeleteId] = useState(null);
 
     const menuRef = useRef(null);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
       const delay = 400;
@@ -126,7 +129,7 @@ export default function User() {
                   className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
                 >
-                  Ajouter <span className="text-2xl font-bold">+</span>
+                  {t("add")} <span className="text-2xl font-bold">+</span>
                 </button>
               </div>
             </div>
@@ -138,12 +141,12 @@ export default function User() {
                   <table className="min-w-full text-lg text-gray-700">
                     <thead className="bg-fuchsia text-white">
                       <tr>
-                        <th className="py-3 px-4 text-left">Photo</th>
-                        <th className="py-3 px-4 text-left">Nom</th>
-                        <th className="py-3 px-4 text-left">Prénom</th>
-                        <th className="py-3 px-4 text-left">Email</th>
-                        <th className="py-3 px-4 text-left">Rôle</th>
-                        <th className="py-3 px-4 text-left">Actions</th>
+                        <th className="py-3 px-4 text-left">{t("photo")}</th>
+                        <th className="py-3 px-4 text-left">{t("name")}</th>
+                        <th className="py-3 px-4 text-left">{t("firstName")}</th>
+                        <th className="py-3 px-4 text-left">{t("email")}</th>
+                        <th className="py-3 px-4 text-left">{t("role")}</th>
+                        <th className="py-3 px-4 text-left">{t("actions")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -158,10 +161,10 @@ export default function User() {
                               <img
                                 src={`http://localhost:3000${user.photo}`}
                                 alt={user.nom}
-                                className="w-12 h-12 object-cover rounded-full"
+                                className="size-18 object-cover rounded-full"
                               />
                             ) : (
-                              <span>Aucune photo</span>
+                              <span>{t("noPhoto")}</span>
                             )}
                           </td>
                           <td className="p-2">{user.nom}</td>
@@ -169,10 +172,12 @@ export default function User() {
                           <td className="p-2">{user.email}</td>
                           <td className="p-2">
                             { user.role === "regisseurEquipementInterne"? (
-                              <p>Régisseur des équipements interne</p>
+                              <p>{t("equipmentManager")}</p>
                             ): user.role === "personnelInterne"? (
-                              <p>Personnel interne</p>
-                            ): (
+                              <p>{t("internalStaff")}</p>
+                            ): user.role === "partenaire"?(
+                              <p>{t("partner")}</p>
+                            ):(
                               <p>{user.role}</p>
                             )}
                           </td>

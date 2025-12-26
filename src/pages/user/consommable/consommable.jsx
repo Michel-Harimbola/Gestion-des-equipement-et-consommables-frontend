@@ -5,7 +5,7 @@ import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 import UtilisationConsommable from "./UtilisationConsommable";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 
 export default function Consommable() {
@@ -15,8 +15,6 @@ export default function Consommable() {
   
   const [showPopup, setShowPopup] = useState(false);
   const [selectedUtilisationId, setSelectedUtilisationId] = useState(null);
- 
-  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -60,7 +58,7 @@ export default function Consommable() {
                 dispatch(setQuery(e.target.value));
                 dispatch(setPage(1));
               }}
-              placeholder="Rechercher..."
+              placeholder={t("research")}
               className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
             />
 
@@ -88,26 +86,38 @@ export default function Consommable() {
               items.map((consommable) => (
                 <div 
                   key={consommable.id}
-                  className="flex flex-col items-center space-y-5 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] py-8 lg:w-[290px] w-[350px] rounded-3xl"
+                  className="flex flex-col justify-between px-4 py-3 space-y-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[350px] rounded-3xl"
                 >
-                  <div>
-                      <h1 className="font-semibold text-lg text-center">{t("consumableName")}</h1>
-                      <h1 className="text-xl font-semibold text-center">{consommable.nom}</h1>
+                  <div className="flex items-center justify-center">
+                    {consommable.photo ? (
+                      <img
+                        src={`http://localhost:3000${consommable.photo}`}
+                        alt={consommable.nom}
+                        className="w-45 object-cover rounded-xl"
+                      />
+                    ) : (
+                      <span>{t("noPhoto")}</span>
+                    )}
                   </div>
-                  
-                  <div className="flex flex-row justify-center items-center space-x-2">
-                    <p>{t("available")} {consommable.quantiteDisponible}</p>
-                  </div>
-                  
-                  <button 
-                    onClick={() => handleUtilisationConsommableClick(consommable.id)}
-                    disabled={ consommable.quantiteDisponible == 0 }
-                    className={`text-white font-bold border border-transparent rounded-3xl px-4 py-2 ${consommable.quantiteDisponible == 0 ? 
+
+                  <div className="space-y-4">
+                      <div className="flex flex-col">
+                        <h1 className="text-xl font-bold">{consommable.nom}</h1>  
+                        <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("available")} : {consommable.quantiteDisponible}</p>
+                      </div>
+                    <button 
+                      onClick={() => handleUtilisationConsommableClick(consommable.id)}
+                      disabled={ consommable.quantiteDisponible == 0 }
+                      className={`
+                          text-white font-bold border border-transparent rounded-xl w-full px-4 py-2 ${consommable.quantiteDisponible == 0 ? 
                           "bg-gray-400 dark:bg-gray-500" 
-                          : "bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"}
-                    `}>
-                    {t("use")}
-                  </button>
+                          :"bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"
+                        }
+                      `}>
+                      {t("use")}
+                    </button>
+                  </div>
+                  
                 </div>
               ))
             )}

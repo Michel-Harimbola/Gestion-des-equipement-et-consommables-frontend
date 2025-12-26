@@ -15,19 +15,19 @@ export const links = [
   {
     href: "/AdminDashboard",
     icon: FaChartBar,
-    text: "Dashboard",
+    text: "dashboard",
     roles: ["admin", "regisseurEquipementInterne"]
   },
   {
     href: "/User",
     icon: FaUsers,
-    text: "Utilisateurs",
+    text: "users",
     roles: ["admin"]
   },
   {
     href: "/Emprunt",
     icon: FaHandHolding,
-    text: "Emprunts",
+    text: "loans",
     badge: {
       text: "Pro",
       color: "bg-gray-100 text-gray-800",
@@ -38,7 +38,7 @@ export const links = [
   {
     href: "/Consommable",
     icon: FaBoxOpen,
-    text: "Consommables",
+    text: "consumables",
     badge: {
       text: "4",
       color: "bg-blue-100 text-blue-800",
@@ -49,31 +49,31 @@ export const links = [
   {
     href: "/Equipement",
     icon: FaTools,
-    text: "Equipements",
+    text: "equipments",
     roles: ["admin", "regisseurEquipementInterne"]
   },
   {
     href: "/Demande",
     icon: LuClipboardList,
-    text: "Demandes",
+    text: "requests",
     roles: ["admin"]
   },
   {
     href: "/Utilisation",
     icon: FaCogs,
-    text: "Utilisation Consommable",
+    text: "consumableUsage",
     roles: ["admin", "regisseurEquipementInterne"]
   },
   {
     href: "/Notification",
     icon: FaBell,
-    text: "Notification",
+    text: "notification",
     roles: ["admin"]
   },
   {
     href: "/Rapport",
     icon: FaListAlt,
-    text: "Rapport",
+    text: "report",
     roles: ["admin", "regisseurEquipementInterne"]
   },
 ];
@@ -97,7 +97,8 @@ export const navItems = [
   },
   { id: 4, 
     name: "history", 
-    path: "/userDashboard/MesEmprunts", 
+    path1: "/userDashboard/MesEmprunts", 
+    path2: "/userDashboard/MesUtilisation", 
     roles: ["personnelInterne", "client", "partenaire"] },
 ];
 

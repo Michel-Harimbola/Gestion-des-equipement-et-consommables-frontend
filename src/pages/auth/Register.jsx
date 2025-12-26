@@ -35,6 +35,12 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
+  const [showPassword1, setShowPassword1] = useState(false);
+
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
   const [darkMode, setDarkMode] = useState(() => {
       const savedTheme = localStorage.getItem("darkMode");
       return savedTheme === "true"; 
@@ -137,18 +143,18 @@ const Register = () => {
                       name='ConfirmationModeDePasse'
                       value={confirm}
                       onChange={(e) => setConfirm(e.target.value)}
-                      type={ showPassword ? "text" : "password" }
+                      type={ showPassword1 ? "text" : "password" }
                       placeholder={t("confirmPassword")}
                       className="w-full pl-5 pr-4 py-2 border-l-5 border-fuchsia rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150"
                     />
                     <button
                       type="button"
-                      onClick={togglePasswordVisibility}
+                      onClick={togglePasswordVisibility1}
                       className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:bg-gray-600
                           dark:placeholder-white dark:text-white focus:outline-none cursor-pointer"
                     >
-                      {showPassword ? (
+                      {showPassword1 ? (
                         <EyeOff className="w-5 h-5" />
                       ) : (
                         <Eye className="w-5 h-5" />

@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDemandes, annulerDemande } from "../../../redux/slices/user/demandeEmpruntSlice";
-import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 
 export default function DemandeEmprunt() {
     const dispatch = useDispatch();
     const { items } = useSelector(state => state.demande);
-    const { t } = useTranslation();
 
     useEffect(() => {
       dispatch(fetchUserDemandes());
@@ -30,21 +29,21 @@ export default function DemandeEmprunt() {
                         <h1 className="text-2xl font-semibold">{demande.equipement.marque}</h1>
                         <p>N° {demande.equipement.numeroDeSerie}</p>
                       </div>
-                      <p>{t("borrowDate")} <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
-                      <p>{t("expectedReturnDate")} <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
+                      <p>{t("borrowDate")} : <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
+                      <p>{t("expectedReturnDate")} : <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
                       <div>
                         {demande.equipement.etatMateriel == "BonEtat" ? (
-                          <p>{t("equipmentCondition")} {t("goodCondition")}</p>
+                          <p>{t("equipmentCondition")} : {t("goodCondition")}</p>
                         ) : demande.equipement.etatMateriel == "EtatMoyen" ? (
-                          <p>{t("equipmentCondition")} {t("averageCondition")}</p>
+                          <p>{t("equipmentCondition")} : {t("averageCondition")}</p>
                         ) : demande.equipement.etatMateriel == "MauvaisEtat" ? (  
-                          <p>{t("equipmentCondition")} {t("badCondition")}</p>
+                          <p>{t("equipmentCondition")} : {t("badCondition")}</p>
                         ) : demande.equipement.etatMateriel == "HorsUsage" ? (
-                          <p>{t("equipmentCondition")} {t("outOfService")}</p>
+                          <p>{t("equipmentCondition")} : {t("outOfService")}</p>
                         ) : demande.equipement.etatMateriel == "EnReparation" ? (
-                          <p>{t("equipmentCondition")} {t("underRepair")}</p>
+                          <p>{t("equipmentCondition")} : {t("underRepair")}</p>
                         ) : (
-                          <p>{t("equipmentCondition")} {t("newCondition")}</p>
+                          <p>{t("equipmentCondition")} : {t("newCondition")}</p>
                         )}
                       </div>
                       <div className="flex flex-row justify-between items-center -mt-2">

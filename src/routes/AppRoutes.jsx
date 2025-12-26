@@ -11,6 +11,7 @@ import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Consommable from "../pages/user/consommable/consommable";
 import Profil from "../pages/user/Profil";
+import MesUtilisationConsommables from "../pages/user/MesUtilisationConsommables";
 
 import AdminDashboard from "../pages/admin/Dashboard/AdminDashboard";
 import Unauthorized from "../pages/Unauthorized";
@@ -45,6 +46,7 @@ export default function AppRoutes() {
                   <Route path="/userDashboard/MesEmprunts" element={ <MesEmprunts /> } />
                   <Route path="/userDashboard/Consommable" element={ <Consommable /> } />
                   <Route path="/userDashboard/Profil" element={ <Profil /> } />
+                  <Route path="/userDashboard/MesUtilisation" element={ <MesUtilisationConsommables /> } />
                 </Route>
                 
                 {/* Routes admin */}

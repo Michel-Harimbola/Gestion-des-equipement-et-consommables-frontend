@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { updatePersonalInformation } from "../../redux/slices/user/userSlice";
 import { logout, changePassword } from "../../redux/slices/auth/authSlice";
 import { updateCurrentUser } from "../../redux/slices/auth/authSlice";
-import { LogOutIcon, EditIcon, CheckCheckIcon, X } from "lucide-react";
+import { t } from "i18next";
+import { LogOutIcon, EditIcon, CheckCheckIcon, X, Eye, EyeOff } from "lucide-react";
+
 
 export default function Profil() {
   const navigate = useNavigate();
@@ -92,6 +94,24 @@ export default function Profil() {
     navigate("/login");
   }
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const [showPassword1, setShowPassword1] = useState(false);
+
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const togglePasswordVisibility2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
   return (
     <div className="w-screen h-screen bg-gray-50 dark:bg-gray-900 dark:text-white flex justify-center items-center">
       <div className="flex gap-10 ">
@@ -118,7 +138,7 @@ export default function Profil() {
                 "
               >
                 < LogOutIcon />
-                <span className="text-lg font-bold">Log Out</span>
+                <span className="text-lg font-bold">{t("logout")}</span>
               </button>
           </div>
         </div>
@@ -132,14 +152,14 @@ export default function Profil() {
               className="flex flex-col gap-10"
             >
               <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-semibold">Personal Information</h1>
+                <h1 className="text-3xl font-semibold">{t("personalInformation")}</h1>
                 {!isEditPI && (
                   <button
                     onClick={() => toggleEdit()}
                     className="flex gap-4 items-center bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg cursor-pointer"
                   >
                     <EditIcon className="size-5" />
-                    <span className="text-lg font-semibold">Edit</span>
+                    <span className="text-lg font-semibold">{t("edit")}</span>
                   </button>
                 )}
               </div>
@@ -171,7 +191,7 @@ export default function Profil() {
                       peer-focus:text-sm
                     "
                   >
-                    First Name
+                    {t("lastName")}
                   </label>
                 </div>
                 
@@ -202,7 +222,7 @@ export default function Profil() {
                       peer-focus:text-sm
                     "
                   >
-                    Last Name
+                    {t("firstName")}
                   </label>
                 </div>
               </div>
@@ -233,7 +253,7 @@ export default function Profil() {
                     peer-focus:text-sm
                   "
                 >
-                  Email address
+                  {t("emailAddress")}
                 </label>
               </div>
               
@@ -245,7 +265,7 @@ export default function Profil() {
                     className="flex gap-2 items-center bg-fuchsia hover:bg-red-600 text-white pr-4 p-2 rounded-lg cursor-pointer"
                   >
                     <CheckCheckIcon className="size-6" />
-                    <span className="text-lg font-semibold">Update</span>
+                    <span className="text-lg font-semibold">{t("update")}</span>
                   </button>
 
                   <button
@@ -253,7 +273,7 @@ export default function Profil() {
                     className="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white pr-4 p-2 rounded-lg cursor-pointer"
                   >
                     <X className="size-6" />
-                    <span className="text-lg font-semibold">Cancel</span>
+                    <span className="text-lg font-semibold">{t("cancel")}</span>
                   </button>
                 </div>
               )}
@@ -265,7 +285,7 @@ export default function Profil() {
               className="flex flex-col gap-10"
             >
               <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-semibold">Password</h1>
+                <h1 className="text-3xl font-semibold">{t("password")}</h1>
 
                 {!isEditPassword && (
                   <button
@@ -273,7 +293,7 @@ export default function Profil() {
                     className="flex gap-4 items-center bg-blue-700 hover:bg-blue-600 text-white px-5 py-2 rounded-lg cursor-pointer"
                   >
                     <EditIcon className="size-5" />
-                    <span className="text-lg font-semibold">Edit</span>
+                    <span className="text-lg font-semibold">{t("edit")}</span>
                   </button>
                 )}
               </div>
@@ -282,7 +302,7 @@ export default function Profil() {
                 <input 
                   required 
                   id="oldPassword"
-                  type="password" 
+                  type={ showPassword ? "text" : "password" }
                   placeholder="Password"
                   value={passwordData.oldPassword}
                   onChange={handlePasswordChange}
@@ -291,6 +311,17 @@ export default function Profil() {
                     dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
                   "
                 />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 left-[530px] flex items-center text-gray-400  hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 focus:outline-none cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
                 <label 
                   htmlFor="oldPassword"
                   className="
@@ -304,7 +335,7 @@ export default function Profil() {
                     peer-focus:text-sm
                   "
                 >
-                  Old password
+                  {t("oldPassword")}
                 </label>
               </div>
 
@@ -313,7 +344,7 @@ export default function Profil() {
                   <input 
                     required
                     id="newPassword"
-                    type="password" 
+                    type={ showPassword1 ? "text" : "password" }
                     placeholder="Password"
                     value={passwordData.newPassword}
                     onChange={handlePasswordChange}
@@ -322,6 +353,17 @@ export default function Profil() {
                       dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
                     "
                   />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility1}
+                    className="absolute inset-y-0 left-[530px] flex items-center text-gray-400  hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 focus:outline-none cursor-pointer"
+                  >
+                    {showPassword1 ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
                   <label 
                     htmlFor="newPassword"
                     className="
@@ -335,7 +377,7 @@ export default function Profil() {
                       peer-focus:text-sm
                     "
                   >
-                    New password
+                    {t("newPassword")}
                   </label>
                 </div>
 
@@ -343,7 +385,7 @@ export default function Profil() {
                   <input 
                     required
                     id="confirmNewPassword"
-                    type="password" 
+                    type={ showPassword2 ? "text" : "password" }
                     placeholder="Password"
                     value={passwordData.confirmNewPassword}
                     onChange={handlePasswordChange}
@@ -352,6 +394,17 @@ export default function Profil() {
                       dark:hover:border-gray-400 duration-200 focus:border-fuchsia bg-inherit focus:outline-none placeholder-transparent
                     "
                   />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility2}
+                    className="absolute inset-y-0 left-[530px] flex items-center text-gray-400  hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300 focus:outline-none cursor-pointer"
+                  >
+                    {showPassword2 ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
                   <label 
                     htmlFor="confirmNewPassword"
                     className="
@@ -365,7 +418,7 @@ export default function Profil() {
                       peer-focus:text-sm
                     "
                   >
-                    Confirm new password
+                    {t("confirmNewPassword")}
                   </label>
                 </div>
               </div>
@@ -377,7 +430,7 @@ export default function Profil() {
                     className="flex gap-2 items-center bg-fuchsia hover:bg-red-600 text-white pr-4 p-2 rounded-lg cursor-pointer"
                   >
                     <CheckCheckIcon className="size-6" />
-                    <span className="text-lg font-semibold">Update</span>
+                    <span className="text-lg font-semibold">{t("update")}</span>
                   </button>
 
                   <button
@@ -385,7 +438,7 @@ export default function Profil() {
                     className="flex gap-2 items-center bg-gray-500 hover:bg-gray-600 text-white pr-4 p-2 rounded-lg cursor-pointer"
                   >
                     <X className="size-6" />
-                    <span className="text-lg font-semibold">Cancel</span>
+                    <span className="text-lg font-semibold">{t("cancel")}</span>
                   </button>
                 </div>
               )}

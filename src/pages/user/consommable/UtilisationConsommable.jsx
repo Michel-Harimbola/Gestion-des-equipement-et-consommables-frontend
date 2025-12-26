@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { createUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
 import { fetchConsommables } from "../../../redux/slices/admin/ConsommableSlice";
+import { t } from "i18next";
 
 export default function Emprunter({ selectedUtilisationId, onClose }) {
   const [form, setForm] = useState({
@@ -40,7 +41,7 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm bg-black/40">
       <div className="relative bg-white dark:bg-gray-800 rounded-xl p-6 dark:text-white max-w-md">
         <h1 className="text-3xl -ml-1 font-bold lg:flex text-center">
-          Utiliser un consommable
+          {t("useConsommable")}
         </h1>
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-12">
@@ -53,7 +54,7 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
                 required
             >
               {items.length === 0 ? (
-                <option value="">Aucun consommable disponible</option>
+                <option value="">{t("noConsommableAvailable")}</option>
                 ) : (
                   items.map((cons) => (
                     <option key={cons.id} value={cons.id}>
@@ -92,14 +93,14 @@ export default function Emprunter({ selectedUtilisationId, onClose }) {
                 className="gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-150 shadow-md"
               >
-                Annuler
+                {t("cancel")}
               </button>
               <button 
                 type="submit"
                 className="text-white font-bold border border-transparent rounded-lg px-4 py-2 bg-fuchsia hover:bg-red-500 
                     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"
               >
-                Envoyer
+                {t("send")}
               </button>
             </div>
         

@@ -2,7 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmprunts, fetchSearchEmprunt, setQuery, setPage, createEmprunt, deleteEmprunt, updateEmprunt } from "../../../redux/slices/admin/EmpruntSlice";
 import ConfirmModal from "../../../components/shared/confirmModal";
-import EmpruntForm from "./empruntForm"
+import EmpruntForm from "./empruntForm";
+import { useTranslation } from "react-i18next";
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
@@ -18,6 +19,8 @@ export default function Emprunt() {
   const [deleteId, setDeleteId] = useState(null);
 
   const menuRef = useRef(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -102,7 +105,7 @@ export default function Emprunt() {
                   dispatch(setQuery(e.target.value));
                   dispatch(setPage(1));
                 }}
-                placeholder="Rechercher"
+                placeholder={t("research")}
                 className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
               />
 
@@ -126,7 +129,7 @@ export default function Emprunt() {
                   className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
               >
-                  Ajouter <span className="text-2xl font-bold">+</span>
+                  {t("add")} <span className="text-2xl font-bold">+</span>
               </button>
           </div>
         </div>
@@ -139,16 +142,16 @@ export default function Emprunt() {
             <table className="min-w-full text-lg text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">Photo</th>
-                  <th className="py-3 px-4 text-left">Pénom</th>
-                  <th className="py-3 px-4 text-left">Équipements</th>
-                  <th className="py-3 px-4 text-left">Marque</th>
-                  <th className="py-3 px-4 text-left">N° série</th>
-                  <th className="py-3 px-4 text-left">Statut</th>
-                  <th className="py-3 px-4 text-left">Date d’emprunt</th>
-                  <th className="py-3 px-4 text-left">Date de retour prévu</th>
-                  <th className="py-3 px-4 text-left">Date de retour effective</th>
-                  <th className="py-3 px-4 text-left">Actions</th>
+                  <th className="py-3 px-4 text-left">{t("photo")}</th>
+                  <th className="py-3 px-4 text-left">{t("firstName")}</th>
+                  <th className="py-3 px-4 text-left">{t("equipments")}</th>
+                  <th className="py-3 px-4 text-left">{t("brand")}</th>
+                  <th className="py-3 px-4 text-left">N° </th>
+                  <th className="py-3 px-4 text-left">{t("status")}</th>
+                  <th className="py-3 px-4 text-left">{t("borrowDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("expectedReturnDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("actualReturnDate")}</th>
+                  <th className="py-3 px-4 text-left">{t("actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -165,7 +168,7 @@ export default function Emprunt() {
                           className="w-18 h-10 object-cover rounded-lg"
                         />
                       ):(
-                        <span>Aucune photo</span>
+                        <span>{t("noPhoto")}</span>
                       )}
                     </td>
                     <td className="py-2 px-4 font-medium">{emprunt.utilisateur.prenom}</td>
@@ -175,15 +178,15 @@ export default function Emprunt() {
                     <td className="py-2 px-4 -ml-4 flex">
                       {emprunt.statut === "EnCours"? (
                         <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
-                          En cours
+                          {t("inProgress")}
                         </p>
                       ):emprunt.statut === "EnRetard"?(
                         <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
-                          En retard
+                          {t("late")}
                         </p>
                       ):(
                         <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
-                          Retourné
+                          {t("return")}
                         </p>
                       )}
                     </td>
@@ -220,7 +223,7 @@ export default function Emprunt() {
             >
               <div className="flex justify-between -mb-2">
                 <p>
-                  <span className="font-medium">Nom: </span>
+                  <span className="font-medium">{t("name")}: </span>
                   {emprunt.utilisateur.nom}
                 </p>
                 <div className="flex gap-5">
@@ -251,7 +254,7 @@ export default function Emprunt() {
                           className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                         >
                           <GrUpdate />
-                          Modifier
+                          {t("edit")}
                         </button>
                         
                         <button
@@ -262,7 +265,7 @@ export default function Emprunt() {
                           className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                         >
                           <FiDelete />
-                          Supprimer
+                          {t("delete")}
                         </button>
                       </div>
                     )}
@@ -270,7 +273,7 @@ export default function Emprunt() {
                 </div>
               </div>
               <p>
-                <span className="font-medium">Prénom: </span>
+                <span className="font-medium">{t("firstName")}: </span>
                 {emprunt.utilisateur.prenom}
               </p>
               <p>
@@ -278,34 +281,34 @@ export default function Emprunt() {
                 {emprunt.equipement.nom}
               </p>
               <p>
-                <span className="font-medium">Marque: </span>
+                <span className="font-medium">{t("brand")}: </span>
                 {emprunt.equipement.marque}
               </p>
               <p>
-                <span className="font-medium">Date d’emprunt: </span>
+                <span className="font-medium">{t("borrowDate")}: </span>
                 {new Date(emprunt.dateEmprunt).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-medium">Date de retour prévu: </span>
+                <span className="font-medium">{t("expectedReturnDate")}: </span>
                 {new Date(emprunt.dateRetourPrevu).toLocaleDateString()}
               </p>
               <div className="flex justify-between">
                 <p>
-                  <span className="font-medium">Date de retour effective: </span>
+                  <span className="font-medium">{t("actualReturnDate")}: </span>
                   {emprunt.dateRetourEffective == null ? "pas encore" : new Date(emprunt.dateRetourEffective).toLocaleDateString()}
                 </p>
                 <div className="-mt-4">
                   {emprunt.statut === "EnCours"? (
                     <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
-                      En cours
+                      {t("inProgress")}
                     </p>
                   ):emprunt.statut === "EnRetard"?(
                     <p className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-lg font-semibold">
-                      En retard
+                      {t("late")}
                     </p>
                   ):(
                     <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
-                      Retourné
+                      {t("return")}
                     </p>
                   )}
                 </div>

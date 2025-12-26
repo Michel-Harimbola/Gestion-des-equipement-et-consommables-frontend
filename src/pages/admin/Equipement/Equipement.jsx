@@ -11,6 +11,7 @@ import {
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import EquipementForm from "./equipementForm";
+import { useTranslation } from "react-i18next";
 import { MoreVertical } from "lucide-react";
 import { GrUpdate } from "react-icons/gr";
 
@@ -25,6 +26,8 @@ export default function Equipement() {
   const [deleteId, setDeleteId] = useState(null);
 
   const menuRef = useRef(null);
+    
+  const { t } = useTranslation();
 
   useEffect(() => {
     const delay = 400;
@@ -109,7 +112,7 @@ export default function Equipement() {
                   dispatch(setQuery(e.target.value));
                   dispatch(setPage(1));
                 }}
-                placeholder="Rechercher"
+                placeholder={t("research")}
                 className="pl-10 pr-9 py-2 border rounded-lg dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600"
               />
 
@@ -133,7 +136,7 @@ export default function Equipement() {
                   className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
               >
-                  Ajouter <span className="text-2xl font-bold">+</span>
+                  {t("add")} <span className="text-2xl font-bold">+</span>
               </button>
           </div>
         </div>
@@ -145,17 +148,17 @@ export default function Equipement() {
             <table className="min-w-full text-lg text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
-                  <th className="py-3 px-4 text-left">Photo</th>
-                  <th className="py-3 px-4 text-left">Nom</th>
-                  <th className="py-3 px-4 text-left">Numéro de série</th>
-                  <th className="py-3 px-4 text-left">Marque</th>
-                  <th className="py-3 px-4 text-left">Disponibilité</th>
-                  <th className="py-3 px-4 text-left">Etat matériel</th>
-                  <th className="py-3 px-4 text-left">Obtention</th>
-                  <th className="py-3 px-4 text-left">Fournisseur</th>
-                  <th className="py-3 px-4 text-left">Donateur</th>
-                  <th className="py-3 px-4 text-left">Prix</th>
-                  <th className="py-3 px-4 text-left">Actions</th>
+                  <th className="py-3 px-4 text-left">{t("photo")}</th>
+                  <th className="py-3 px-4 text-left">{t("name")}</th>
+                  <th className="py-3 px-4 text-left">{t("serialNumber")}</th>
+                  <th className="py-3 px-4 text-left">{t("brand")}</th>
+                  <th className="py-3 px-4 text-left">{t("availability")}</th>
+                  <th className="py-3 px-4 text-left">{t("equipmentCondition")}</th>
+                  <th className="py-3 px-4 text-left">{t("acquisition")}</th>
+                  <th className="py-3 px-4 text-left">{t("supplier")}</th>
+                  <th className="py-3 px-4 text-left">{t("donor")}</th>
+                  <th className="py-3 px-4 text-left">{t("price")}</th>
+                  <th className="py-3 px-4 text-left">{t("actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -169,10 +172,10 @@ export default function Equipement() {
                           <img
                             src={`http://localhost:3000${equipement.photo}`}
                             alt={equipement.nom}
-                            className="w-18 h-10 object-cover rounded-xl"
+                            className="w-20 h-15 object-cover rounded-xl"
                           />
                         ) : (
-                          <span>Aucune photo</span>
+                          <span>{t("noPhoto")}</span>
                         )}
                       </td>
                       <td className="py-2 px-4">{equipement.nom}</td>
@@ -181,15 +184,15 @@ export default function Equipement() {
                       <td className="py-2 px-4 flex">
                         {equipement.disponibilite === "Emprunte"? (
                           <p className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-lg font-semibold">
-                            Emprunté
+                            {t("borrowed")}
                           </p>
                         ):equipement.disponibilite === "EnMaintenance"? (
                           <p className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-lg font-semibold">
-                            En maintenance
+                            {t("maintenance")}
                           </p>
                         ):(
                           <p className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-lg font-semibold">
-                            Disponible
+                            {t("availableStatus")}
                           </p>
                         )}
                       </td>
