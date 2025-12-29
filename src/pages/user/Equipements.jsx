@@ -6,11 +6,12 @@ import Emprunter from "./Emprunter";
 import ContratInfo from "./ContratInfo"; 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function Equipements() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.equipement));
   const { user } = useSelector(state => state.auth);
@@ -20,8 +21,6 @@ export default function Equipements() {
   const [selectedEquipementId, setSelectedEquipementId] = useState(null);
   const [showContrat, setShowContrat] = useState(false);
   const [showEmprunter, setShowEmprunter] = useState(false);
-
-
 
   useEffect(() => {
     const delay = 400;
@@ -109,7 +108,7 @@ export default function Equipements() {
                 }}
                 className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
               >
-                <FiX size={18} />
+                <FiX size={18} className="cursor-pointer" />
               </button>
             )}
           </div>
@@ -123,66 +122,65 @@ export default function Equipements() {
                 filteredItems.map((eq) => (
                   <div 
                     key={eq.id}
-                    className="flex flex-col px-4 py-3 space-y-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[350px] rounded-3xl"
+                    className="flex flex-col justify-between px-4 py-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[350px] rounded-3xl"
                   >
-                    <div>
-                        <div className="flex items-center justify-center ">
-                          {eq.photo ? (
-                            <img
-                              src={`http://localhost:3000${eq.photo}`}
-                              alt={eq.nom}
-                              className="w-55 h-40 object-cover rounded-3xl"
-                            />
-                          ) : (
-                            <span>{t("noPhoto")}</span>
-                          )}
-                        </div>
-                        
-                        <div className="flex flex-col">
-                          <p className="font-bold text-xl">{eq.marque}</p>
-                          {role === "client" && (
-                            <p className="font-semibold text-lg">{t("price")}: {eq.prix} ar</p>
-                          )}
-                          <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">N° {eq.numeroDeSerie}</p>
-                          <div className="flex justify-between items-center">
-                            <div className="font-semibold text-sm text-gray-700 dark:text-gray-200">
-                              {eq.etatMateriel == "BonEtat" ? (
-                                <p>{t("goodCondition")}</p>
-                              ) : eq.etatMateriel == "EtatMoyen" ? (
-                                <p>{t("averageCondition")}</p>
-                              ) : eq.etatMateriel == "MauvaisEtat" ? (  
-                                <p>{t("badCondition")}</p>
-                              ) : eq.etatMateriel == "HorsUsage" ? (
-                                <p>{t("outOfService")}</p>
-                              ) : eq.etatMateriel == "EnReparation" ? (
-                                <p>{t("underRepair")}</p>
-                              ) : (
-                                <p>{t("newCondition")}</p>
-                              )}
-                            </div>
-                            
-                            <div className="text-gray-700 flex justify-end dark:text-white font-semibold">
-                              {eq.disponibilite == "Disponible"? (
-                                <p className="bg-green-100 dark:bg-green-500 px-3 rounded-md">{t("availableStatus")}</p>
-                              ): eq.disponibilite == "EnMaintenance" ? (
-                                <p className="bg-blue-100 dark:bg-blue-500 px-3 rounded-md">{t("maintenance")}</p>
-                              ):(
-                                <p className="bg-red-100 dark:bg-red-500 px-3 rounded-md">{t("borrowed")}</p>
-                              )}
-                            </div>
+                    <div className="flex items-center justify-center ">
+                      {eq.photo ? (
+                        <img
+                          src={`http://localhost:3001${eq.photo}`}
+                          alt={eq.nom}
+                          className="w-55 h-45 object-cover rounded-3xl"
+                        />
+                      ) : (
+                        <span>{t("noPhoto")}</span>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex flex-col">
+                        <p className="font-bold text-xl">{eq.marque}</p>
+                        {role === "client" && (
+                          <p className="font-semibold text-lg">{t("price")}: {eq.prix} ar</p>
+                        )}
+                        <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">N° {eq.numeroDeSerie}</p>
+                        <div className="flex justify-between items-center">
+                          <div className="font-semibold text-sm text-gray-700 dark:text-gray-200">
+                            {eq.etatMateriel == "BonEtat" ? (
+                              <p>{t("goodCondition")}</p>
+                            ) : eq.etatMateriel == "EtatMoyen" ? (
+                              <p>{t("averageCondition")}</p>
+                            ) : eq.etatMateriel == "MauvaisEtat" ? (  
+                              <p>{t("badCondition")}</p>
+                            ) : eq.etatMateriel == "HorsUsage" ? (
+                              <p>{t("outOfService")}</p>
+                            ) : eq.etatMateriel == "EnReparation" ? (
+                              <p>{t("underRepair")}</p>
+                            ) : (
+                              <p>{t("newCondition")}</p>
+                            )}
+                          </div>
+                          
+                          <div className="text-gray-700 flex justify-end dark:text-white font-semibold">
+                            {eq.disponibilite == "Disponible"? (
+                              <p className="bg-green-100 dark:bg-green-500 px-3 rounded-md">{t("availableStatus")}</p>
+                            ): eq.disponibilite == "EnMaintenance" ? (
+                              <p className="bg-blue-100 dark:bg-blue-500 px-3 rounded-md">{t("maintenance")}</p>
+                            ):(
+                              <p className="bg-red-100 dark:bg-red-500 px-3 rounded-md">{t("borrowed")}</p>
+                            )}
                           </div>
                         </div>
+                      </div>
+                      <button 
+                        onClick={() => handleEmprunterClick(eq.id)}
+                        disabled={ eq.disponibilite !== "Disponible" }
+                        className={`text-white text-xl font-bold border border-transparent rounded-xl w-full px-4 py-2 ${eq.disponibilite !== "Disponible"? 
+                              "bg-gray-400 dark:bg-gray-500" 
+                              : "bg-fuchsia border-3 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
+                        `}>
+                        {t("borrow")}
+                      </button>
                     </div>
-
-                    <button 
-                      onClick={() => handleEmprunterClick(eq.id)}
-                      disabled={ eq.disponibilite !== "Disponible" }
-                      className={`text-white text-xl font-bold border border-transparent rounded-xl w-full px-4 py-2 ${eq.disponibilite !== "Disponible"? 
-                            "bg-gray-400 dark:bg-gray-500" 
-                            : "bg-fuchsia border-3 hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md cursor-pointer"}
-                      `}>
-                      {t("borrow")}
-                    </button>
                   </div>
                 ))
               ) : (

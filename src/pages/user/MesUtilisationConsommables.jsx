@@ -32,8 +32,8 @@ export default function MesUtilisationConsommables() {
     };
 
     return (
-      <div className="h-screen dark:bg-gray-900 pt-24 sm:px-8 px-4">
-          <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">{t("consumableUsage")}</h1>
+      <div className="h-screen dark:bg-gray-800 pt-24 sm:px-8 px-4">
+          <h1 className="text-3xl dark:text-white sm:text-4xl font-bold text-center lg:flex lg:justify-start">{t("consumableUsage")}</h1>
           <div className="flex justify-end mt-10 mb-8">
             <div className="relative">
                         
@@ -58,7 +58,7 @@ export default function MesUtilisationConsommables() {
                   }}
                   className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
                 >
-                  <FiX size={18} />
+                  <FiX size={18} className="cursor-pointer" />
                 </button>
               )}
             </div>
@@ -88,7 +88,7 @@ export default function MesUtilisationConsommables() {
                           <td className="p-2">
                             {utilisation.consommable.photo ? (
                                 <img
-                                  src={`http://localhost:3000${utilisation.consommable.photo}`}
+                                  src={`http://localhost:3001${utilisation.consommable.photo}`}
                                   alt={utilisation.consommable.nom}
                                   className="w-13 object-cover rounded-xl"
                                 />

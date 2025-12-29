@@ -46,7 +46,7 @@ export const createUser = createAsyncThunk("user/create", async (data, thunkAPI)
 export const updateUser = createAsyncThunk("user/update", async ({ id, data }, thunkAPI) => {
   try {
     const res = await userService.update(id, data);
-    toast.success("Utilisateur mis à jour !");
+    toast.success("L'utilisateur est à jour !");
     return res;
   } catch (error) {
     toast.error(error.response?.data?.message);
@@ -108,7 +108,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchSearchUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.users;
+        state.items = action.payload.users  || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;

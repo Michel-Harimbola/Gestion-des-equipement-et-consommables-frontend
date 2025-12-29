@@ -83,7 +83,7 @@ const consommableSlice = createSlice({
       })
       .addCase(fetchConsommables.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.consommables;
+        state.items = Array.isArray(action.payload?.consommables) ? action.payload.consommables : [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;
@@ -99,8 +99,8 @@ const consommableSlice = createSlice({
       })
       .addCase(fetchSearchConsommable.fulfilled, (state, action) => {
           state.loading = false;
-          state.items = action.payload.consommables;
-          state.total = action.payload.total;
+          state.items = Array.isArray(action.payload?.consommables) ? action.payload.consommables : [];
+          state.total = action.payload.total || 0;
           state.page = action.payload.page;
           state.limit = action.payload.limit;
           state.totalPages = Math.ceil(action.payload.total / action.payload.limit);

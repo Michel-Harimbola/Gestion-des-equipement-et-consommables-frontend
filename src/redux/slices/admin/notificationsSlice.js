@@ -44,7 +44,7 @@ extraReducers: (builder) => {
     })
     .addCase(fetchNotfications.fulfilled, (state, action) => {
       state.loading = false;
-      state.items = action.payload.notifications;
+      state.items = action.payload.notifications || [];
       state.total = action.payload.total;
       state.limit = action.payload.limit;
       state.page = action.payload.page;

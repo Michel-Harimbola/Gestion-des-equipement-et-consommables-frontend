@@ -8,12 +8,11 @@ import {
   setPage, 
   deleteUtilisation, 
   updateUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete  } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import UtilisationutilisationForm from "./UtilisationConsommableForm";
 import { useTranslation } from "react-i18next";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
 
 
 export default function Utilisationutilisation() {
@@ -168,9 +167,9 @@ export default function Utilisationutilisation() {
                       <td className="p-2">
                         {utilisation.consommable.photo ? (
                           <img
-                            src={`http://localhost:3000${utilisation.consommable.photo}`}
+                            src={`http://localhost:3001${utilisation.consommable.photo}`}
                             alt={utilisation.consommable.nom}
-                            className="w-13 object-cover rounded-xl"
+                            className="w-12 object-cover rounded-xl"
                           />
                         ) : (
                           <span>{t("noPhoto")}</span>
@@ -185,10 +184,10 @@ export default function Utilisationutilisation() {
                       <td className="py-2 px-4">{utilisation.description}</td>
                       <td className="p-2 space-x-8 flex">
                           <button onClick={() => handleEdit(utilisation)} className="text-xl hover:text-white">
-                            <GrUpdate />
+                            <Edit2 />
                           </button>
                           <button  onClick={() => handleDelete(utilisation.id)} className="text-red-500 text-2xl hover:text-white">
-                            <FiDelete />
+                            <Trash2 />
                           </button>
                       </td>
                     </tr>
@@ -235,7 +234,7 @@ export default function Utilisationutilisation() {
                         }}
                         className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                       >
-                        <GrUpdate />
+                        <Edit2 />
                         Modifier
                       </button>
                       
@@ -246,7 +245,7 @@ export default function Utilisationutilisation() {
                         }}
                         className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                       >
-                        <FiDelete />
+                        <Trash2 />
                         Supprimer
                       </button>
                     </div>

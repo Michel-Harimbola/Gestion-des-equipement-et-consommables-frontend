@@ -3,7 +3,7 @@ import { getLoadingInstance } from "../context/LoadingContextHandler";
 import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
-   baseURL: "http://localhost:3000/api",
+   baseURL: "http://localhost:3001/api",
    timeout: 5000,
 });
 

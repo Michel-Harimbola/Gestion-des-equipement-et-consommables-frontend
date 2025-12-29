@@ -22,11 +22,12 @@ const userService = {
   },
 
   update: async (id, data) => {
-    return axiosInstance.put(`/user/${id}`, data, {
+    const res = await axiosInstance.put(`/user/${id}`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+    return res.data;
   },
 
   remove: async (id) => {

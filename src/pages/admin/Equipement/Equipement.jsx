@@ -8,12 +8,11 @@ import {
   setPage, 
   deleteEquipement, 
   updateEquipement } from "../../../redux/slices/admin/EquipementSlice";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import EquipementForm from "./equipementForm";
 import { useTranslation } from "react-i18next";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 
 
 export default function Equipement() {
@@ -170,9 +169,9 @@ export default function Equipement() {
                       <td className="p-2">
                         {equipement.photo ? (
                           <img
-                            src={`http://localhost:3000${equipement.photo}`}
+                            src={`http://localhost:3001${equipement.photo}`}
                             alt={equipement.nom}
-                            className="w-20 h-15 object-cover rounded-xl"
+                            className="w-16 h-10 object-cover rounded-xl"
                           />
                         ) : (
                           <span>{t("noPhoto")}</span>
@@ -203,10 +202,10 @@ export default function Equipement() {
                       <td className="py-2 px-4">{equipement.prix}</td>
                       <td className="py-4  space-x-8 flex">
                           <button onClick={() => handleEdit(equipement)} className="text-xl hover:text-white">
-                              <GrUpdate />
+                              <Edit2 />
                           </button>
                           <button onClick={() => handleDelete(equipement.id)} className="text-red-500 text-2xl hover:text-white">
-                              <FiDelete />
+                              <Trash2 />
                           </button>
                       </td>
                   </tr>
@@ -255,7 +254,7 @@ export default function Equipement() {
                           }}
                           className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                         >
-                          <GrUpdate />
+                          <Edit2 />
                           Modifier
                         </button>
                         
@@ -266,7 +265,7 @@ export default function Equipement() {
                           }}
                           className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                         >
-                          <FiDelete />
+                          <Trash2 />
                           Supprimer
                         </button>
                       </div>

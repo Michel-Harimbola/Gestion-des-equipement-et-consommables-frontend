@@ -9,7 +9,7 @@ export default function User() {
         <div className="flex gap-3 items-center bg-white p-3 rounded-full dark:bg-gray-700 dark:text-gray-300">
             {currentUser?.photo ? (
                     <img
-                        src={`http://localhost:3000${currentUser.photo}`}
+                        src={`http://localhost:3001${currentUser.photo}`}
                         alt={currentUser.nom}
                         className="w-18 h-18 object-cover rounded-full"
                     />

@@ -36,7 +36,7 @@ export default function Footer() {
                 </div>
                 {currentUser?.photo ? (
                     <img
-                        src={`http://localhost:3000${currentUser.photo}`}
+                        src={`http://localhost:3001${currentUser.photo}`}
                         alt={currentUser.nom}
                         className="w-14 h-14 object-cover rounded-full"
                     />

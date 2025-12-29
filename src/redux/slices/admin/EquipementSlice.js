@@ -83,7 +83,7 @@ const equipementSlice = createSlice({
       })
       .addCase(fetchEquipements.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.equipements;
+        state.items = action.payload.equipements || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;
@@ -99,7 +99,7 @@ const equipementSlice = createSlice({
       })
       .addCase(fetchSearchEquipements.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.equipements;
+        state.items = action.payload.equipements || [];
         state.total = action.payload.total;
         state.page = action.payload.page;
         state.limit = action.payload.limit;

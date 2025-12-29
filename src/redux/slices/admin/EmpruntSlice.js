@@ -91,7 +91,7 @@ const empruntSlice = createSlice({
       })
       .addCase(fetchEmprunts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.emprunts;
+        state.items = action.payload.emprunts || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;
@@ -117,7 +117,7 @@ const empruntSlice = createSlice({
       })
       .addCase(fetchSearchEmprunt.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.emprunts;
+        state.items = action.payload.emprunts || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;

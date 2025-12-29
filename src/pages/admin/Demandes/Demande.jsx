@@ -7,12 +7,11 @@ import {
   setPage, 
   deleteDemande, 
   updateDemande } from "../../../redux/slices/admin/DemandeEmpruntSlice";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import { useTranslation } from "react-i18next";
 import DemandeForm from "./demandeForm";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
 
 
 export default function Demande() {
@@ -150,9 +149,9 @@ export default function Demande() {
                     <td className="p-2">
                       {demande.equipement.photo ? (
                         <img
-                          src={`http://localhost:3000${demande.equipement.photo}`}
+                          src={`http://localhost:3001${demande.equipement.photo}`}
                           alt={demande.equipement.nom}
-                          className="w-18 h-10 object-cover rounded-xl"
+                          className="w-16 h-10 object-cover rounded-xl"
                         />
                       ) : (
                         <span>Aucune photo</span>
@@ -182,10 +181,10 @@ export default function Demande() {
                       <td className="py-2 px-4">{demande.type}</td>
                     <td className="p-4 space-x-8 flex">
                       <button onClick={() => handleEdit(demande)} className="text-xl hover:text-white">
-                          <GrUpdate />
+                          <Edit2 />
                       </button>
                       <button  onClick={() => handleDelete(demande.id)} className="text-red-500 text-2xl hover:text-white">
-                          <FiDelete />
+                          <Trash2 />
                       </button>
                     </td>
                 </tr>
@@ -235,7 +234,7 @@ export default function Demande() {
                         }}
                         className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                       >
-                        <GrUpdate />
+                        <Edit2 />
                         Modifier
                       </button>
                       
@@ -246,7 +245,7 @@ export default function Demande() {
                         }}
                         className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                       >
-                        <FiDelete />
+                        <Trash2 />
                         Supprimer
                       </button>
                     </div>

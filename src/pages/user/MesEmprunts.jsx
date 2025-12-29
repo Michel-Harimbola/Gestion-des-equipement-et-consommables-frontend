@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserEmprunts, searchUserEmprunts, setPage, setQuery } from "../../redux/slices/user/empruntSlice";
 import GlobalLoader from "../../components/shared/GlobalLoader";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 
 export default function MesEmprunts() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { items, loading, page, totalPages, query, limit: stateLimit = 10 } = useSelector((state) => state.emprunt);
   
@@ -90,7 +91,7 @@ export default function MesEmprunts() {
               }}
               className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
             >
-              <FiX size={18} />
+              <FiX size={18} className="cursor-pointer" />
             </button>
           )}
         </div>
@@ -126,7 +127,7 @@ export default function MesEmprunts() {
                     <td className="p-2">
                       {emprunt.equipement.photo ? (
                         <img
-                          src={`http://localhost:3000${emprunt.equipement.photo}`}
+                          src={`http://localhost:3001${emprunt.equipement.photo}`}
                           alt={emprunt.equipement.nom}
                           className="w-18 h-12 object-cover rounded-xl"
                         />

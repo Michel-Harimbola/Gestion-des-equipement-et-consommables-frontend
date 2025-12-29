@@ -48,6 +48,7 @@ export default function UserForm({ onSubmit, onClose, initialData = null }) {
       }
 
       onSubmit(formData);
+
     } else {
       onSubmit(form);
     }

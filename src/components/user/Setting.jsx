@@ -22,7 +22,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                 <div>
                     {photo ? (
                         <img 
-                            src={`http://localhost:3000${photo}`} 
+                            src={`http://localhost:3001${photo}`} 
                             alt={photo}
                             className="w-14 h-14 object-cover rounded-full" 
                         />

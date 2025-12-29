@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function EtatMaterielForm({ onSubmit, onClose, initialData = null }) {
+  const { t } = useTranslation();
   const [etatMateriel, setEtatMateriel] = useState("Neuf");
 
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function RecentEmprunt() {
                                         <div className="p-1 bg-gray-200 dark:bg-gray-400 rounded-lg">                                           
                                             {emprunt.equipement?.photo ? (
                                                 <img
-                                                    src={`http://localhost:3000${emprunt.equipement.photo}`}
+                                                    src={`http://localhost:3001${emprunt.equipement.photo}`}
                                                     alt={emprunt.equipement.nom}
                                                     className="w-28 h-20 object-cover rounded-lg"
                                                 />

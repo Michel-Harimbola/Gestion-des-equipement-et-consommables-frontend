@@ -61,9 +61,9 @@ export default function Rapport() {
   }, [isConfirmOpen]);
 
   return (
-    <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
+    <div className="h-screen dark:bg-gray-900 pt-40 lg:pl-74 lg:pr-10 px-4">
       {/* Ordi */}
-      <div className="md:block hidden overflow-x-auto rounded-lg mt-32">
+      <div className="md:block hidden overflow-x-auto rounded-lg">
           {loading ? (
             <p>Chargement...</p>
           ) : (

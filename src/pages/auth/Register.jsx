@@ -4,12 +4,13 @@ import { registerUser } from "../../redux/slices/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from 'lucide-react';
 import { FaSun, FaMoon } from "react-icons/fa";
-import { t } from 'i18next';
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const [form, setForm] = useState({ nom: "", prenom: "", email: "", motdepasse: "", role: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation(); 
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -173,7 +174,6 @@ const Register = () => {
                       dark:placeholder-white dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia transition duration-150 cursor-pointer "
                   >
                     <option value="" disabled>{t("chooseRole")}</option>
-                    <option value="client">{t("client")}</option>
                     <option value="partenaire">{t("partner")}</option>
                     <option value="personnelInterne">{t("internalStaff")}</option>
                   </select>

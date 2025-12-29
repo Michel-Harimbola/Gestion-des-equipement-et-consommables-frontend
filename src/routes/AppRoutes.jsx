@@ -23,6 +23,7 @@ import Demande from "../pages/admin/Demandes/Demande";
 import UtilisationConsommable from "../pages/admin/UtilisationConsommable/UtilisationConsommable";
 import Notification from "../pages/admin/Notification/Notification";
 import Rapport from "../pages/admin/Rapport/Rapport";
+import Setting from "../pages/admin/Setting";
 
 export default function AppRoutes() {
     return (
@@ -66,6 +67,7 @@ export default function AppRoutes() {
                     <Route path="/Utilisation" element={<UtilisationConsommable />} />
                     <Route path="/Notification" element={<Notification />} />
                     <Route path="/Rapport" element={<Rapport />} />
+                    <Route path="/Setting" element={<Setting />} />
                 </Route>
             </Routes>
         </BrowserRouter>

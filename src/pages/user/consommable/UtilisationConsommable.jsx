@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { createUtilisation } from "../../../redux/slices/admin/utilisationConsommableSlice";
 import { fetchConsommables } from "../../../redux/slices/admin/ConsommableSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export default function Emprunter({ selectedUtilisationId, onClose }) {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { items } = useSelector((state) => state.consommables);
+
   const [form, setForm] = useState({
     consommableId: selectedUtilisationId || "",
     quantiteUtilise: "",
     description: "",
   });
-
-  const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.consommables);
 
   useEffect(() => {
     dispatch(fetchConsommables());

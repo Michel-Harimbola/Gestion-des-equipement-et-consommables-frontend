@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserDemandes, annulerDemande } from "../../../redux/slices/user/demandeEmpruntSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function DemandeEmprunt() {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { items } = useSelector(state => state.demande);
 
     useEffect(() => {

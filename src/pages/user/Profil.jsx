@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { updatePersonalInformation } from "../../redux/slices/user/userSlice";
 import { logout, changePassword } from "../../redux/slices/auth/authSlice";
 import { updateCurrentUser } from "../../redux/slices/auth/authSlice";
-import { t } from "i18next";
-import { LogOutIcon, EditIcon, CheckCheckIcon, X, Eye, EyeOff } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { LogOutIcon, EditIcon, CheckCheckIcon, X, Eye, EyeOff, Camera } from "lucide-react";
+import { FaCamera } from "react-icons/fa";
 
 
 export default function Profil() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { id, role, photo, nom, prenom, email } = useSelector(state => state.auth.currentUser);
   const [isEditPI, setIsEditPI] = useState(false);
@@ -118,12 +120,19 @@ export default function Profil() {
 
         {/* Pofil */}
         <div className="flex flex-col justify-between bg-white dark:bg-gray-800 p-10 border border-gray-300 rounded-4xl">
-          <div className="flex flex-col items-center">
-            <img 
-              src={`http://localhost:3000${photo}`} 
-              alt={photo} 
-              className="size-55 object-cover rounded-full"
-            />
+          <div className="flex flex-col items-center relative">
+            <div className="flex flex-col">
+              <img 
+                src={`http://localhost:3001${photo}`} 
+                alt={photo} 
+                className="size-55 object-cover rounded-full"
+              />
+              <div className="absolute bottom-32 right-2">
+                <button className="dark:text-white focus:scale-90 cursor-pointer bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 p-2 rounded-full">
+                  <FaCamera className="size-7" />
+                </button>
+              </div>
+            </div>
             <h1 className="text-2xl font-semibold mt-4">{nom}</h1>
             <h2 className="text-xl font-normal">{prenom}</h2>
             <p className="mt-4 text-gray-600 dark:text-gray-300">@{role}</p>
@@ -303,6 +312,7 @@ export default function Profil() {
                   required 
                   id="oldPassword"
                   type={ showPassword ? "text" : "password" }
+                  disabled={!isEditPassword}
                   placeholder="Password"
                   value={passwordData.oldPassword}
                   onChange={handlePasswordChange}
@@ -327,7 +337,7 @@ export default function Profil() {
                   className="
                     absolute left-4 px-1 tracking-wide bg-white dark:bg-gray-800 -top-3 text-sm duration-300 pointer-events-none
                     peer-placeholder-shown:text-base
-                    peer-placeholder-shown:top-2
+                    peer-placeholder-shown:top-3
                     peer-placeholder-shown:text-gray-500
                     dark:peer-placeholder-shown:text-gray-400
                     peer-focus:text-fuchsia 
@@ -345,6 +355,7 @@ export default function Profil() {
                     required
                     id="newPassword"
                     type={ showPassword1 ? "text" : "password" }
+                    disabled={!isEditPassword}
                     placeholder="Password"
                     value={passwordData.newPassword}
                     onChange={handlePasswordChange}
@@ -369,7 +380,7 @@ export default function Profil() {
                     className="
                       absolute left-4 px-1 tracking-wide bg-white dark:bg-gray-800 -top-3 text-sm duration-300 pointer-events-none
                       peer-placeholder-shown:text-base
-                      peer-placeholder-shown:top-2
+                      peer-placeholder-shown:top-3
                       peer-placeholder-shown:text-gray-500
                       dark:peer-placeholder-shown:text-gray-400
                       peer-focus:text-fuchsia 
@@ -386,6 +397,7 @@ export default function Profil() {
                     required
                     id="confirmNewPassword"
                     type={ showPassword2 ? "text" : "password" }
+                    disabled={!isEditPassword}
                     placeholder="Password"
                     value={passwordData.confirmNewPassword}
                     onChange={handlePasswordChange}
@@ -410,7 +422,7 @@ export default function Profil() {
                     className="
                       absolute left-4 px-1 tracking-wide bg-white dark:bg-gray-800 -top-3 text-sm duration-300 pointer-events-none
                       peer-placeholder-shown:text-base
-                      peer-placeholder-shown:top-2
+                      peer-placeholder-shown:top-3
                       peer-placeholder-shown:text-gray-500
                       dark:peer-placeholder-shown:text-gray-400
                       peer-focus:text-fuchsia 

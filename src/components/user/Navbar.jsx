@@ -21,7 +21,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
     const notifRef = useRef(null);
     const settingRef = useRef(null);
     
-    const [isActive, setIsActive] = useState(0);
+    const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(false)
     const [showNotif, setShowNotif] = useState(false);
     const [isOpenSetting, setIsOpenSetting] = useState(false);
@@ -177,7 +177,11 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     {item.name === "history" ? (
                                         <span
                                             onClick={() => setIsHistoriqueOpen(true)}
-                                            className="hover:text-fuchsia cursor-pointer"
+                                            className={`ease-in-out border-fuchsia ${
+                                                isActive === item.id
+                                                    ? "text-fuchsia hover:text-red-600 lg:border-b-4 pb-5"
+                                                    : "hover:text-fuchsia"
+                                            }`}
                                         >
                                             {t(item.name)}
                                         </span>
@@ -204,6 +208,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                             <Historique
                                                 path1={item.path1}
                                                 path2={item.path2}
+                                                ID={item.id}
+                                                setIsActive={setIsActive}
                                             />
                                         </div>
                                     )}
@@ -259,7 +265,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                             >
                                 {photo ? (
                                     <img 
-                                        src={`http://localhost:3000${photo}`} 
+                                        src={`http://localhost:3001${photo}`} 
                                         alt={photo}
                                         className="w-[46px] h-[46px] -mb-4 object-cover rounded-full" 
                                     />

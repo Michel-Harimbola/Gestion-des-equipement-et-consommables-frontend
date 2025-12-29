@@ -5,11 +5,12 @@ import { CreateDemandeRetour, fetchUserDemandes } from "../../../redux/slices/us
 import DemandeEmprunt from "./DemandeEmprunt";
 import EtatMaterielForm from "./EtatMaterielForm";
 import GlobalLoader from "../../../components/shared/GlobalLoader";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { items, loading } = useSelector((state) => state.enCours);
 
   const [showEtatForm, setShowEtatForm] = useState(false);

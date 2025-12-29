@@ -112,7 +112,7 @@ const demandeEmpruntSlice = createSlice({
       })
       .addCase(fetchDemandes.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.demandes;
+        state.items = action.payload.demandes || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;
@@ -127,7 +127,7 @@ const demandeEmpruntSlice = createSlice({
       })
       .addCase(fetchDemandesEnAttente.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.demandes;
+        state.items = action.payload.demandes || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;

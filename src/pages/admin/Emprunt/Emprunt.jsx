@@ -4,9 +4,8 @@ import { fetchEmprunts, fetchSearchEmprunt, setQuery, setPage, createEmprunt, de
 import ConfirmModal from "../../../components/shared/confirmModal";
 import EmpruntForm from "./empruntForm";
 import { useTranslation } from "react-i18next";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 
 
 export default function Emprunt() {
@@ -155,7 +154,7 @@ export default function Emprunt() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((emprunt, index) => (
+                {items.map((emprunt) => (
                   <tr 
                       key={emprunt.id} 
                       className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
@@ -163,9 +162,9 @@ export default function Emprunt() {
                     <td className="p-2">
                       {emprunt.equipement.photo ? (
                         <img
-                          src={`http://localhost:3000${emprunt.equipement.photo}`}
+                          src={`http://localhost:3001${emprunt.equipement.photo}`}
                           alt={emprunt.equipement.nom}
-                          className="w-18 h-10 object-cover rounded-lg"
+                          className="w-16 h-10 object-cover rounded-lg"
                         />
                       ):(
                         <span>{t("noPhoto")}</span>
@@ -201,10 +200,10 @@ export default function Emprunt() {
                     </td>
                     <td className="p-4 space-x-8 flex">
                       <button onClick={() => handleEdit(emprunt)} className="text-xl hover:text-white">
-                          <GrUpdate />
+                          <Edit2 />
                       </button>
                       <button  onClick={() => handleDelete(emprunt.id)} className="text-red-500 text-2xl hover:text-white">
-                          <FiDelete />
+                          <Trash2 />
                       </button>
                     </td>
                   </tr>
@@ -253,7 +252,7 @@ export default function Emprunt() {
                           }}
                           className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                         >
-                          <GrUpdate />
+                          <Edit2 />
                           {t("edit")}
                         </button>
                         
@@ -264,7 +263,7 @@ export default function Emprunt() {
                           }}
                           className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                         >
-                          <FiDelete />
+                          <Trash2 />
                           {t("delete")}
                         </button>
                       </div>

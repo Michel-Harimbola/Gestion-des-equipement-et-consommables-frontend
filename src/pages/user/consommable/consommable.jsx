@@ -5,11 +5,12 @@ import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FiSearch, FiX } from "react-icons/fi";
 import UtilisationConsommable from "./UtilisationConsommable";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function Consommable() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.consommables || {}));
   
@@ -70,7 +71,7 @@ export default function Consommable() {
                 }}
                 className="absolute right-3 top-3 text-gray-500 dark:text-gray-300"
               >
-                <FiX size={18} />
+                <FiX size={18} className="cursor-pointer" />
               </button>
             )}
           </div>
@@ -91,9 +92,9 @@ export default function Consommable() {
                   <div className="flex items-center justify-center">
                     {consommable.photo ? (
                       <img
-                        src={`http://localhost:3000${consommable.photo}`}
+                        src={`http://localhost:3001${consommable.photo}`}
                         alt={consommable.nom}
-                        className="w-45 object-cover rounded-xl"
+                        className="w-40 object-cover rounded-xl"
                       />
                     ) : (
                       <span>{t("noPhoto")}</span>
@@ -103,6 +104,7 @@ export default function Consommable() {
                   <div className="space-y-4">
                       <div className="flex flex-col">
                         <h1 className="text-xl font-bold">{consommable.nom}</h1>  
+                        <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("brand")} : {consommable.marque}</p>
                         <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("available")} : {consommable.quantiteDisponible}</p>
                       </div>
                     <button 

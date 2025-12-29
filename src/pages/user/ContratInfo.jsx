@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 
 export default function ContratInfo({ onClose, onNext }) {
+  const { t } = useTranslation();
   const [accepted, setAccepted] = useState(false);
 
   return (

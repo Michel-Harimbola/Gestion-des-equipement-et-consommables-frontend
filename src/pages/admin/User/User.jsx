@@ -4,9 +4,8 @@ import { fetchUsers, fetchSearchUser, setQuery, setPage, createUser, deleteUser,
 import ConfirmModal from "../../../components/shared/confirmModal";
 import UserForm from "./userForm";
 import { useTranslation } from "react-i18next";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 
 
 export default function User() {
@@ -159,9 +158,9 @@ export default function User() {
                           <td className="p-2">
                             {user.photo ? (
                               <img
-                                src={`http://localhost:3000${user.photo}`}
+                                src={`http://localhost:3001${user.photo}`}
                                 alt={user.nom}
-                                className="size-18 object-cover rounded-full"
+                                className="size-14 object-cover rounded-full"
                               />
                             ) : (
                               <span>{t("noPhoto")}</span>
@@ -181,12 +180,12 @@ export default function User() {
                               <p>{user.role}</p>
                             )}
                           </td>
-                          <td className="p-4 space-x-8 flex">
+                          <td className="py-6 space-x-8 flex">
                             <button onClick={() => handleEdit(user)} className="text-xl hover:text-white">
-                               <GrUpdate />
+                               <Edit2 />
                             </button>
                             <button onClick={() => handleDelete(user.id)} className="text-red-500 text-2xl hover:text-white">
-                               <FiDelete />
+                               <Trash2 />
                             </button>
                           </td>
                         </tr>
@@ -232,7 +231,7 @@ export default function User() {
                             }}
                             className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                           >
-                            <GrUpdate />
+                            <Edit2 />
                             Modifier
                           </button>
                           
@@ -244,7 +243,7 @@ export default function User() {
                             className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 
                               active:bg-red-50 rounded-xl"
                           >
-                            <FiDelete />
+                            <Trash2 />
                             Supprimer
                           </button>
                         </div>

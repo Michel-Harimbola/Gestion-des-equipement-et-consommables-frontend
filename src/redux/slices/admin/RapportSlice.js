@@ -46,7 +46,7 @@ const rapportSlice = createSlice({
       })
       .addCase(fetchRapports.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.rapports;
+        state.items = action.payload.rapports || [];
         state.total = action.payload.total;
         state.limit = action.payload.limit;
         state.page = action.payload.page;

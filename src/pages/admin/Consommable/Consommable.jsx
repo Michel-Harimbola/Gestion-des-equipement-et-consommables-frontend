@@ -1,12 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchConsommables, fetchSearchConsommable, setPage, setQuery, createConsommable, deleteConsommable, updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX, FiDelete } from "react-icons/fi";
+import { 
+  fetchConsommables, 
+  fetchSearchConsommable, 
+  setPage, 
+  setQuery, 
+  createConsommable, 
+  deleteConsommable, 
+  updateConsommable } from "../../../redux/slices/admin/ConsommableSlice";
+import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
+import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import ConsommableForm from "./consommableForm";
 import { useTranslation } from "react-i18next";
-import { MoreVertical } from "lucide-react";
-import { GrUpdate } from "react-icons/gr";
 
 
 export default function Consommables() {
@@ -126,9 +132,11 @@ export default function Consommables() {
               <div>
                   <button
                       onClick={handleAdd}
-                      className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
-                      bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
-                  >
+                      className=" 
+                          gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white bg-fuchsia hover:bg-red-400  
+                          dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md
+                        "       
+                      >
                       {t("add")} <span className="text-2xl font-bold">+</span>
                   </button>
               </div>
@@ -151,34 +159,37 @@ export default function Consommables() {
                       </tr>
                     </thead>
                     <tbody>
-                      {items.map((consommable, index) => (
+                      {items?.map((consommable, index) => (
                         <tr 
                           key={consommable.id} 
-                          className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
-                        >
-                            <td className="p-2">
-                              {consommable.photo ? (
-                                <img
-                                  src={`http://localhost:3000${consommable.photo}`}
-                                  alt={consommable.nom}
-                                  className="w-16 object-cover rounded-xl"
-                                />
-                              ) : (
-                                <span>{t("noPhoto")}</span>
-                              )}
-                            </td>
-                            <td className="py-2 px-4">{consommable.nom}</td>
-                            <td className="py-2 px-4">{consommable.marque}</td>
-                            <td className="py-2 px-4">{consommable.quantiteDisponible}</td>
-                            <td className="py-2 px-4">{consommable.seuilCritique}</td>
-                            <td className="p-2 space-x-8 flex">
-                                <button onClick={() => handleEdit(consommable)} className="text-xl hover:text-white">
-                                   <GrUpdate />
-                                </button>
-                                <button onClick={() => handleDelete(consommable.id)} className="text-red-500 text-2xl hover:text-white">
-                                   <FiDelete />
-                                </button>
-                            </td>
+                          className="
+                              odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 
+                              dark:text-white transition-colors
+                            "
+                          >
+                          <td className="p-2">
+                            {consommable.photo ? (
+                              <img
+                                src={`http://localhost:3001${consommable.photo}`}
+                                alt={consommable.nom}
+                                className="w-12 object-cover rounded-xl"
+                              />
+                            ) : (
+                              <span>{t("noPhoto")}</span>
+                            )}
+                          </td>
+                          <td className="py-2 px-4">{consommable.nom}</td>
+                          <td className="py-2 px-4">{consommable.marque}</td>
+                          <td className="py-2 px-4">{consommable.quantiteDisponible}</td>
+                          <td className="py-2 px-4">{consommable.seuilCritique}</td>
+                          <td className="flex gap-8 p-4">
+                              <button onClick={() => handleEdit(consommable)} className="text-xl hover:text-white">
+                                  <Edit2 />
+                              </button>
+                              <button onClick={() => handleDelete(consommable.id)} className="text-red-500 text-2xl hover:text-white">
+                                  <Trash2 />
+                              </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -222,7 +233,7 @@ export default function Consommables() {
                             }}
                             className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                           >
-                            <GrUpdate />
+                            <Edit2 />
                             {t("edit")}
                           </button>
                           
@@ -231,9 +242,12 @@ export default function Consommables() {
                               setOpenMenuConsommableId(null);
                               setIsConfirmOpen(true);
                             }}
-                            className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
-                          >
-                            <FiDelete />
+                            className="
+                                flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 
+                                active:bg-red-50 rounded-xl
+                              "
+                            >
+                            <Trash2 />
                             {t("delete")}
                           </button>
                         </div>

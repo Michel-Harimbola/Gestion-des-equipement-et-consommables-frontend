@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotfications, deleteNotfication, setPage } from "../../../redux/slices/admin/notificationsSlice";
-import { FiChevronLeft, FiChevronRight, FiDelete } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import { useTranslation } from "react-i18next";
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Trash2 } from "lucide-react";
 
 
 export default function Notification() {
@@ -60,9 +60,9 @@ export default function Notification() {
   }, [isConfirmOpen]);
 
   return (
-    <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
+    <div className="h-screen dark:bg-gray-900 pt-40 lg:pl-74 lg:pr-10 px-4">
       {/* Ordi */}
-        <div className="md:block hidden overflow-x-auto rounded-lg mt-32">
+        <div className="md:block hidden overflow-x-auto rounded-lg">
           {loading ? (
           <p>Chargement...</p>
           ) : (
@@ -91,7 +91,7 @@ export default function Notification() {
                     <td className="p-2">{notification.vu ? "Oui" : "Non"}</td>
                     <td className="p-2 space-x-8 flex">
                       <button onClick={() => handleDelete(notification.id)} className="text-red-500 text-2xl hover:text-white">
-                        <FiDelete />
+                        <Trash2 />
                       </button>
                     </td>
                     </tr>
@@ -137,7 +137,7 @@ export default function Notification() {
                         }}
                         className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                       >
-                        <FiDelete />
+                        <Trash2 />
                         Supprimer
                       </button>
                     </div>
