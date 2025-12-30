@@ -39,25 +39,32 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    
+    const dataToSend = {};
 
-    Object.keys(form).forEach((key) => {
-      formData.append(key, form[key]);
-    });
+    for (let key in form) {
+      if (form[key] !== "" && form[key] !== null) {
+        // Convertir prix en nombre si c'est le champ
+        dataToSend[key] = key === "prix" ? Number(form[key]) : form[key];
+      }
+    }
 
-    onSubmit(formData);
+    // Exclure photo si non modifié
+    if (!form.photo) delete dataToSend.photo;
+
+    onSubmit(dataToSend); 
   };
 
   return (
     <div className="fixed inset-0  backdrop-blur-sm bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-lg w-full sm:max-w-lg max-w-md">
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 shadow-lg w-full sm:max-w-xl max-w-md">
         <h2 className="text-2xl font-semibold mb-5 dark:text-white">
           {initialData ? "Modifier l'équipement" : "Ajouter un équipement"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="flex gap-5">
-            <div className="flex flex-col gap-5">
+            <div className="flex-1 flex-col space-y-5">
               <input
                 name='nom'
                 value={form.nom}
@@ -98,7 +105,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
                 >
                   <option value="Disponible">Disponible</option>
                   <option value="EnMaintenance">En Maintenance</option>
-                  <option value="Emprunter">Emprunter</option>
+                  <option value="Emprunte">{t("borrowed")}</option>
                   <option value="Indisponible">Indisponible</option>
                 </select>
               </div>
@@ -120,7 +127,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
               </div>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex-1 flex-col space-y-5">
               <div className="relative">
                 <select
                   name='obtention'
@@ -147,7 +154,7 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
                 value={form.donateur}
                 onChange={handleChange}
                 type="text"
-                placeholder="Donnateur"
+                placeholder="Donateur"
                 className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
                   dark:text-white focus:ring-fuchsia transition duration-150"
               /> 
@@ -166,7 +173,6 @@ export default function EquipementForm({ onSubmit, onClose, initialData = null }
                 accept="image/*"
                 className="w-full pl-5 pr-4 py-3 border-l-5 border-fuchsia rounded-sm bg-white focus:outline-none focus:ring-2 dark:bg-gray-600 dark:placeholder-gray-400
                   dark:text-white focus:ring-fuchsia transition duration-150"
-                required
                 onChange={(e) => 
                   setForm({ ...form, photo: e.target.files[0] })
                 }

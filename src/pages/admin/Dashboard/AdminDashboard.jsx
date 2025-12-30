@@ -8,16 +8,18 @@ import RecentEmprunt from "../../../components/admin/RecentEmprunt/RecentEmprunt
 
 function AdminDashboard({ darkMode }) {
   return (
-    <Main>
-        <Content>
-            <Stats darkMode={darkMode}/>
-            <div className="flex flex-col gap-3 lg:flex-row">
-                <DemandeEmprunt />
-                <RecentEmprunt />
-            </div>
-        </Content>
-        <Profile darkMode={darkMode}/>
-    </Main>
+    <div className="bg-gray-100 dark:bg-gray-900">
+      <Main>
+          <Content>
+              <Stats darkMode={darkMode}/>
+              <div className="flex flex-col gap-3 lg:flex-row">
+                  <DemandeEmprunt />
+                  <RecentEmprunt />
+              </div>
+          </Content>
+          <Profile darkMode={darkMode}/>
+      </Main>
+    </div>
   )
 }
 

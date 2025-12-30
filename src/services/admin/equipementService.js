@@ -25,6 +25,7 @@ const EquipementSevice = {
     },
 
     update: async (id, data) => {
+        console.log(data);
         const res = await axiosInstance.put(`/equipement/${id}`, data);
         return res.data;
     },

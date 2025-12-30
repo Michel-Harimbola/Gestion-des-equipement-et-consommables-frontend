@@ -89,7 +89,7 @@ export default function EmpruntForm({ onSubmit, onClose, initialData = null }) {
               onChange={handleChange} 
               placeholder="Usage"
               className="w-full text-xl pl-3 pt-2 pb-8 border-l-5 border-fuchsia bg-white appearance-none rounded-sm p-2 shadow-[0_0_8px_2px_rgba(0,0,0,0.1)] dark:bg-gray-600
-                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia cursor-pointer"
+                dark:placeholder-gray-400 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia"
               required
             />
 

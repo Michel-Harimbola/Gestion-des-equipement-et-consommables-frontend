@@ -31,7 +31,7 @@ export default function DashboardLayout() {
         darkMode={darkMode}
       />
 
-      <main className="flex-1 dark:bg-gray-800 overflow-hidden">
+      <main className="flex-1 dark:bg-gray-800 overflow-auto">
         <Outlet />
       </main>
     </div>

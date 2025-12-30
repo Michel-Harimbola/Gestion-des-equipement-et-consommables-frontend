@@ -63,7 +63,7 @@ const consommableSlice = createSlice({
     loading: false,
     error: null,
     page: 1,
-    limit: 10,
+    limit: 12,
     total: 0,
     totalPages: 0,
     query: ""

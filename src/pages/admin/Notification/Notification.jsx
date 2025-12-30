@@ -1,48 +1,59 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotfications, deleteNotfication, setPage } from "../../../redux/slices/admin/notificationsSlice";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { MoreVertical, Trash2, Filter, Square, SquareCheckBig } from "lucide-react";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import { useTranslation } from "react-i18next";
-import { MoreVertical, Trash2 } from "lucide-react";
 
 
 export default function Notification() {
-    const dispatch = useDispatch();
-    const { items, loading, page, totalPages } = useSelector((state) => state.notifications);
+  const dispatch = useDispatch();
+  const { items, loading, page, totalPages } = useSelector((state) => state.notifications);
 
-    const [openMenuId, setOpenMenuId] = useState(null);
-    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-    const [deleteId, setDeleteId] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [isActive, setIsActive] = useState("all");
+  const [deleteId, setDeleteId] = useState(null);
 
-    const menuRef = useRef(null);
-    
-    const { t } = useTranslation();
-
-    useEffect(() => {
-        dispatch(fetchNotfications({ page, limit: 13 }));
-    }, [dispatch, page]);
-
-    const handlePrev = () => {
-      if (page > 1) dispatch(setPage(page - 1));
-    };
+  const menuRef = useRef(null);
   
-    const handleNext = () => {
-      if (page < totalPages) dispatch(setPage(page + 1));
-    };
+  const { t } = useTranslation();
 
-    const handleDelete = (id) => {
-      setDeleteId(id);
-      setIsConfirmOpen(true);
-    };
+  useEffect(() => {
+      dispatch(fetchNotfications({ page, limit: 13 }));
+  }, [dispatch, page]);
 
-    const confirmDelete = () => {
-      dispatch(deleteNotfication(deleteId));
-      setIsConfirmOpen(false);
-      setDeleteId(null);
-    };
+  const handlePrev = () => {
+    if (page > 1) dispatch(setPage(page - 1));
+  };
 
-    useEffect(() => {
+  const handleNext = () => {
+    if (page < totalPages) dispatch(setPage(page + 1));
+  };
+
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    dispatch(deleteNotfication(deleteId));
+    setIsConfirmOpen(false);
+    setDeleteId(null);
+  };
+
+  const toggleFilter = () => {
+    setOpenFilter(!openFilter);
+  }
+
+  const FilterNotification = items.filter((Notification) => {
+    if (isActive === "all") return true;
+    return Notification.type === isActive;
+  })
+
+  useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setOpenMenuId(null);
@@ -60,7 +71,57 @@ export default function Notification() {
   }, [isConfirmOpen]);
 
   return (
-    <div className="h-screen dark:bg-gray-900 pt-40 lg:pl-74 lg:pr-10 px-4">
+    <div className="h-screen dark:bg-gray-900 pt-23 lg:pl-74 lg:pr-10 px-4">
+      <div className="flex items-center mb-6">
+        
+        {/* Filtre */}
+        <div className="relative">
+          <button 
+            onClick={toggleFilter}
+            className="
+              flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-500 dark:border-gray-400 
+              dark:text-gray-400 px-4 py-2 w-[240px] cursor-pointer
+            "
+          >
+            <div className="flex gap-4">
+              <Filter className="size-5" />
+              <h1>{t("type")}</h1>
+            </div>
+
+            {openFilter ? (
+              <FiChevronUp className="size-6 ml-20" />
+            ):(
+              <FiChevronDown className="size-6 ml-20" />
+            )}
+          </button>
+
+          {openFilter && (
+            <div className="absolute bg-white dark:bg-gray-900 dark:text-white w-full border border-gray-500 border-t-0 border-b-0">
+              {["all", "Refus", "Acceptation", "AlerteStock", "RappelRetour"].map((val) => (
+                <div 
+                  key={val}
+                  className="border-b border-gray-500"
+                >
+                  <div className="flex gap-4 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800">
+                    <button 
+                      onClick={() => setIsActive(val)}
+                      className="cursor-pointer"
+                    >
+                      {isActive === val ? (
+                        <SquareCheckBig className="text-fuchsia" />               
+                      ):(
+                        <Square className="opacity-50" />                              
+                      )}
+                    </button>
+                    <span className="cursor-default">{t(val)}</span>
+                  </div>
+              </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Ordi */}
         <div className="md:block hidden overflow-x-auto rounded-lg">
           {loading ? (
@@ -69,7 +130,6 @@ export default function Notification() {
           <table className="min-w-full text-lg text-gray-700">
               <thead className="bg-fuchsia text-white">
                   <tr>
-                      <th className="py-3 px-4 text-left">ID</th>
                       <th className="py-3 px-4 text-left">Message</th>
                       <th className="py-3 px-4 text-left">Date d'envoi</th>
                       <th className="py-3 px-4 text-left">Type</th>
@@ -78,14 +138,13 @@ export default function Notification() {
                   </tr>
               </thead>
               <tbody>
-                {items.map((notification, index) => (
+                {FilterNotification.map((notification, index) => (
                     <tr 
                         key={notification.id} 
                         className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 
                         dark:odd:bg-gray-900 dark:text-white transition-colors"
                     >
-                    <td className="p-2">{index + 1}</td>
-                    <td className="p-2">{notification.message}</td>
+                    <td className="px-4 py-2">{notification.message}</td>
                     <td className="p-2">{new Date(notification.DateEnvoi).toLocaleDateString()}</td>
                     <td className="p-2">{notification.type}</td>
                     <td className="p-2">{notification.vu ? "Oui" : "Non"}</td>
@@ -103,7 +162,7 @@ export default function Notification() {
 
         {/* Mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
-          {items.map((notification, index) => (
+          {FilterNotification.map((notification, index) => (
             <div
               key={notification.id}
               className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"

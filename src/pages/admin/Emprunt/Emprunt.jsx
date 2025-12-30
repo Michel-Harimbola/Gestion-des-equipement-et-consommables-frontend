@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { fetchEmprunts, fetchSearchEmprunt, setQuery, setPage, createEmprunt, deleteEmprunt, updateEmprunt } from "../../../redux/slices/admin/EmpruntSlice";
+import { MoreVertical, Trash2, Edit2, Filter, Square, SquareCheckBig } from "lucide-react";
+import { FiChevronLeft, FiChevronRight, FiChevronDown, FiChevronUp, FiSearch, FiX } from "react-icons/fi";
 import ConfirmModal from "../../../components/shared/confirmModal";
 import EmpruntForm from "./empruntForm";
-import { useTranslation } from "react-i18next";
-import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
-import { MoreVertical, Trash2, Edit2 } from "lucide-react";
 
 
 export default function Emprunt() {
@@ -15,6 +15,8 @@ export default function Emprunt() {
   const [selectedEmprunt, setSelectedEmprunt] = useState(null);
   const [openMenuEmpruntId, setOpenMenuEmpruntId] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [isActive, setIsActive] = useState("all");
   const [deleteId, setDeleteId] = useState(null);
 
   const menuRef = useRef(null);
@@ -72,6 +74,15 @@ export default function Emprunt() {
     setIsModalOpen(false);
   };
 
+  const toggleFilter = () => {
+    setOpenFilter(!openFilter);
+  }
+
+  const FilterEmprunt = items.filter((emprunt) => {
+    if (isActive === "all") return true;
+    return emprunt.statut === isActive;
+  })
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -92,7 +103,9 @@ export default function Emprunt() {
   return (
     <div className="h-screen dark:bg-gray-900 pt-22 lg:pl-74 lg:pr-10 px-4">
         <div className="flex justify-between mb-5">
-          <div className="mt-2">
+          <div className="flex items-center gap-10">
+
+            {/* Recherche */}
             <div className="relative">
                         
               <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
@@ -118,6 +131,61 @@ export default function Emprunt() {
                 >
                   <FiX size={18} />
                 </button>
+              )}
+            </div>
+
+            {/* Filtre */}
+            <div className="relative">
+              <button 
+                onClick={toggleFilter}
+                className="
+                  flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 border border-gray-500 dark:border-gray-400 
+                  dark:text-gray-400 px-4 py-2 w-[240px] cursor-pointer
+                "
+              >
+                <div className="flex gap-4">
+                  <Filter className="size-5" />
+                  <h1>Statut</h1>
+                </div>
+                {openFilter ? (
+                  <FiChevronUp className="size-6 ml-20" />
+                ):(
+                  <FiChevronDown className="size-6 ml-20" />
+                )}
+              </button>
+  
+              {openFilter && (
+                <div className="absolute bg-white dark:bg-gray-900 dark:text-white w-full border border-gray-500 border-t-0 border-b-0">
+                  {["all", "EnCours", "EnRetard", "Retourner"].map((val) => (
+                    <div 
+                      key={val}
+                      className="border-b border-gray-500"
+                    >
+                      <div className="flex gap-4 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <button 
+                          onClick={() => setIsActive(val)}
+                          className="cursor-pointer"
+                        >
+                          {isActive === val ? (
+                            <SquareCheckBig className="text-fuchsia" />               
+                          ):(
+                            <Square className="opacity-50" />                              
+                          )}
+                        </button>
+                        <span className="cursor-default">
+                          { val === "all" 
+                          ? t("all")
+                          : val === "EnCours"
+                          ? t("inProgress")
+                          : val === "EnRetard" 
+                          ? t("late")
+                          : t("return")
+                          }
+                        </span>
+                      </div>
+                  </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -154,10 +222,10 @@ export default function Emprunt() {
                 </tr>
               </thead>
               <tbody>
-                {items.map((emprunt) => (
+                {FilterEmprunt.map((emprunt) => (
                   <tr 
                       key={emprunt.id} 
-                      className="even:bg-white odd:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                      className="even:bg-white odd:bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                   >
                     <td className="p-2">
                       {emprunt.equipement.photo ? (
@@ -215,7 +283,7 @@ export default function Emprunt() {
 
         {/* Mobile */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
-          {items.map((emprunt, index) => (
+          {FilterEmprunt.map((emprunt) => (
             <div
               key={emprunt.id}
               className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"

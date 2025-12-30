@@ -99,32 +99,32 @@ export const navItems = [
   { 
     id: 1, 
     name: "equipments", 
-    path: "/userDashboard/Equipements", 
+    path: "/Equipements", 
     roles: ["personnelInterne", "client", "partenaire"] 
   },
   { 
     id: 2, 
     name: "consumables", 
-    path: "/userDashboard/Consommable", 
+    path: "/Consommables", 
     roles: ["personnelInterne"] 
   },
   { 
     id: 3, 
     name: "loansAndRequests", 
-    path: "/UserDashboard", 
+    path: "/EmpruntEtDemande", 
     roles: ["personnelInterne", "client", "partenaire"] 
   },
   { 
     id: 4, 
     name: "history", 
-    path1: "/userDashboard/MesEmprunts", 
-    path2: "/userDashboard/MesUtilisation", 
+    path1: "/MesEmprunts", 
+    path2: "/MesUtilisation", 
     roles: ["personnelInterne"] 
   },
   { 
     id: 5, 
     name: "history2", 
-    path: "/userDashboard/MesEmprunts", 
+    path: "/MesEmprunts", 
     roles: ["client", "partenaire"] 
   },
 ];

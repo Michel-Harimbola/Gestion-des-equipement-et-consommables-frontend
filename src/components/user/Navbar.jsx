@@ -86,7 +86,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         >
             {/* Logo */}
             <div className="flex items-center gap-2 md:pr-16 pr-0">
-                <Link to="/userDashboard/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                <Link to="/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
                     <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
                     YouthComputing
                 </Link>
@@ -145,7 +145,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
                 {/* Logo and close icon Inside Toggle Menu */}
                 <div className="w-full md:hidden flex items-center justify-between px-4">
-                    <Link to="/userDashboard/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
+                    <Link to="/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
                         <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
                         YouthComputing
                     </Link>

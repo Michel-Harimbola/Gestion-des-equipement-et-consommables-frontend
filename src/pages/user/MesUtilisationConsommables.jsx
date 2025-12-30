@@ -74,6 +74,8 @@ export default function MesUtilisationConsommables() {
                     <tr>
                       <th className="py-3 px-4 text-left">{t("photo")}</th>
                       <th className="py-3 px-4 text-left">{t("consumable")}</th>
+                      <th className="py-3 px-4 text-left">{t("brand")}</th>
+                      <th className="py-3 px-4 text-left">{t("Catégorie")}</th>
                       <th className="py-3 px-4 text-left">{t("usageDate")}</th>
                       <th className="py-3 px-4 text-left">{t("usedQuantity")}</th>
                       <th className="py-3 px-4 text-left">{t("description")}</th>
@@ -97,6 +99,8 @@ export default function MesUtilisationConsommables() {
                               )}
                           </td>
                           <td className="py-2 px-4">{utilisation.consommable?.nom}</td>
+                          <td className="py-2 px-4">{utilisation.consommable?.marque}</td>
+                          <td className="py-2 px-4">{utilisation.consommable?.categorie}</td>
                           <td className="py-2 px-4">{new Date(utilisation.dateUtilisation).toLocaleDateString()}</td>
                           <td className="py-2 px-4">{utilisation.quantiteUtilise}</td>
                           <td className="py-2 px-4">{utilisation.description}</td>

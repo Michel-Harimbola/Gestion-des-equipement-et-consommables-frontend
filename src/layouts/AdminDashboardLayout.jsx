@@ -41,7 +41,7 @@ export default function AdminDashboardLayout() {
             <div className="flex flex-1 overflow-hidden">
                 <Sidebar isSidebarOpen={isSidebarOpen} />
                 
-                <main className="flex-1 bg-gray-100 dark:bg-gray-900 overflow-auto">
+                <main className="flex-1 dark:bg-gray-900 overflow-auto">
                     <Outlet />
                 </main>
             </div>

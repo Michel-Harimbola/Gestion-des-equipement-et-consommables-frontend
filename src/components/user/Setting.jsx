@@ -45,7 +45,7 @@ export default function Setting({ darkMode, toggleDarkMode, handleLogout, photo,
                     <div className="flex flex-col font-semibold text-gray-600 dark:text-gray-100">
                         <button
                             onClick={() => {
-                                navigate("/userDashboard/Profil");
+                                navigate("/Profil");
                                 setIsOpenSetting(null);
                             }}
                             className="flex gap-4 px-2 py-3 border border-transparent hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg focus:scale-90"

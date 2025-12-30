@@ -114,6 +114,11 @@
   "internalStaff": "Personnel interne",
   "equipmentManager": "Régisseur des équipements internes",
 
+  "admin": "Admin",
+  "regisseurEquipementInterne": "Régisseur",
+  "personnelInterne": "Personnel interne",
+  "partenaire": "Partenaire",
+
   "register": "INSCRIVEZ",
   "alreadyAccount": "Vous avez déjà un compte ?",
   "signIn": "Se connecter",

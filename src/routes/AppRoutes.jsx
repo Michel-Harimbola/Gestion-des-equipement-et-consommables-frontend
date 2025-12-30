@@ -6,7 +6,7 @@ import AdminDashboardLayout from "../layouts/AdminDashboardLayout";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 
-import UserDashboard from "../pages/user/Emprunt_et_Demandes/UserDashboard";
+import EmpruntEnCours from "../pages/user/Emprunt_et_Demandes/EmpruntEnCours";
 import Equipements from "../pages/user/Equipements";
 import MesEmprunts from "../pages/user/MesEmprunts";
 import Consommable from "../pages/user/consommable/consommable";
@@ -42,12 +42,12 @@ export default function AppRoutes() {
                         </ProtectedRoute>
                     }
                 >
-                  <Route path="/userDashboard" element={ <UserDashboard /> } />
-                  <Route path="/userDashboard/Equipements" element={ <Equipements /> } />
-                  <Route path="/userDashboard/MesEmprunts" element={ <MesEmprunts /> } />
-                  <Route path="/userDashboard/Consommable" element={ <Consommable /> } />
-                  <Route path="/userDashboard/Profil" element={ <Profil /> } />
-                  <Route path="/userDashboard/MesUtilisation" element={ <MesUtilisationConsommables /> } />
+                  <Route path="/EmpruntEtDemande" element={ <EmpruntEnCours /> } />
+                  <Route path="/Equipements" element={ <Equipements /> } />
+                  <Route path="/Consommables" element={ <Consommable /> } />
+                  <Route path="/MesEmprunts" element={ <MesEmprunts /> } />
+                  <Route path="/MesUtilisation" element={ <MesUtilisationConsommables /> } />
+                  <Route path="/Profil" element={ <Profil /> } />
                 </Route>
                 
                 {/* Routes admin */}

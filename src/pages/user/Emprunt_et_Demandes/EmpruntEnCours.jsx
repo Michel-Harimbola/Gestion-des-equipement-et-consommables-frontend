@@ -8,7 +8,7 @@ import GlobalLoader from "../../../components/shared/GlobalLoader";
 import { useTranslation } from "react-i18next";
 
 
-export default function UserDashboard() {
+export default function EmpruntEnCours() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { items, loading } = useSelector((state) => state.enCours);
@@ -49,7 +49,7 @@ export default function UserDashboard() {
         { loading? (
           <GlobalLoader />
         ) : items.length === 0 ? (
-          <p className="text-gray-600 dark:text-gray-100 mt-16">{t("noCurrentLoan")}</p>
+          <p className="text-gray-600 text-center lg:text-start dark:text-gray-100 mt-16">{t("noCurrentLoan")}</p>
         ) :(
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mr-10 mt-10 overflow-auto">
             {items.map((emprunt) => (

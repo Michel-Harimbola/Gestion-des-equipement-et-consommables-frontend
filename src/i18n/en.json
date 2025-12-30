@@ -113,6 +113,11 @@
   "internalStaff": "Internal staff",
   "equipmentManager": "Internal equipment manager",
 
+  "admin": "Admin",
+  "regisseurEquipementInterne": "manager",
+  "personnelInterne": "Internal staff",
+  "partenaire": "Partner",
+
   "register": "REGISTER",
   "alreadyAccount": "Already have an account?",
   "signIn": "Sign in",
