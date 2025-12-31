@@ -115,7 +115,7 @@ export default function Profil() {
   };
 
   return (
-    <div className="w-screen h-screen bg-gray-50 dark:bg-gray-900 dark:text-white flex justify-center items-center">
+    <div className="w-screen h-screen dark:bg-gray-900 dark:text-white flex justify-center items-center">
       <div className="flex gap-10 ">
 
         {/* Pofil */}

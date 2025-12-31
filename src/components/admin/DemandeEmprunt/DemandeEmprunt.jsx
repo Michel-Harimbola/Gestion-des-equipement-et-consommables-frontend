@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDemandesEnAttente, setPage, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
-import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
-import MotifForm from "./MotifForm";
-import Title from "../../../ui/Title";
-import GlobalLoader from "../../shared/GlobalLoader";
 import { useTranslation } from "react-i18next";
+import { fetchDemandesEnAttente, setPage, approuverEmprunt, refuserEmprunt } from "../../../redux/slices/admin/DemandeEmpruntSlice";
+import { fetchEquipementsStatus } from "../../../redux/slices/admin/dashboardSlice";
+import { fetchEmpruntsParMois } from "../../../redux/slices/admin/dashboardSlice";
+import { fetchRecentEmprunts } from "../../../redux/slices/admin/EmpruntSlice";
+import { fetchStats } from "../../../redux/slices/admin/dashboardSlice";
+import { FiChevronDown, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import GlobalLoader from "../../shared/GlobalLoader";
 import { LuCheck, LuX } from "react-icons/lu";
 import { FaRegEnvelope } from "react-icons/fa";
-import { FiChevronDown, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import MotifForm from "./MotifForm";
+import Title from "../../../ui/Title";
 
 
 export default function DemandeEmprunt() {
@@ -83,7 +86,12 @@ export default function DemandeEmprunt() {
                                             <button
                                                 onClick={() => dispatch(approuverEmprunt(demande.id))
                                                     .unwrap()
-                                                    .then(() => (dispatch(fetchRecentEmprunts())))
+                                                    .then(() => {
+                                                        dispatch(fetchRecentEmprunts());
+                                                        dispatch(fetchEquipementsStatus());
+                                                        dispatch(fetchEmpruntsParMois());
+                                                        dispatch(fetchStats());
+                                                    })
 
                                                 }
                                                 className="bg-slate-200 dark:bg-gray-700 px-5 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"

@@ -80,12 +80,12 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
         <div
             id="navbar"
             className="
-                w-full h-16 bg-white border-b border-neutral-200 flex items-center justify-between dark:text-white dark:border-gray-600
-                md:px-16 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 dark:bg-gray-800 shadow-md
+                w-full h-20 bg-white flex items-center justify-between dark:text-white dark:border-gray-600
+                md:px-8 sm:px-10 px-4 fixed top-0 transition-all ease-in-out duration-300 z-50 dark:bg-gray-800 
             " 
         >
             {/* Logo */}
-            <div className="flex items-center gap-2 md:pr-16 pr-0">
+            <div className="flex items-center gap-2 md:mr-30 pr-0">
                 <Link to="/equipements" className="text-2xl text-marine dark:text-fuchsia font-semibold flex items-center gap-x-2">
                     <img src={YouthComputing} alt="Logo" className="h-10 w-10 rounded-full" />
                     YouthComputing
@@ -93,11 +93,11 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             </div>
 
             {/* Hamburger Menu for Mobile */}
-            <div className="md:hidden flex gap-4">
+            <div className="md:hidden flex gap-2">
                 <div className="relative">
                     <button
                         onClick={() => setShowNotif(!showNotif)}
-                        className="w-fit p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
+                        className="w-fit p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 relative cursor-pointer"
                     >
                         <Bell size={24} />
                         {unreadCount > 0 && (
@@ -126,11 +126,46 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                     )}
                 </div>
 
+                <div 
+                    ref={settingRef} 
+                    className="mr-4"
+                >
+                    <button 
+                        onClick={toggleSetting}
+                        className="flex flex-col hover:opacity-80 cursor-pointer"
+                    >
+                        {photo ? (
+                            <img 
+                                src={`http://localhost:3001${photo}`} 
+                                alt={photo}
+                                className="size-[40px] -mb-4 object-cover rounded-full" 
+                            />
+                        ):(
+                            <span>{t("noPhoto")}</span>
+                        )}
+                        <div className="flex justify-end">
+                            < FiChevronDown className="size-[17px] bg-gray-200 dark:bg-gray-600 rounded-full" />
+                        </div>
+                    </button>
+
+                    {isOpenSetting && (
+                        <Setting 
+                            darkMode={darkMode}
+                            toggleDarkMode={toggleDarkMode}
+                            handleLogout={handleLogout}
+                            photo={photo}
+                            nom={nom}
+                            prenom={prenom}
+                            setIsOpenSetting={setIsOpenSetting}
+                        />
+                    )}
+                </div>
+
                 <button
                     onClick={toggleNavbar}
                     className="text-neutral-600 dark:text-white focus:outline-none cursor-pointer"
                 >
-                    <Menu size={24} color="currentColor" />
+                    <Menu size={26} color="currentColor" />
                 </button>
             </div>
 
@@ -164,7 +199,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
 
                 <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-0">
                     {/* Navbar items */}
-                    <ul className="flex flex-col md:flex-row items-center gap-5 text-lg font-semibold cursor-pointer">
+                    <ul className="flex flex-col md:flex-row items-center gap-8 text-lg font-semibold">
                         {navItems
                             .filter(item => item.roles.includes(role))
                             .map((item) => (
@@ -177,10 +212,8 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     {item.name === "history" ? (
                                         <span
                                             onClick={() => setIsHistoriqueOpen(true)}
-                                            className={`ease-in-out border-fuchsia ${
-                                                isActive === item.id
-                                                    ? "text-fuchsia hover:text-red-600 lg:border-b-4 pb-5"
-                                                    : "hover:text-fuchsia"
+                                            className={`group relative py-2 cursor-pointer ${
+                                                isActive === item.id ? "text-fuchsia" : "opacity-70"
                                             }`}
                                         >
                                             {t(item.name)}
@@ -192,19 +225,21 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                                 setIsActive(item.id);
                                                 setIsOpen(false);
                                             }}
-                                            className={`ease-in-out border-fuchsia ${
-                                                isActive === item.id
-                                                    ? "text-fuchsia hover:text-red-600 lg:border-b-4 pb-5"
-                                                    : "hover:text-fuchsia"
+                                            className={`group relative py-2 ${
+                                                isActive === item.id ? "text-fuchsia" : "opacity-70"
                                             }`}
                                         >
                                             {t(item.name)}
+                                            <div 
+                                                className="absolute h-1 bg-fuchsia rounded-full -bottom-2 w-0 group-hover:w-full duration-300"
+                                            ></div>
                                         </Link>
                                     )}
 
                                     {/* Historique dropdown */}
                                     {item.name === "history" && isHistoriqueOpen && (
-                                        <div className="absolute top-full left-0 z-50">
+                                        <div className="absolute right-6 top-5">
+                                            <FiChevronDown className="size-6 cursor-pointer" />
                                             <Historique
                                                 path1={item.path1}
                                                 path2={item.path2}
@@ -257,7 +292,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                         {/* Setting */}
                         <div 
                             ref={settingRef} 
-                            className="relative"
+                            className="relative hidden md:block"
                         >
                             <button 
                                 onClick={toggleSetting}
@@ -267,7 +302,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
                                     <img 
                                         src={`http://localhost:3001${photo}`} 
                                         alt={photo}
-                                        className="w-[46px] h-[46px] -mb-4 object-cover rounded-full" 
+                                        className="size-[46px] -mb-4 object-cover rounded-full" 
                                     />
                                 ):(
                                     <span>{t("noPhoto")}</span>

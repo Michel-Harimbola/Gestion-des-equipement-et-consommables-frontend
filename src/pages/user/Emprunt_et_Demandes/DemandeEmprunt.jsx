@@ -21,54 +21,73 @@ export default function DemandeEmprunt() {
           ) : (
             <div className="overflow-auto h-[800px]">
             <div className="grid lg:grid-cols-1 gap-6 mt-10 lg:px-6">
-                  {items.map((demande) => (
-                    <div  
-                      key={demande.id}
-                      className="flex flex-col space-y-1 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none 
-                        shadow-[0_0_15px_1px_rgba(0,0,0,0.1)] p-5 rounded-2xl">
-                      <div className="flex justify-between text-lg font-semibold mr-1">
-                        <h1 className="text-2xl font-semibold">{demande.equipement.marque}</h1>
-                        <p>N° {demande.equipement.numeroDeSerie}</p>
-                      </div>
-                      <p>{t("borrowDate")} : <span>{new Date(demande.dateDemande).toLocaleDateString()}</span></p>
-                      <p>{t("expectedReturnDate")} : <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
-                      <div>
-                        {demande.equipement.etatMateriel == "BonEtat" ? (
-                          <p>{t("equipmentCondition")} : {t("goodCondition")}</p>
-                        ) : demande.equipement.etatMateriel == "EtatMoyen" ? (
-                          <p>{t("equipmentCondition")} : {t("averageCondition")}</p>
-                        ) : demande.equipement.etatMateriel == "MauvaisEtat" ? (  
-                          <p>{t("equipmentCondition")} : {t("badCondition")}</p>
-                        ) : demande.equipement.etatMateriel == "HorsUsage" ? (
-                          <p>{t("equipmentCondition")} : {t("outOfService")}</p>
-                        ) : demande.equipement.etatMateriel == "EnReparation" ? (
-                          <p>{t("equipmentCondition")} : {t("underRepair")}</p>
-                        ) : (
-                          <p>{t("equipmentCondition")} : {t("newCondition")}</p>
-                        )}
-                      </div>
-                      <div className="flex flex-row justify-between items-center -mt-2">
-                        <div className="flex flex-row items-center space-x-2 mt-2">
-                          <div className="w-4 h-4 rounded-full bg-gray-500 dark:bg-gray-400"></div>
-                          <div className="text-center text-gray-600 dark:text-gray-200 font-normal">
-                            {demande.type === "RETOUR" ? (
-                              <p>{t("pendingReturn")}</p>
-                            ) : (
-                              <p>{t("pendingBorrow")}</p>
-                            )}
-                            
-                          </div>
-                        </div>
+              {items.map((demande) => (
+                <div  
+                  key={demande.id}
+                  className="flex flex-col space-y-1 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none 
+                    shadow-[0_0_15px_1px_rgba(0,0,0,0.1)] p-5 rounded-2xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1">
+                  <div className="flex justify-between text-lg font-semibold mr-1">
+                    <h1 className="text-2xl font-semibold">{demande.equipement.marque}</h1>
+                    <p>N° {demande.equipement.numeroDeSerie}</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="flex flex-col gap-1">
+                      <p>{demande.equipement.nom}</p>
 
-                        <button 
-                          onClick={() => dispatch(annulerDemande(demande.id))}
-                          className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
-                            bg-marine hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
-                          {t("cancel")}
-                        </button>
+                      <div className="mr-1">
+                            {demande.equipement.etatMateriel == "BonEtat" ? (
+                              <p>{t("goodCondition")}</p>
+                            ) : demande.equipement.etatMateriel == "EtatMoyen" ? (
+                              <p>{t("averageCondition")}</p>
+                            ) : demande.equipement.etatMateriel == "MauvaisEtat" ? (  
+                              <p>{t("badCondition")}</p>
+                            ) : demande.equipement.etatMateriel == "HorsUsage" ? (
+                              <p>{t("outOfService")}</p>
+                            ) : demande.equipement.etatMateriel == "EnReparation" ? (
+                              <p>{t("underRepair")}</p>
+                            ) : (
+                              <p>{t("newCondition")}</p>
+                            )}
+                      </div>
+
+                      <p>{t("borrowDate")} : <span>{new Date(demande.dateEmprunt).toLocaleDateString()}</span></p>
+                      <p>{t("expectedReturnDate")} : <span>{new Date(demande.dateRetourPrevu).toLocaleDateString()}</span></p>
+                    </div>
+                    
+                    <div className="-mt-3 hover:scale-110 transition duration-300 delay-150">
+                      {demande.equipement.photo ? (
+                        <img
+                          src={`http://localhost:3001${demande.equipement.photo}`}
+                          alt={demande.equipement.nom}
+                          className="w-35 h-26 object-cover rounded-2xl"
+                        />
+                      ) : (
+                        <span>{t("noPhoto")}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-row justify-between items-center -mt-2">
+                    <div className="flex flex-row items-center space-x-2 mt-2">
+                      <div className="w-4 h-4 rounded-full bg-gray-500 dark:bg-gray-400"></div>
+                      <div className="text-center text-gray-600 dark:text-gray-200 font-normal">
+                        {demande.type === "RETOUR" ? (
+                          <p>{t("pendingReturn")}</p>
+                        ) : (
+                          <p>{t("pendingBorrow")}</p>
+                        )}
+                        
                       </div>
                     </div>
-                  ))}
+
+                    <button 
+                      onClick={() => dispatch(annulerDemande(demande.id))}
+                      className="flex space-x-2 px-4 py-2 border border-transparent text-lg font-medium rounded-lg text-white
+                        bg-marine hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-fuchsia transition duration-150 shadow-md">
+                      {t("cancel")}
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
             </div>
           )}

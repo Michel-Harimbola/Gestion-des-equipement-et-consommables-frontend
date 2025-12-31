@@ -14,6 +14,7 @@ export default function Consommable() {
 
   const { items, loading, page, totalPages, query, limit: stateLimit = 12 } = useSelector((state => state.consommables || {}));
   
+  const [filter, setFilter] = useState("all");
   const [showPopup, setShowPopup] = useState(false);
   const [selectedUtilisationId, setSelectedUtilisationId] = useState(null);
 
@@ -38,6 +39,11 @@ export default function Consommable() {
     if (page < totalPages) dispatch(setPage(page + 1));
   };
 
+  const filteredItems = items.filter((consommable) => {
+    if (filter === "all") return true;
+    return consommable.categorie === filter;
+  });
+
   const handleUtilisationConsommableClick = (consommableId) => {
     setSelectedUtilisationId(consommableId);
     setShowPopup(true);
@@ -47,9 +53,31 @@ export default function Consommable() {
     <div className="mt-24 px-4 sm:px-8 dark:text-gray-50">
         <h1 className="text-3xl -ml-1 font-bold text-center lg:flex ">{t("allConsumables")}</h1>
 
-        <div className="flex lg:justify-end justify-center mb-8 mt-10">
+        <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-7">
+
+          {/* Filtre */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {["all", "Bureautique", "Informatique", "Evenementiel", "Nettoyage", "Maintenance", "Communication", "Autre"].map((val) => (
+              <button
+                key={val}
+                onClick={() => {
+                  setFilter(val);
+                  dispatch(setPage(1));
+                }}
+                className={`px-4 py-1 rounded-lg  transition cursor-pointer ${
+                  filter === val
+                    ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                    : "bg-gray-50 dark:bg-gray-600 font-semibold hover:bg-gray-100 dark:hover:bg-gray-500"
+                }`}
+              >
+                {t(val)}
+              </button>
+            ))}
+          </div>
+
+          {/* Recherche */}
           <div className="relative">
-                      
+       
             <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
 
             <input
@@ -80,21 +108,25 @@ export default function Consommable() {
         {loading ? (
           <GlobalLoader />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 space-x-16 mx-15 lg:mx-0 mb-13 mt-10">
-            {items.length > 0 && items.length === 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-13 mt-10">
+            {filteredItems.length > 0 && filteredItems.length === 0 ? (
               <p className="text-center col-span-full">{t("noConsumableFound")}</p>
             ) : (
-              items.map((consommable) => (
+              filteredItems.map((consommable) => (
                 <div 
                   key={consommable.id}
-                  className="flex flex-col justify-between px-4 py-3 space-y-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[350px] rounded-3xl"
+                  className="
+                    flex flex-col justify-between px-4 py-3 space-y-3 bg-white dark:bg-gray-700 dark:border dark:border-gray-500 
+                    dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] lg:w-[290px] w-[240px] rounded-xl md:rounded-xl transition 
+                    delay-150 duration-300 ease-in-out hover:-translate-y-5 
+                  "
                 >
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center hover:scale-110 justify-center transition duration-300 delay-150">
                     {consommable.photo ? (
                       <img
                         src={`http://localhost:3001${consommable.photo}`}
                         alt={consommable.nom}
-                        className="w-40 object-cover rounded-xl"
+                        className="md:w-40 w-30 object-cover rounded-xl"
                       />
                     ) : (
                       <span>{t("noPhoto")}</span>
@@ -105,13 +137,16 @@ export default function Consommable() {
                       <div className="flex flex-col">
                         <h1 className="text-xl font-bold">{consommable.nom}</h1>  
                         <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("brand")} : {consommable.marque}</p>
-                        <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("available")} : {consommable.quantiteDisponible}</p>
+                        <div className="flex justify-between">
+                          <p className="font-semibold text-sm text-gray-700 dark:text-gray-200">{t("available")} : {consommable.quantiteDisponible}</p>
+                          <p className="font-semibold text-sm text-gray-700 dark:text-gray-200 px-2 bg-amber-200">{consommable.categorie}</p>
+                        </div>
                       </div>
                     <button 
                       onClick={() => handleUtilisationConsommableClick(consommable.id)}
                       disabled={ consommable.quantiteDisponible == 0 }
                       className={`
-                          text-white font-bold border border-transparent rounded-xl w-full px-4 py-2 ${consommable.quantiteDisponible == 0 ? 
+                          text-white font-bold border border-transparent rounded-lg w-full px-4 py-2 ${consommable.quantiteDisponible == 0 ? 
                           "bg-gray-400 dark:bg-gray-500" 
                           :"bg-fuchsia hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition duration-150 shadow-md cursor-pointer"
                         }

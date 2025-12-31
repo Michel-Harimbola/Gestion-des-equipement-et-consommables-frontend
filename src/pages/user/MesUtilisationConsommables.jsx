@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserUtilisation, fetchSearchUserUtilisation, setPage, setQuery } from "../../redux/slices/admin/utilisationConsommableSlice";
 import { FiChevronLeft, FiChevronRight, FiSearch, FiX } from "react-icons/fi";
@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 export default function MesUtilisationConsommables() {
   const dispatch = useDispatch();
     const { items, loading, page, totalPages, query, limit: stateLimit } = useSelector((state) => state.utilisation);
+
+    const [filter, setFilter] = useState("all");
 
     const { t } = useTranslation();
 
@@ -31,10 +33,37 @@ export default function MesUtilisationConsommables() {
       if (page < totalPages) dispatch(setPage(page + 1));
     };
 
+    const filteredItems = items.filter((utilisation) => {
+      if (filter === "all") return true;
+      return utilisation.consommable.categorie === filter;
+    });
+
     return (
       <div className="h-screen dark:bg-gray-800 pt-24 sm:px-8 px-4">
           <h1 className="text-3xl dark:text-white sm:text-4xl font-bold text-center lg:flex lg:justify-start">{t("consumableUsage")}</h1>
-          <div className="flex justify-end mt-10 mb-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-7">
+
+            {/* Filtre */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {["all", "Bureautique", "Informatique", "Evenementiel", "Nettoyage", "Maintenance", "Communication", "Autre"].map((val) => (
+                <button
+                  key={val}
+                  onClick={() => {
+                    setFilter(val);
+                    dispatch(setPage(1));
+                  }}
+                  className={`px-4 py-1 rounded-lg  transition cursor-pointer ${
+                    filter === val
+                      ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
+                      : "bg-gray-50 dark:bg-gray-600 font-semibold hover:bg-gray-100 dark:hover:bg-gray-500"
+                  }`}
+                >
+                  {t(val)}
+                </button>
+              ))}
+            </div>
+  
+            {/* Recherche */}
             <div className="relative">
                         
               <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
@@ -82,10 +111,10 @@ export default function MesUtilisationConsommables() {
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((utilisation, index) => (
+                    {filteredItems.map((utilisation) => (
                       <tr 
                         key={utilisation.id} 
-                        className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
+                        className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-700 dark:even:bg-gray-800 dark:odd:bg-gray-900 dark:text-white transition-colors"
                       >
                           <td className="p-2">
                             {utilisation.consommable.photo ? (
@@ -113,7 +142,7 @@ export default function MesUtilisationConsommables() {
 
           {/* Mobile */}
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 md:hidden dark:text-white">
-            {items.map((utilisation, index) => (
+            {filteredItems.map((utilisation) => (
               <div
                 key={utilisation.id}
                 className="bg-white dark:bg-gray-700 rounded-xl p-4 dark:border dark:border-gray-500 dark:shadow-none shadow-[0_0_20px_1px_rgba(0,0,0,0.1)]"

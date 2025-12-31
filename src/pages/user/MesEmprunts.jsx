@@ -45,6 +45,8 @@ export default function MesEmprunts() {
       <h1 className="text-3xl sm:text-4xl font-bold text-center lg:flex lg:justify-start">{t("myLoans")}</h1>
 
       <div className="flex flex-col lg:flex-row items-center justify-between mb-8 mt-10 gap-3">
+
+        {/* Filtre */}
         <div className="flex flex-wrap justify-center lg:justify-start gap-3">
           {["all", "EnCours", "EnRetard", "Retourner"].map((val) => (
             <button
@@ -53,7 +55,7 @@ export default function MesEmprunts() {
               className={`px-4 py-1 rounded-lg font-semibold transition cursor-pointer ${
                 filter === val
                   ? "bg-black dark:bg-gray-200 font-bold text-white dark:text-black"
-                  : "bg-gray-100 dark:bg-gray-600 font-semibold hover:bg-gray-200 dark:hover:bg-gray-500"
+                  : "bg-gray-50 dark:bg-gray-600 font-semibold hover:bg-gray-100 dark:hover:bg-gray-500"
               }`}
             >
               { val === "all" 
@@ -68,6 +70,7 @@ export default function MesEmprunts() {
           ))}
         </div>
 
+        {/* Recherche */}
         <div className="relative">
                     
           <FiSearch className="absolute left-3 top-3 text-gray-500 dark:text-gray-300" size={18} />
@@ -104,7 +107,7 @@ export default function MesEmprunts() {
       ) : (
         <>
           {/* ordi */}
-          <div className="hidden md:block overflow-x-auto shadow-[0_0_20px_1px_rgba(0,0,0,0.1)] rounded-xl">
+          <div className="hidden md:block overflow-x-auto rounded-xl">
             <table className="w-full text-sm sm:text-base text-gray-700">
               <thead className="bg-fuchsia text-white">
                 <tr>
@@ -122,7 +125,7 @@ export default function MesEmprunts() {
                 {filteredItems.map((emprunt, index) => (
                   <tr
                     key={emprunt.id}
-                    className="odd:bg-white even:bg-gray-100 hover:bg-gray-200 dark:even:bg-gray-900 dark:odd:bg-gray-800 dark:text-white transition-colors"
+                    className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 dark:even:bg-gray-900 dark:odd:bg-gray-800 dark:text-white transition-colors"
                   >
                     <td className="p-2">
                       {emprunt.equipement.photo ? (

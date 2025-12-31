@@ -195,7 +195,7 @@ export default function Utilisationutilisation() {
                   className=" gap-2 px-4 py-2 border border-transparent text-lg font-semibold rounded-lg text-white
                   bg-fuchsia hover:bg-red-400  dark:bg-fuchsia focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 shadow-md"       
               >
-                  Ajouter <span className="text-2xl font-bold">+</span>
+                  {t("add")} <span className="text-2xl font-bold">+</span>
               </button>
           </div>
         </div>
@@ -208,13 +208,14 @@ export default function Utilisationutilisation() {
               <table className="min-w-full text-lg text-gray-700">
                 <thead className="bg-fuchsia text-white">
                   <tr>
-                    <th className="py-3 px-4 text-left">Photo</th>
-                    <th className="py-3 px-4 text-left">Utilisateur</th>
-                    <th className="py-3 px-4 text-left">Consommable</th>
-                    <th className="py-3 px-4 text-left">Date d'Utilisation</th>
-                    <th className="py-3 px-4 text-left">Quantité</th>
-                    <th className="py-3 px-4 text-left">Description</th>
-                    <th className="py-3 px-4 text-left">Actions</th>
+                    <th className="py-3 px-4 text-left">{t("photo")}</th>
+                    <th className="py-3 px-4 text-left">{t("user")}</th>
+                    <th className="py-3 px-4 text-left">{t("consumable")}</th>
+                    <th className="py-3 px-4 text-left">Catégorie</th>
+                    <th className="py-3 px-4 text-left">{t("usageDate")}</th>
+                    <th className="py-3 px-4 text-left">{t("quantity")}</th>
+                    <th className="py-3 px-4 text-left">{t("description")}</th>
+                    <th className="py-3 px-4 text-left">{t("actions")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -237,6 +238,7 @@ export default function Utilisationutilisation() {
                       </td>
                       <td className="py-2 px-4">{utilisation.utilisateur?.nom || "_"}</td>
                       <td className="py-2 px-4">{utilisation.consommable?.nom || "_"}</td>
+                      <td className="py-2 px-4">{utilisation.consommable?.categorie || "_"}</td>
                       <td className="py-2 px-4">
                         {new Date(utilisation.dateUtilisation).toLocaleDateString()}
                       </td>
@@ -266,7 +268,7 @@ export default function Utilisationutilisation() {
             >
               <div className="flex justify-between -mb-2">
                 <p>
-                  <span className="font-medium">Utilisateur: </span>
+                  <span className="font-medium">{t("user")}: </span>
                   {utilisation.utilisateur?.nom || "_"}
                 </p>
 
@@ -295,7 +297,7 @@ export default function Utilisationutilisation() {
                         className="flex items-center gap-3 w-full py-2 px-4 mr-6 text-left hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-gray-200 rounded-xl"
                       >
                         <Edit2 />
-                        Modifier
+                        {t("edit")}
                       </button>
                       
                       <button
@@ -306,26 +308,26 @@ export default function Utilisationutilisation() {
                         className="flex items-center gap-3 w-full py-2 px-4 text-left text-red-600 dark:text-red-400 hover:bg-gray-200 dark:hover:bg-gray-500 active:bg-red-50 rounded-xl"
                       >
                         <Trash2 />
-                        Supprimer
+                        {t("delete")}
                       </button>
                     </div>
                   )}
                 </div>
               </div>
               <p>
-                <span className="font-medium">Consommable: </span>
+                <span className="font-medium">{t("consumable")}: </span>
                 {utilisation.consommable?.nom || "_"}
               </p>
               <p>
-                <span className="font-medium">Date: </span>
+                <span className="font-medium">{t("usageDate")}: </span>
                 {new Date(utilisation.dateUtilisation).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-medium">Quantité utilisé: </span>
+                <span className="font-medium">{t("usedQuantity")}: </span>
                 {utilisation.quantiteUtilise}
               </p>
               <p>
-                <span className="font-medium">Déscription: </span>
+                <span className="font-medium">{t("description")}: </span>
                 {utilisation.description}
               </p>
             </div>

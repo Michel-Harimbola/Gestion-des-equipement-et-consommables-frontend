@@ -45,17 +45,18 @@ export default function EmpruntEnCours() {
   return (
     <div className="mt-24 px-4 sm:px-8 dark:text-gray-50 lg:grid lg:grid-cols-3 md:grid-cols-1 gap-20">
       <div className=" col-span-2">
-        <h1 className="text-3xl font-semibold lg:flex text-center">{t("currentLoans")}</h1> 
+        <h1 className="relative text-3xl font-semibold lg:flex text-center mb-10">{t("currentLoans")}</h1> 
         { loading? (
           <GlobalLoader />
         ) : items.length === 0 ? (
           <p className="text-gray-600 text-center lg:text-start dark:text-gray-100 mt-16">{t("noCurrentLoan")}</p>
         ) :(
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mr-10 mt-10 overflow-auto">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 lg:mr-10 overflow-auto">
             {items.map((emprunt) => (
               <div 
                 key={emprunt.id}
-                className={`flex flex-col space-y-1 bg-white dark:bg-gray-700 border ${emprunt.statut === "EnRetard"? "border-red-400": "border-gray-400 dark:border-gray-500"} 
+                className={`flex flex-col space-y-1 bg-white dark:bg-gray-700 border 
+                  ${emprunt.statut === "EnRetard"? "border-red-400": "border-gray-400 dark:border-gray-500"} 
                   dark:shadow-none  p-6 rounded-2xl`}
               > 
                 <div className="flex justify-between mb-2">
@@ -70,30 +71,42 @@ export default function EmpruntEnCours() {
                       </p>
                   </div>
                 </div>
-                
-                <div className="flex justify-between">
-                  <div className="flex space-x-2">
-                    {emprunt.equipement.nom}
+                <div className="flex gap-3">
+                  <div className="flex flex-col gap-1">
+                    <p>{emprunt.equipement.nom}</p>
+
+                    <div className="mr-1">
+                      {emprunt.equipement.etatMateriel == "BonEtat" ? (
+                        <p>{t("goodCondition")}</p>
+                      ) : emprunt.equipement.etatMateriel == "EtatMoyen" ? (
+                        <p>{t("averageCondition")}</p>
+                      ) : emprunt.equipement.etatMateriel == "MauvaisEtat" ? (  
+                        <p>{t("badCondition")}</p>
+                      ) : emprunt.equipement.etatMateriel == "HorsUsage" ? (
+                        <p>{t("outOfService")}</p>
+                      ) : emprunt.equipement.etatMateriel == "EnReparation" ? (
+                        <p>{t("underRepair")}</p>
+                      ) : (
+                        <p>{t("newCondition")}</p>
+                      )}
+                    </div>
+
+                    <p>{t("borrowDate")} : <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
+                    <p>{t("expectedReturnDate")} : <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
                   </div>
-                  <div className="flex space-x-2 mr-1 ">
-                        {emprunt.equipement.etatMateriel == "BonEtat" ? (
-                          <p>{t("goodCondition")}</p>
-                        ) : emprunt.equipement.etatMateriel == "EtatMoyen" ? (
-                          <p>{t("averageCondition")}</p>
-                        ) : emprunt.equipement.etatMateriel == "MauvaisEtat" ? (  
-                          <p>{t("badCondition")}</p>
-                        ) : emprunt.equipement.etatMateriel == "HorsUsage" ? (
-                          <p>{t("outOfService")}</p>
-                        ) : emprunt.equipement.etatMateriel == "EnReparation" ? (
-                          <p>{t("underRepair")}</p>
-                        ) : (
-                          <p>{t("newCondition")}</p>
-                        )}
+                  
+                  <div className="-mt-5 hover:scale-110 transition duration-300 delay-150">
+                    {emprunt.equipement.photo ? (
+                      <img
+                        src={`http://localhost:3001${emprunt.equipement.photo}`}
+                        alt={emprunt.equipement.nom}
+                        className="w-40 h-32 object-cover rounded-2xl"
+                      />
+                    ) : (
+                      <span>{t("noPhoto")}</span>
+                    )}
                   </div>
                 </div>
-
-                <p>{t("borrowDate")} : <span>{new Date(emprunt.dateEmprunt).toLocaleDateString()}</span></p>
-                <p>{t("expectedReturnDate")} : <span>{new Date(emprunt.dateRetourPrevu).toLocaleDateString()}</span></p>
         
                 <div className="flex flex-row justify-between items-center -mt-3">
                   <div className="flex flex-row items-center space-x-2 mt-2">
